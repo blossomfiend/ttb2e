@@ -120,9 +120,42 @@ export class TtbActor extends Actor {
         return super._onUpdate(data, options, userId);
     }
 
-    _initializeSource(data, options = {}) {
-        data = super._initializeSource(data, options);
-        data.system.cards.deck.name = "Twist Deck";
-        return data;
+    async _preCreate(data, options, userId) {
+        await super._preCreate(data, options, userId);
+
+        if (this.type === "fated") {
+            // Set up all the cards documents needed for fated to play the game
+            let folder = await Folder.create({ name: `${this.name}'s Cards`, type: "Cards" });
+            let [twistDeck, controlHand, playArea, discardPile] = await Cards.createDocuments([
+                { name: `${this.name}'s Twist Deck`, type: "deck", folder: folder.id },
+                { name: `${this.name}'s Control Hand`, type: "hand", folder: folder.id },
+                { name: `${this.name}'s Play Area`, type: "pile", folder: folder.id },
+                { name: `${this.name}'s Discard Pile`, type: "pile", folder: folder.id },
+            ]);
+
+            this.updateSource({
+                system: {
+                    cards: {
+                        containerFolder: folder.id,
+                        twistDeck: twistDeck.id,
+                        controlHand: controlHand.id,
+                        playArea: playArea.id,
+                        discardPile: discardPile.id,
+                    },
+                },
+            });
+        }
+    }
+
+    async _preDelete(options, user) {
+        await super._preDelete(options, user);
+
+        if (this.type === "fated") {
+            // Delete the cards we created for the fated
+            await this.system.cards.containerFolder?.delete();
+            await Promise.all(["twistDeck", "controlHand", "playArea", "discardPile"].map(async field => {
+                await this.system.cards[field]?.delete();
+            }));
+        }
     }
 }

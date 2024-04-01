@@ -1,6 +1,6 @@
 import {TtbActorSheetSvelte} from "./applications/TtbActorSheet.svelte.js";
 import {SYSTEM_ID} from "./globals.js";
-import {TtbActor} from "./TtbActor.js";
+import {TtbActor} from "./documents/actor/TtbActor.js";
 import TTB2E from "./config.js";
 import FatedData from "./data/actor/FatedData.js";
 

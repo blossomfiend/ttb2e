@@ -28,7 +28,11 @@ export default class FatedData extends foundry.abstract.TypeDataModel {
                 initial: ["Living", "Fated"],
             }),
             cards: new fields.SchemaField({
-                deck: new fields.EmbeddedDocumentField(foundry.documents.BaseCards),
+                containerFolder: new fields.ForeignDocumentField(Folder),
+                twistDeck: new fields.ForeignDocumentField(Cards),
+                controlHand: new fields.ForeignDocumentField(Cards),
+                playArea: new fields.ForeignDocumentField(Cards),
+                discardPile: new fields.ForeignDocumentField(Cards),
             })
         };
     }

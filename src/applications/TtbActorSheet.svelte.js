@@ -45,7 +45,6 @@ export class TtbActorSheetSvelte extends ActorSheet {
 
     /** @override */
     async _render(force=false, options={}) {
-
         // Do not render under certain conditions
         const states = Application.RENDER_STATES;
         this._priorState = this._state;
@@ -70,7 +69,6 @@ export class TtbActorSheetSvelte extends ActorSheet {
 
         const inner = await this._renderInner(data);
         let html = inner;
-
 
         // If the application already exists in the DOM, just update the components props, Svelte doesn't need to rerender
         if ( element.length ) {

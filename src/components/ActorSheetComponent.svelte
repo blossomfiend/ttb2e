@@ -10,7 +10,7 @@
     let cards = game.cards;
 
     function test() {
-        system.cards.deck.sheet.render(true);
+        system.cards.twistDeck.sheet.render(true);
     }
 </script>
 
