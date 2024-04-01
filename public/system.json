@@ -1,0 +1,32 @@
+{
+  "id": "ttb2e",
+  "version": "1.0.0",
+  "title": "Malifaux: Through the Breach Second Edition",
+  "url": "",
+  "description": "An implementation of Through the Breach.",
+  "authors": [
+    {
+      "name": "Lilith"
+    }
+  ],
+  "esmodules": ["ttb2e.js"],
+  "styles": ["style.css"],
+  "packs": [],
+  "packFolders": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "socket": false,
+  "gridDistance": 1,
+  "gridUnits": "yd",
+  "primaryTokenAttribute": "wounds",
+  "secondaryTokenAttribute": "power"
+}

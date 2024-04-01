@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "ttb2e",
+  "version": "1.0.0",
+  "description": "CSS compiler for the Boilerplate system",
+  "type": "module",
+  "scripts": {
+    "serve": "vite",
+    "watch": "vite build --watch --minify false",
+    "build": "vite build"
+  },
+  "browserslist": [
+    "last 3 versions"
+  ],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "autoprefixer": "^10.4.19",
+    "lightningcss": "^1.22.1",
+    "postcss": "^8.4.38",
+    "svelte": "^5.0.0-next.90",
+    "svelte-language-server": "^0.16.1",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.0.7"
+  },
+  "pnpm": {
+    "overrides": {
+      "svelte": "$svelte"
+    }
+  }
+}
