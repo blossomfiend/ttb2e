@@ -15,14 +15,14 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "autoprefixer": "^10.4.19",
-    "lightningcss": "^1.22.1",
+    "lightningcss": "^1.24.1",
     "postcss": "^8.4.38",
     "svelte": "^5.0.0-next.90",
-    "svelte-language-server": "^0.16.1",
+    "svelte-language-server": "^0.16.7",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.0.7"
+    "vite": "^5.2.7"
   },
   "pnpm": {
     "overrides": {
