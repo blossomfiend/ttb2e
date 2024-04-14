@@ -1,5 +1,5 @@
 // only required for dev
 // in prod, foundry loads index.js, which is compiled by vite/rollup
-// in dev, foundry loads index.js, this file, which loads lancer.ts
+// in dev, foundry loads index.js, this file, which loads ttb2e.ts
 
-import * as TTB from "./ttb.js";
+import "./ttb2e.js";

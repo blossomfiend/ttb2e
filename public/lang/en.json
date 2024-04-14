@@ -1,22 +1,303 @@
 {
-  "BOILERPLATE.AbilityStr": "Strength",
-  "BOILERPLATE.AbilityCon": "Constitution",
-  "BOILERPLATE.AbilityDex": "Dexterity",
-  "BOILERPLATE.AbilityInt": "Intelligence",
-  "BOILERPLATE.AbilityWis": "Wisdom",
-  "BOILERPLATE.AbilityCha": "Charisma",
-
-  "BOILERPLATE.AbilityStrAbbr": "str",
-  "BOILERPLATE.AbilityConAbbr": "con",
-  "BOILERPLATE.AbilityDexAbbr": "dex",
-  "BOILERPLATE.AbilityIntAbbr": "int",
-  "BOILERPLATE.AbilityWisAbbr": "wis",
-  "BOILERPLATE.AbilityChaAbbr": "cha",
-
-  "BOILERPLATE.EffectCreate": "Create Effect",
-  "BOILERPLATE.EffectToggle": "Toggle Effect",
-  "BOILERPLATE.EffectEdit": "Edit Effect",
-  "BOILERPLATE.EffectDelete": "Delete Effect",
-
-  "BOILERPLATE.Add": "Add"
+  "ttb": {
+    "suits": {
+      "rams": {
+        "name": "Rams"
+      },
+      "crows": {
+        "name": "Crows"
+      },
+      "tomes": {
+        "name": "Tomes"
+      },
+      "masks": {
+        "name": "Masks"
+      }
+    },
+    "aspects": {
+      "might": {
+        "name": "Might"
+      },
+      "grace": {
+        "name": "Grace"
+      },
+      "speed": {
+        "name": "speed"
+      },
+      "resilience": {
+        "name": "Resilience"
+      },
+      "intellect": {
+        "name": "Intellect"
+      },
+      "charm": {
+        "name": "Charm"
+      },
+      "cunning": {
+        "name": "Cunning"
+      },
+      "tenacity": {
+        "name": "Tenacity"
+      }
+    },
+    "derivedAspects": {
+      "defense": {
+        "name": "Defense"
+      },
+      "willpower": {
+        "name": "Willpower"
+      },
+      "initiative": {
+        "name": "Initiative"
+      },
+      "walk": {
+        "name": "Walk"
+      },
+      "charge": {
+        "name": "Charge"
+      },
+      "height": {
+        "name": "Height"
+      },
+      "wounds": {
+        "name": "Wounds"
+      }
+    },
+    "skillCategories": {
+      "academic": "Academic",
+      "closeCombat": "Close Combat",
+      "crafting": "Crafting",
+      "expertise": "Expertise",
+      "magical": "Magical",
+      "rangedCombat": "Ranged Combat",
+      "social": "Social",
+      "training": "Training"
+    },
+    "skills": {
+      "bureaucracy": {
+        "name": "Bureaucracy",
+        "description": "The inner workings of legal and government matters."
+      },
+      "engineering": {
+        "name": "Engineering",
+        "description": "Proper mechanical and structural design."
+      },
+      "history": {
+        "name": "History",
+        "description": "The lore of human existence."
+      },
+      "literacy": {
+        "name": "Literacy",
+        "description": "Reading and deciphering text, learning new languages."
+      },
+      "mathematics": {
+        "name": "Mathematics",
+        "description": "Arithmetic, Physics, and other numerical disciplines."
+      },
+      "music": {
+        "name": "Music",
+        "description": "The ability to compose and play music."
+      },
+      "flexible": {
+        "name": "Flexible",
+        "description": "Chains, Lassos, Whips, and any other such weapons."
+      },
+      "grappling": {
+        "name": "Grappling",
+        "description": "Wrestling and holding an opponent."
+      },
+      "heavyMelee": {
+        "name": "Heavy Melee",
+        "description": "Large and cumbersome weapons that require two hands."
+      },
+      "martialArts": {
+        "name": "Martial Arts",
+        "description": "Quick strikes to vulnerable areas made with hands and feet."
+      },
+      "melee": {
+        "name": "Melee",
+        "description": "One handed weapons that bludgeon, slash, or pierce."
+      },
+      "pneumatic": {
+        "name": "Pneumatic",
+        "description": "Weapons that include mechanical parts."
+      },
+      "pugilism": {
+        "name": "Pugilism",
+        "description": "Powerful strikes usually made with closed fists."
+      },
+      "alchemistry": {
+        "name": "Alchemistry",
+        "description": "Mixing and properly using chemicals."
+      },
+      "art": {
+        "name": "Art",
+        "description": "Producing and understanding artistic works."
+      },
+      "artefacting": {
+        "name": "Artefacting",
+        "description": "Building constructs and machinery."
+      },
+      "blacksmithing": {
+        "name": "Blacksmithing",
+        "description": "Forging metal objects such as swords and horseshoes."
+      },
+      "culinary": {
+        "name": "Culinary",
+        "description": "Creating appetizing food and drink."
+      },
+      "explosives": {
+        "name": "Explosives",
+        "description": "Creating and using bombs, dynamite, and other explosives."
+      },
+      "homesteading": {
+        "name": "Homesteading",
+        "description": "Making and maintaining the materials of everyday life."
+      },
+      "printing": {
+        "name": "Printing",
+        "description": "Creating books and other written objects."
+      },
+      "stitching": {
+        "name": "Stitching",
+        "description": "Sewing and stitching of both fabric and corpses."
+      },
+      "doctor": {
+        "name": "Doctor",
+        "description": "Healing the sick and injured."
+      },
+      "forgery": {
+        "name": "Forgery",
+        "description": "Creating false documents and writings."
+      },
+      "gambling": {
+        "name": "Gambling",
+        "description": "Properly playing games of chance and skill."
+      },
+      "husbandry": {
+        "name": "Husbandry",
+        "description": "Caring for livestock and riding/driving transport animals."
+      },
+      "lockpicking": {
+        "name": "Lockpicking",
+        "description": "Opening locks and other complex devices."
+      },
+      "notice": {
+        "name": "Notice",
+        "description": "Spotting things that are out of place or hidden."
+      },
+      "track": {
+        "name": "Track",
+        "description": "Following a target through an environment."
+      },
+      "wilderness": {
+        "name": "Wilderness",
+        "description": "Proper survival and safety in unsettled areas."
+      },
+      "counterSpelling": {
+        "name": "Counter-Spelling",
+        "description": "Stopping magical effects and spells."
+      },
+      "enchanting": {
+        "name": "Enchanting",
+        "description": "Imbuing an object or target with magical qualities."
+      },
+      "necromancy": {
+        "name": "Necromancy",
+        "description": "Control over another's mind, body, or spirit."
+      },
+      "sorcery": {
+        "name": "Sorcery",
+        "description": "Creation of elemental effects."
+      },
+      "prestidigitation": {
+        "name": "Prestidigitation",
+        "description": "Manipulation of space, time, and the senses."
+      },
+      "archery": {
+        "name": "Archery",
+        "description": "Use of blowguns, bows, and similar projectile weapons."
+      },
+      "heavyGuns": {
+        "name": "Heavy Guns",
+        "description": "Use of large powder guns, such as cannons and Gatlings."
+      },
+      "longArms": {
+        "name": "Long Arms",
+        "description": "Long barrel weapons such as rifles and carbines."
+      },
+      "pistol": {
+        "name": "Pistol",
+        "description": "One handed firearms like derringers and dueling pistols."
+      },
+      "shotgun": {
+        "name": "Shotgun",
+        "description": "Shotgun weapons of both the scatter and slug variety."
+      },
+      "thrownWeapons": {
+        "name": "Thrown Weapons",
+        "description": "Ranged weapons hurled by hand."
+      },
+      "barter": {
+        "name": "Barter",
+        "description": "Trading and negotiation tactics."
+      },
+      "bewitch": {
+        "name": "Bewitch",
+        "description": "Making others like or appreciate the character."
+      },
+      "convince": {
+        "name": "Convince",
+        "description": "Swaying another's point through logic and compromise."
+      },
+      "deceive": {
+        "name": "Deceive",
+        "description": "The art of telling lies and appearing sincere."
+      },
+      "intimidate": {
+        "name": "Intimidate",
+        "description": "Scaring others and presenting a fearful presence."
+      },
+      "leadership": {
+        "name": "Leadership",
+        "description": "Rallying others to a cause and coordinating groups."
+      },
+      "scrutiny": {
+        "name": "Scrutiny",
+        "description": "Reading the emotions and disposition of others."
+      },
+      "acrobatics": {
+        "name": "Acrobatics",
+        "description": "Tumbling, leaping, and other quick bursts of motion."
+      },
+      "athletics": {
+        "name": "Athletics",
+        "description": "Running, jumping, climbing, and other physical activities."
+      },
+      "carouse": {
+        "name": "Carouse",
+        "description": "Maintaining one's composure while intoxicated or poisoned."
+      },
+      "centering": {
+        "name": "Centering",
+        "description": "Keeping oneself calm and collected."
+      },
+      "evade": {
+        "name": "Evade",
+        "description": "Quickly avoiding dangerous attacks."
+      },
+      "pickPocket": {
+        "name": "Pick Pocket",
+        "description": "Sleight of hand, both as theft and illusion."
+      },
+      "stealth": {
+        "name": "Stealth",
+        "description": "The ability to hide and move without being noticed."
+      },
+      "toughness": {
+        "name": "Toughness",
+        "description": "The ability to withstand physical abuse."
+      }
+    }
+  }
 }

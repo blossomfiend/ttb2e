@@ -1,13 +1,9 @@
-import { mount } from 'svelte';
-import ActorSheetComponent from "../components/ActorSheetComponent.svelte";
+import ActorSheetComponent from "../components/ActorSheet.svelte";
 import {SYSTEM_ID} from "../globals.js";
 
 export class TtbActorSheetSvelte extends ActorSheet {
-    svelteState = $state({});
-
     constructor(data, options) {
         super(data, options);
-        this.svelte = null;
     }
 
     /** @override */
@@ -22,26 +18,9 @@ export class TtbActorSheetSvelte extends ActorSheet {
     }
 
     /** @override */
-    getData(options = {}) {
-        return {
-            actor: this.actor,
-        };
+    async getData(options = {}) {
+        return super.getData();
     }
-
-    // // Injects Svelte app when initializing HTML
-    // async _injectHTML(element) {
-    //     return super._injectHTML(element);
-    //     // this.svelte = new ActorSheetComponent({
-    //     //     target: document.body,
-    //     //     props: this.getData(),
-    //     // });
-    // }
-    //
-    // // Injects Svelte app when replacing innerHTML
-    // async _replaceHTML(element, html) {
-    //     // TODO: fix this because Foundry code right now always expects fresh DOM to attach listeners to, which kinda sucks
-    //     this.svelte.$set(this.getData());
-    // }
 
     /** @override */
     async _render(force=false, options={}) {
@@ -67,17 +46,17 @@ export class TtbActorSheetSvelte extends ActorSheet {
         const element = this.element;
         const data = await this.getData(this.options);
 
-        const inner = await this._renderInner(data);
-        let html = inner;
+        let html;
 
         // If the application already exists in the DOM, just update the components props, Svelte doesn't need to rerender
         if ( element.length ) {
-            this.svelteState = data;
+            this.svelteApp.$set(data);
             html = this.element;
         }
         // Otherwise render a new app
         else {
             // Render the inner content
+            const inner = await this._renderInner(data);
 
             // Wrap a popOut application in an outer frame
             if ( this.popOut ) {
@@ -89,29 +68,28 @@ export class TtbActorSheetSvelte extends ActorSheet {
             // Add the HTML to the DOM and record the element
             this._injectHTML(html);
 
-            this.svelteState = data;
-            this.svelte = mount(ActorSheetComponent, {
+            this.svelteApp = new ActorSheetComponent({
                 target: this.element.find(".svelte-container")[0],
-                props: this.svelteState,
+                props: data,
             });
-        }
 
-        if ( !this.popOut && this.options.resizable ) new Draggable(this, html, false, this.options.resizable);
+            if ( !this.popOut && this.options.resizable ) new Draggable(this, html, false, this.options.resizable);
 
-        // need to override the inner element used earlier by what's actually in the DOM
-        const innerElement = this.element.find(".svelte-container");
+            // need to get the inner element used earlier by what's actually in the DOM
+            const innerElement = this.element.find(".svelte-container");
 
-        // dirty fix because FormApplication usually sets this in _renderInner, which doesn't work here
-        this.form = innerElement[0];
+            // dirty fix because FormApplication usually sets this in _renderInner, which doesn't work here
+            this.form = innerElement[0];
 
-        // Activate event listeners on the inner HTML
-        this._activateCoreListeners(innerElement);
-        this.activateListeners(innerElement);
+            // Activate event listeners on the inner HTML
+            this._activateCoreListeners(innerElement);
+            this.activateListeners(innerElement);
 
-        // Set the application position (if it's not currently minimized)
-        if ( !this._minimized ) {
-            foundry.utils.mergeObject(this.position, options, {insertKeys: false});
-            this.setPosition(this.position);
+            // Set the application position (if it's not currently minimized)
+            if ( !this._minimized ) {
+                foundry.utils.mergeObject(this.position, options, {insertKeys: false});
+                this.setPosition(this.position);
+            }
         }
 
         // Apply focus to the application, maximizing it and bringing it to the top
@@ -126,7 +104,9 @@ export class TtbActorSheetSvelte extends ActorSheet {
 
     /** @override */
     async close(options = {}) {
-        return super.close(options);
+        const ret = await super.close(options);
+        this.svelteApp.$destroy();
+        return ret;
     }
 
     /** @override */

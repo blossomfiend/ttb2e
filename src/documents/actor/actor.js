@@ -1,4 +1,4 @@
-import {data} from "autoprefixer";
+import {objMap} from "../../util.js";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -36,13 +36,69 @@ export class TtbActor extends Actor {
     prepareDerivedData() {
         const actorData = this;
         const systemData = actorData.system;
+        const skills = systemData.skills;
+        const aspects = systemData.aspects;
+        const derivedAspects = systemData.derivedAspects;
         const flags = actorData.flags.boilerplate || {};
+
+        for (const skillConstants of game.ttb2e.skills) {
+            const skill = skills[skillConstants.name];
+            Object.assign(skill, skillConstants);
+            if (typeof skill.aspect === "string") {
+                const baseValue = skill.override ?? (skill.rank + aspects[skill.aspect]);
+                skill.av = combine(sum, suited(baseValue), skill.bonus);
+            } else {
+                skill.av = Object.fromEntries(skillConstants.aspect.map(aspect => {
+                    const baseValue = skill.override ?? (skill.rank + aspects[aspect]);
+                    const av = combine(sum, suited(baseValue), skill.bonus);
+                    return [aspect, av];
+                }));
+            }
+        }
+
+        systemData.wounds.max =
+            (systemData.wounds.override
+                ?? 4 + skills.toughness.av.value + Math.ceil(Math.max(0, aspects.resilience) / 2))
+            + systemData.wounds.bonus.value;
+        systemData.wounds.negative = Math.max(0, -systemData.wounds.value);
+
+        derivedAspects.initiative.value = suited(aspects.speed + skills.notice.rank);
+        derivedAspects.defense.value = combine(sum,
+            suited(2),
+            combine(Math.max,
+                suited(0),
+                skills.evade.av,
+                suited(aspects.speed)));
+        derivedAspects.willpower.value = combine(sum,
+            suited(2),
+            combine(Math.max,
+                suited(0),
+                skills.centering.av,
+                suited(aspects.tenacity)));
+
+        derivedAspects.walk.value = suited(4 + Math.ceil(aspects.speed / 2));
+        derivedAspects.charge.value = suited(Math.max(derivedAspects.walk.value.value, 4 + aspects.speed));
+        derivedAspects.height.value = suited(2);
+
+        for (let derivedAspectName in derivedAspects) {
+            const derivedAspect = derivedAspects[derivedAspectName];
+            if (derivedAspect.override != null) {
+                derivedAspect.value.value = derivedAspect.override;
+            }
+            derivedAspect.value = combine(sum, derivedAspect.value, derivedAspect.bonus);
+        }
+
+        // make sure Charge is always at least the value of Walk
+        if (derivedAspects.charge.override === null) {
+            derivedAspects.charge.value.value = Math.max(derivedAspects.charge.value.value, derivedAspects.walk.value.value);
+        }
 
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
         this._prepareCharacterData(actorData);
         this._prepareNpcData(actorData);
     }
+
 
     /**
      * Prepare Character type specific data
@@ -125,12 +181,12 @@ export class TtbActor extends Actor {
 
         if (this.type === "fated") {
             // Set up all the cards documents needed for fated to play the game
-            let folder = await Folder.create({ name: `${this.name}'s Cards`, type: "Cards" });
+            let folder = await Folder.create({name: `${this.name}'s Cards`, type: "Cards"});
             let [twistDeck, controlHand, playArea, discardPile] = await Cards.createDocuments([
-                { name: `${this.name}'s Twist Deck`, type: "deck", folder: folder.id },
-                { name: `${this.name}'s Control Hand`, type: "hand", folder: folder.id },
-                { name: `${this.name}'s Play Area`, type: "pile", folder: folder.id },
-                { name: `${this.name}'s Discard Pile`, type: "pile", folder: folder.id },
+                {name: `${this.name}'s Twist Deck`, type: "deck", folder: folder.id},
+                {name: `${this.name}'s Control Hand`, type: "hand", folder: folder.id},
+                {name: `${this.name}'s Play Area`, type: "pile", folder: folder.id},
+                {name: `${this.name}'s Discard Pile`, type: "pile", folder: folder.id},
             ]);
 
             this.updateSource({
@@ -158,4 +214,58 @@ export class TtbActor extends Actor {
             }));
         }
     }
+}
+
+/**
+ *
+ * @param {number} value
+ * @return {SuitedValue}
+ * @private
+ */
+function suited(value) {
+    return {
+        value: value,
+        suits: {
+            rams: 0,
+            crows: 0,
+            tomes: 0,
+            masks: 0,
+        },
+    };
+}
+
+/**
+ *
+ * @param {(a: number, b: number) => number} combinator
+ * @param {...Suits} values
+ * @returns {Suits}
+ * @private
+ */
+function combineSuits(combinator, ...values) {
+    return values.reduce((a, b) =>
+        /** @type {Suits} */ objMap(a, (aVal, suit) => combinator(aVal, b[suit]))
+    );
+}
+
+/**
+ *
+ * @param {(a: number, b: number) => number} combinator
+ * @param {...SuitedValue} values
+ * @returns {SuitedValue}
+ * @private
+ */
+function combine(combinator, ...values) {
+    return values.reduce((a, b) => ({
+        value: combinator(a.value, b.value),
+        suits: combineSuits(combinator, a.suits, b.suits),
+    }));
+}
+
+/**
+ *
+ * @param {...number} values
+ * @return {number}
+ */
+function sum(...values) {
+    return values.reduce((a, b) => a + b, 0);
 }

@@ -1,13 +1,14 @@
-import {TtbActorSheetSvelte} from "./applications/TtbActorSheet.svelte.js";
+import {TtbActorSheetSvelte} from "./applications/fated.js";
 import {SYSTEM_ID} from "./globals.js";
-import {TtbActor} from "./documents/actor/TtbActor.js";
+import {TtbActor} from "./documents/actor/actor.js";
 import TTB2E from "./config.js";
-import FatedData from "./data/actor/FatedData.js";
+import FatedData from "./data/actor/fated.js";
+
 
 Hooks.once('init', async () => {
     // Add utility classes to the global game object so that they're more easily
     // accessible in global contexts.
-    game[SYSTEM_ID] = TTB2E;
+    game.ttb2e = TTB2E;
 
     // Define custom Document classes
     CONFIG.Actor.documentClass = TtbActor;
@@ -30,5 +31,5 @@ Hooks.once('init', async () => {
 async function preloadTemplates() {
     const templatePaths = [`systems/${SYSTEM_ID}/templates/svelte_form.hbs`];
 
-    return loadTemplates(templatePaths);
+    return await loadTemplates(templatePaths);
 }
