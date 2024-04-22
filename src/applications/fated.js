@@ -10,10 +10,8 @@ export class TtbActorSheetSvelte extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["fated", "sheet", "actor"],
-            template: `systems/${SYSTEM_ID}/templates/svelte_form.hbs`,
             width: 600,
             height: 600,
-            tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features"}]
         });
     }
 
@@ -55,28 +53,31 @@ export class TtbActorSheetSvelte extends ActorSheet {
         }
         // Otherwise render a new app
         else {
-            // Render the inner content
-            const inner = await this._renderInner(data);
+            let target;
 
             // Wrap a popOut application in an outer frame
-            if ( this.popOut ) {
+            if (this.popOut) {
                 html = await this._renderOuter();
-                html.find(".window-content").append(inner);
+                target = html.find(".window-content")[0];
                 ui.windows[this.appId] = this;
+            } else {
+                html = jQuery("<div>");
+                target = html[0];
             }
 
             // Add the HTML to the DOM and record the element
             this._injectHTML(html);
 
             this.svelteApp = new ActorSheetComponent({
-                target: this.element.find(".svelte-container")[0],
+                target: target,
                 props: data,
             });
+            const formRoot = this.svelteApp.formRoot;
 
             if ( !this.popOut && this.options.resizable ) new Draggable(this, html, false, this.options.resizable);
 
             // need to get the inner element used earlier by what's actually in the DOM
-            const innerElement = this.element.find(".svelte-container");
+            const innerElement = jQuery(formRoot);
 
             // dirty fix because FormApplication usually sets this in _renderInner, which doesn't work here
             this.form = innerElement[0];

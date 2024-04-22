@@ -16,6 +16,7 @@
   "license": "",
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@types/jquery": "^3.5.29",
     "autoprefixer": "^10.4.19",
     "lightningcss": "^1.24.1",
     "postcss": "^8.4.38",

@@ -44,15 +44,13 @@ export class TtbActor extends Actor {
         for (const skillConstants of game.ttb2e.skills) {
             const skill = skills[skillConstants.name];
             Object.assign(skill, skillConstants);
-            if (typeof skill.aspect === "string") {
-                const baseValue = skill.override ?? (skill.rank + aspects[skill.aspect]);
-                skill.av = combine(sum, suited(baseValue), skill.bonus);
-            } else {
-                skill.av = Object.fromEntries(skillConstants.aspect.map(aspect => {
-                    const baseValue = skill.override ?? (skill.rank + aspects[aspect]);
-                    const av = combine(sum, suited(baseValue), skill.bonus);
-                    return [aspect, av];
-                }));
+            skill.av = Object.fromEntries(skillConstants.aspects.map(aspect => {
+                const baseValue = skill.override ?? (skill.rank + aspects[aspect]);
+                const av = combine(sum, suited(baseValue), skill.bonus);
+                return [aspect, av];
+            }));
+            if (skillConstants.aspects.length === 1) {
+                Object.assign(skill.av, skill.av[skillConstants.aspects[0]]);
             }
         }
 

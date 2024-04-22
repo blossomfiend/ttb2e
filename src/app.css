@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .window-content:has(.ttb) {
+        @apply dark:bg-stone-700 dark:bg-denim-75;
+    }
+}
