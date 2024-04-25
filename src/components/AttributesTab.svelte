@@ -1,30 +1,39 @@
 <script>
     import NumberInput from "./NumberInput.svelte";
     import {localize} from "../util.js";
+    import TextSuits from "./TextSuits.svelte";
+
     export let actor;
     $: system = actor.system;
+    $: aspects = game.ttb2e.aspects.map(aspect => ({
+        name: aspect,
+        value: system.aspects[aspect],
+    }));
+    $: derivedAspects = game.ttb2e.derivedAspects.map(derivedAspect => ({
+        name: derivedAspect,
+        ...system.derivedAspects[derivedAspect],
+    }));
 </script>
 <div class="flex flex-row gap-4">
     <div class="flex flex-col gap-3">
-        {#each game.ttb2e.aspects as aspect}
-            <div class="flex flex-row gap-1">
-                <label for={`system.aspects.${aspect}`}
-                       class="flex-1">{localize(`ttb.aspects.${aspect}.name`)}</label>
-                <div class="w-8">
-                    <NumberInput name={`system.aspects.${aspect}`} value={system.aspects[aspect]}/>
-                </div>
-            </div>
+        {#each aspects as aspect}
+            <label class="flex flex-row gap-1">
+                <span class="flex-1">{localize(`ttb.aspects.${aspect.name}.name`)}</span>
+                <span class="w-8">
+                    <NumberInput name={`system.aspects.${aspect.name}`} value={aspect.value}/>
+                </span>
+            </label>
         {/each}
         <hr/>
-        {#each game.ttb2e.derivedAspects as derivedAspect}
-            <div class="flex flex-row gap-1">
-                <label for={`system.derivedAspects.${derivedAspect}.value.value`}
-                       class="flex-1">{localize(`ttb.derivedAspects.${derivedAspect}.name`)}</label>
-                <div class="w-8">
-                    <NumberInput name={`system.derivedAspects.${derivedAspect}.value.value`}
-                                 value={system.derivedAspects[derivedAspect].value.value} disabled/>
-                </div>
-            </div>
+        {#each derivedAspects as derivedAspect}
+            <label class="flex flex-row items-center gap-1">
+                <span class="flex-1">{localize(`ttb.derivedAspects.${derivedAspect.name}.name`)}</span>
+                <span class="w-8">
+                    <NumberInput name={`system.derivedAspects.${derivedAspect.name}.value.value`}
+                                 value={derivedAspect.value.value} disabled/>
+                </span>
+                <TextSuits suits={derivedAspect.value.suits}/>
+            </label>
         {/each}
     </div>
     <div>

@@ -1,4 +1,4 @@
-import {TtbActorSheetSvelte} from "./applications/fated.js";
+import {FatedApp} from "./applications/fated.js";
 import {SYSTEM_ID} from "./globals.js";
 import {TtbActor} from "./documents/actor/actor.js";
 import TTB2E from "./config.js";
@@ -22,7 +22,7 @@ Hooks.once('init', async () => {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("TtbActorSheet", TtbActorSheetSvelte, {makeDefault: true});
+    Actors.registerSheet("TtbActorSheet", FatedApp, {makeDefault: true});
 
     // Preload Handlebars templates.
     await preloadTemplates();

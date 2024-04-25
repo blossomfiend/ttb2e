@@ -17,8 +17,6 @@
     // let cardsPromise = Cards.create({name: "test"})
     //     .then(cards => console.log(cards));
 
-    let cards = game.cards;
-
     function test() {
         system.cards.twistDeck.sheet.render(true);
     }
@@ -38,26 +36,25 @@
     }
 
     let aspects = game[SYSTEM_ID].aspects;
-    let localize = key => game.i18n.format(key);
     let transitionParams = {
         duration: 200,
         start: 0.98,
     };
 </script>
 
-<form bind:this={formRoot} class="flex flex-col ttb dark:text-stone-100">
+<form bind:this={formRoot} class="flex flex-col ttb dark:text-stone-100" autocomplete="off">
     <header class="sheet-header flex flex-row gap-2 mb-3">
         <img class="" src="{actor.img}" data-edit="img" title="{actor.name}" height="100" width="100"
              alt="portrait of the character"/>
         <div class="flex flex-col gap-2">
             <!-- Header / Character name-->
             <h1 class="">
-                <input name="name" class="character-name text-2xl" type="text" value="{actor.name}" placeholder="Name"/>
+                <input name="name" class="character-name text-2xl" type="text" value="{actor.name}" placeholder="Name" autocomplete="off"/>
             </h1>
             <!-- Resources -->
             <div class="flex flex-row justify-between gap-2">
                 <div class="flex flex-col text-center gap-1">
-                    <label for="system.health.value" class="resource-label">Wounds</label>
+                    <span class="resource-label">Wounds</span>
                     <div class="resource-content flex flex-row justify-between items-center max-w-32">
                         <NumberInput name="system.wounds.value" value="{system.wounds.value}"/>
                         <span class="px-1"> / </span>
@@ -65,19 +62,19 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col text-center gap-1">
-                    <label for="system.power.value" class="resource-label">XP</label>
-                    <div class="resource-content flex flex-row justify-between items-center">
+                <label class="flex flex-col text-center gap-1">
+                    <span class="resource-label">XP</span>
+                    <span class="resource-content flex flex-row justify-between items-center">
                         <NumberInput name="system.xp" value="{system.xp}"/>
-                    </div>
-                </div>
+                    </span>
+                </label>
 
-                <div class="flex flex-col text-center gap-1">
-                    <label for="system.attributes.level.value" class="resource-label">Level</label>
-                    <div class="resource-content flex flex-row justify-between items-center">
+                <label class="flex flex-col text-center gap-1">
+                    <span class="resource-label">Level?</span>
+                    <span class="resource-content flex flex-row justify-between items-center">
                         <NumberInput name="system.attributes.level.value" value="1"/>
-                    </div>
-                </div>
+                    </span>
+                </label>
             </div>
         </div>
     </header>

@@ -41,6 +41,9 @@ export default {
             boxShadow: {
                 "foundry": "0 0 6px var(--tw-shadow-color)",
             },
+            height: {
+                "texticon": "1em",
+            },
             colors: {
                 "warm-1": "var(--color-warm-1)",
                 "warm-2": "var(--color-warm-2)",
@@ -132,6 +135,9 @@ export default {
             addUtilities({
                 ".text-shadow-red": {
                     "text-shadow": "0 0 8px var(--color-shadow-primary)",
+                },
+                ".drop-shadow-red": {
+                    "filter": "drop-shadow(0 0 4px var(--color-shadow-primary))",
                 },
                 ".small-caps": {
                     "font-variant": "small-caps",

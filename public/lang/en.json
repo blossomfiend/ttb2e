@@ -1,5 +1,8 @@
 {
   "ttb": {
+    "ui": {
+      "rank": "Rank"
+    },
     "suits": {
       "rams": {
         "name": "Rams"

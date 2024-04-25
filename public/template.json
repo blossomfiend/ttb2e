@@ -5,7 +5,7 @@
     "fatemasterCharacter": {}
   },
   "Item": {
-    "types": ["weapon", "spell", "talent"],
+    "types": ["talent", "trigger", "pursuit"],
     "weapon": {},
     "spell": {}
   }
