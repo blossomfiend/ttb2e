@@ -1,7 +1,6 @@
 <svelte:options accessors={true}/>
 <script>
     import "../app.css"
-    import {SYSTEM_ID} from "../globals.js";
     import SkillsTab from "./SkillsTab.svelte";
     import TabMenu from "./TabMenu.svelte";
     import Tabs from "./Tabs.svelte";
@@ -9,7 +8,7 @@
     import AttributesTab from "./AttributesTab.svelte";
 
     export let actor;
-    export let formRoot;
+    console.log(actor);
     const rest = $$restProps;
 
     $: system = actor.system;
@@ -31,18 +30,10 @@
     ];
     let currentTab = tabs[0];
 
-    function onTabChange(tab) {
-        currentTab = tab;
-    }
-
-    let aspects = game[SYSTEM_ID].aspects;
-    let transitionParams = {
-        duration: 200,
-        start: 0.98,
-    };
+    let aspects = game.ttb2e.aspects;
 </script>
 
-<form bind:this={formRoot} class="flex flex-col ttb dark:text-stone-100" autocomplete="off">
+<div class="flex flex-col ttb scrollable">
     <header class="sheet-header flex flex-row gap-2 mb-3">
         <img class="" src="{actor.img}" data-edit="img" title="{actor.name}" height="100" width="100"
              alt="portrait of the character"/>
@@ -81,7 +72,7 @@
 
     <!-- svelte-ignore a11y-missing-attribute -->
     <nav class="sheet-tabs tabs sticky top-0 backdrop-blur-lg">
-        <TabMenu tabs={tabs} onTabChange={onTabChange} currentTab={currentTab}/>
+        <TabMenu tabs={tabs} onTabChange={t => currentTab = t} currentTab={currentTab}/>
     </nav>
 
     <main class="sheet-body size-full">
@@ -101,7 +92,7 @@
             {/if}
         </Tabs>
     </main>
-</form>
+</div>
 
 <style>
     input[name="name"] {

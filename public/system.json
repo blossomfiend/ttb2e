@@ -21,12 +21,14 @@
     }
   ],
   "compatibility": {
-    "minimum": "11",
-    "verified": "11"
+    "minimum": "12",
+    "verified": "12"
   },
   "socket": false,
-  "gridDistance": 1,
-  "gridUnits": "yd",
+  "grid": {
+    "distance": 1,
+    "units": "yd"
+  },
   "primaryTokenAttribute": "wounds",
   "secondaryTokenAttribute": "power"
 }
