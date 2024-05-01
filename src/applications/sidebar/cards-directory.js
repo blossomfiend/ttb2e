@@ -18,8 +18,7 @@ export default class TtbCardsDirectory extends CardsDirectory {
                     const cards = this.collection.get(li.data("documentId"));
                     game.settings.set("ttb2e", "fateDeck", cards.id);
                 },
-            }
-        ]
+            },
+        ];
     }
-
 }

@@ -1,10 +1,10 @@
-import {objMap} from "../../util.js";
+import {objMap} from "../util.js";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class TtbActor extends Actor {
+export default class TtbActor extends Actor {
     constructor(data, context) {
         super(data, context);
     }

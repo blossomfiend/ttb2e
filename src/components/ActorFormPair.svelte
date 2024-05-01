@@ -1,11 +1,10 @@
 <script>
     import FoundryFormPair from "./FoundryFormPair.svelte";
-    import {get} from "../util.js";
 
     export let actor;
     export let name;
     $: id = actor.id;
-    $: value = get(actor, name);
+    $: value = foundry.utils.getProperty(actor, name);
 </script>
 
 <FoundryFormPair idPrefix={id} name={name} value={value} let:labelProps let:inputProps>

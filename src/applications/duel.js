@@ -1,5 +1,6 @@
-import DuelComponent from "../components/DuelComponent.svelte";
+import DuelComponent from "../components/DuelDialog.svelte";
 import SvelteApplicationMixin from "./svelte-application.js";
+import Flip from "../flip.js";
 
 const ApplicationV2 = foundry.applications.api.ApplicationV2;
 
@@ -17,6 +18,10 @@ export default class DuelApplication extends SvelteApplicationMixin(ApplicationV
         },
         form: {
             closeOnSubmit: true,
+            handler: async (event, form, formData) => {
+                let flip = new Flip({}, formData.object);
+                await flip.postFlip();
+            },
         },
         position: {
             width: 360,

@@ -1,6 +1,6 @@
 import {objMap} from "../../util.js";
 
-export default class FatedData extends foundry.abstract.TypeDataModel {
+export default class FatedActorData extends foundry.abstract.TypeDataModel {
     /** @inheritdoc */
     static defineSchema() {
         const fields = foundry.data.fields;

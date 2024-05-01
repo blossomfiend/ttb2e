@@ -8,5 +8,9 @@
     "types": ["talent", "trigger", "pursuit"],
     "weapon": {},
     "spell": {}
+  },
+  "ChatMessage": {
+    "types": ["flip"],
+    "flip": {}
   }
 }

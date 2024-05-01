@@ -1,8 +1,10 @@
 import FatedApplication from "./applications/fated.js";
-import {TtbActor} from "./documents/actor/actor.js";
+import TtbActor from "./documents/actor.js";
 import TTB2E from "./config.js";
-import FatedData from "./data/actor/fated.js";
-import TtbCardsDirectory from "./sidebar/cards.js";
+import FatedActorData from "./data/actor/fated.js";
+import TtbChatMessage from "./documents/chat-message.js";
+import TtbCardsDirectory from "./applications/sidebar/cards-directory.js";
+import FlipChatMessageData from "./data/chat-message/flip.js";
 
 Hooks.once("init", async () => {
     console.log("HI FROM TTB");
@@ -12,18 +14,20 @@ Hooks.once("init", async () => {
 
     // Define custom Document classes
     CONFIG.Actor.documentClass = TtbActor;
-    CONFIG.Actor.dataModels.fated = FatedData;
+    CONFIG.Actor.dataModels.fated = FatedActorData;
     CONFIG.Actor.trackableAttributes = {
         fated: {
             bar: ["wounds"],
             value: [],
         },
     };
+    CONFIG.ChatMessage.documentClass = TtbChatMessage;
+    CONFIG.ChatMessage.dataModels.flip = FlipChatMessageData;
     CONFIG.ui.cards = TtbCardsDirectory;
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("ttb2e", FatedApplication, { types: ["fated"], makeDefault: true });
+    Actors.registerSheet("ttb2e", FatedApplication, {types: ["fated"], makeDefault: true});
 });
 
 Hooks.on("renderTtbCardsDirectory", async (_directory, el, _data) => {
@@ -34,11 +38,32 @@ Hooks.on("renderTtbCardsDirectory", async (_directory, el, _data) => {
     }
 });
 
-Hooks.on("updateSetting", (setting) => {
+Hooks.on("updateSetting", setting => {
     console.log(setting);
     if (setting.key === "ttb2e.fateDeck") {
         ui.cards.render();
     }
+});
+
+Hooks.on("getSceneControlButtons", controls => {
+    console.log(controls);
+    // TODO make this actually do something useful
+    controls.find(group => group.name === "token").tools.push({
+        name: "cardsApp",
+        title: "Cards App",
+        icon: "fa-solid fa-cards",
+        toggle: true,
+        active: game.settings.get("core", NotesLayer.TOGGLE_SETTING),
+        onClick: toggled => game.settings.set("core", NotesLayer.TOGGLE_SETTING, toggled),
+    });
+    // controls.push({
+    //     name: "cardsApp",
+    //     title: "Cards App",
+    //     icon: "fa-solid fa-cards",
+    //     toggle: true,
+    //     active: game.settings.get("core", NotesLayer.TOGGLE_SETTING),
+    //     onClick: toggled => game.settings.set("core", NotesLayer.TOGGLE_SETTING, toggled)
+    // });
 });
 
 function registerSettings() {
