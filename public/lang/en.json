@@ -1,7 +1,8 @@
 {
   "ttb": {
     "ui": {
-      "rank": "Rank"
+      "rank": "Rank",
+      "setAsFateDeck": "Set as Fate Deck"
     },
     "suits": {
       "rams": {
@@ -301,6 +302,11 @@
         "name": "Toughness",
         "description": "The ability to withstand physical abuse."
       }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "fated": "Fated"
     }
   }
 }

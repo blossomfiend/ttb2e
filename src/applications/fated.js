@@ -23,18 +23,14 @@ export default class FatedApplication extends SvelteApplicationMixin(DocumentShe
         },
         form: {
             submitOnChange: true,
-        }
+        },
     };
 
     /**
-     * @param {RenderOptions} options                 Options which configure application rendering behavior
-     * @returns {Promise<ApplicationRenderContext>}   Context data for the render operation
      * @protected
+     * @override
      */
     async _prepareContext(options) {
-        return {
-            actor: this.document,
-        };
+        return { actor: this.document };
     }
-
 }

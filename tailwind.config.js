@@ -3,6 +3,7 @@ const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ["./src/**/*.{html,js,svelte,ts}"],
+    darkMode: ["selector", ".theme-dark"],
     theme: {
         fontFamily: {
             "body": "--font-body",

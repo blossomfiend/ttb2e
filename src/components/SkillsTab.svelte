@@ -3,14 +3,15 @@
     import NumberInput from "./NumberInput.svelte";
     import {localize} from "../util.js";
     import TextSuits from "./TextSuits.svelte";
-    import {DuelApp} from "../applications/duel.js";
+    import DuelApplication from "../applications/duel.js";
 
     export let actor;
     let categories = game.ttb2e.skillCategories;
     $: skills = Object.values(actor.system.skills);
 
     const renderDuel = (skill, aspect) => {
-        const dialog = new Dialog()
+        const dialog = new DuelApplication();
+        dialog.render({ force: true });
     }
 </script>
 

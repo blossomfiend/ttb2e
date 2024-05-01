@@ -1,4 +1,3 @@
-import {SYSTEM_ID} from "../../globals.js";
 import {objMap} from "../../util.js";
 
 export default class FatedData extends foundry.abstract.TypeDataModel {
