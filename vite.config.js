@@ -23,7 +23,6 @@ export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, "dist"),
         sourcemap: true,
-        brotliSize: true,
         emptyOutDir: true,
         lib: {
             entry: path.resolve(__dirname, "src/ttb2e.js"),
