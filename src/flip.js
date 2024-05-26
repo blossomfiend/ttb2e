@@ -36,9 +36,27 @@ export default class Flip {
      */
     data;
 
+    flippedCards;
+
+    async evaluate() {
+        let fateDeck = game.cards.get(game.settings.get("ttb2e", "fateDeck"));
+        let fateDiscard = game.cards.get(game.settings.get("ttb2e", "fateDiscard"));
+        this.flippedCards = await fateDeck.flip(fateDiscard, Math.abs(this.options.fateModifier) + 1);
+        await this.postFlip();
+    }
+
     async postFlip() {
-        const message = await TtbChatMessage.create({
+        let flippedCards = this.flippedCards.map(card => ({
+            value: card.value,
+            suit: card.suit,
+        }));
+        await TtbChatMessage.create({
             type: "flip",
-        }, {});
+            system: {
+                ...this.data,
+                fateModifier: this.options.fateModifier,
+                flippedCards: flippedCards,
+            }
+        });
     }
 }

@@ -2,7 +2,10 @@
   "ttb": {
     "ui": {
       "rank": "Rank",
-      "setAsFateDeck": "Set as Fate Deck"
+      "flip": "Flip",
+      "setAsFateDeck": "Set as Fate Deck",
+      "controlCenter": "Fate Control Center",
+      "duelConfigTitle": "Duel: {skill} + {aspect}"
     },
     "suits": {
       "rams": {

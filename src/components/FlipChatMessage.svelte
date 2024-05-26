@@ -3,8 +3,14 @@
     import InlineFateModifiers from "./InlineFateModifiers.svelte";
     import {localize} from "../util.js";
 
-    const skill = "skills.prestidigitation";
-    const aspect = "intellect";
+    export let skill = null;
+    export let aspect = null;
+    export let flippedCards;
+    export let targetNumber;
+    export let actingValue;
+    export let fateModifier;
+
+    console.log(flippedCards, targetNumber, actingValue, fateModifier);
 
     $: title = (() => {
         let titleElements = [];
@@ -17,65 +23,21 @@
         return titleElements.join(" + ");
     })();
 
-    const flippedCards = [
-        {
-            suit: "masks",
-            value: 13,
-        },
-        {
-            suit: "redJoker",
-            value: 14,
-        },
-        {
-            suit: "crows",
-            value: 4,
-        },
-        {
-            suit: "rams",
-            value: 7,
-        },
-    ];
-    /*
-    const targetNumber = null;
-    /*/
-    const targetNumber = {
-        value: 10,
-        suits: {
+
+    $: canCheat = fateModifier >= 0 && !flippedCards.some(c => c.suit === "blackJoker");
+
+    function getDuelTotal(card) {
+        let suits = actingValue != null ? {...actingValue.suits} : {
             rams: 0,
             crows: 0,
             tomes: 0,
-            masks: 1,
-        },
-    };
-    //*/
-    const actingValue = {
-        value: 3,
-        suits: {
-            rams: 0,
-            crows: 0,
-            tomes: 1,
             masks: 0,
-        },
-    };
-    const fateModifier = -3;
-
-    function getCardName(card) {
-        if (card.suit === "blackJoker")
-            return "Black Joker";
-        if (card.suit === "redJoker")
-            return "Red Joker";
-        return `${card.value} of ${card.suit}`;
-    }
-
-    function getDuelTotal(card) {
-        let suits = {
-            ...actingValue.suits
         };
         if (card.suit !== "redJoker" && card.suit !== "blackJoker") {
             suits[card.suit] += 1;
         }
         return {
-            value: card.value + actingValue.value,
+            value: card.value + (actingValue?.value ?? 0),
             suits
         };
     }
@@ -107,12 +69,12 @@
     }
 </script>
 
-<div class="message-content">
-    <div class="text-center text-16 mb-1">
+<div class="message-content flex flex-col gap-2">
+    <div class="text-center text-16">
         {title}
         <InlineFateModifiers {fateModifier}/>
     </div>
-    <div class="flex flex-row justify-evenly mb-2">
+    <div class="flex flex-row justify-evenly">
         {#if targetNumber != null}
             <div class="flex flex-col items-center">
                 <div>
@@ -142,17 +104,17 @@
             {@const canBeChosen = canCardBeChosen(flippedCard)}
             {@const higherThanTN = doesCardMatchTN(flippedCard, duelTotal)}
             {@const valueDifference = duelTotal.value - targetNumber?.value ?? 0}
-            {@const severity = Math.max(1, Math.floor((flippedCard.value - 1) / 5) + 1)}
+            {@const severity = Math.floor((flippedCard.value - 1) / 5) + 1}
             <div>
                 <div class="w-16 h-24 leading-none bg-white rounded grid grid-cols-1 grid-rows-1"
-                    class:shadow-md={canBeChosen}
-                    class:shadow-sm={!canBeChosen}>
+                     class:shadow-md={canBeChosen}
+                     class:shadow-sm={!canBeChosen}>
                     <div class="row-start-1 row-end-1 col-start-1 col-end-1 flex flex-col justify-between rounded"
-                        class:bg-slate-100={targetNumber == null}
-                        class:bg-lime-100={targetNumber != null && higherThanTN}
-                        class:bg-red-100={targetNumber != null && !higherThanTN}>
-                        <div class="grow flex flex-row justify-between rounded bg-white"
-                             class:text-red-600={flippedCard.suit === "redJoker"}>
+                         class:bg-slate-100={targetNumber == null}
+                         class:bg-lime-100={targetNumber != null && higherThanTN}
+                         class:bg-red-100={targetNumber != null && !higherThanTN}>
+                        <div class="grow flex flex-row justify-between rounded shadow-sm bg-white"
+                             class:text-red-700={flippedCard.suit === "redJoker"}>
                             <div class="self-start flex flex-col items-center p-1">
                                 <div>{flippedCard.value}</div>
                                 <div>
@@ -169,20 +131,21 @@
                                 {/each}
                             </div>
                         </div>
-                        <div class="self-end flex flex-col items-end rounded-b w-full p-1 pt-1.5">
-                            {#if targetNumber != null}
-                                <div class="text-text-dark-secondary text-13 italic pr-1">
-                                    {`${valueDifference > 0 ? "+" : ""}${valueDifference}`}
+                        {#if targetNumber != null || actingValue != null}
+                            <div class="self-end flex flex-col items-end rounded-b w-full p-1 pt-1.5">
+                                {#if targetNumber != null}
+                                    <div class="text-text-dark-secondary text-13 italic pr-1">
+                                        {`${valueDifference > 0 ? "+" : ""}${valueDifference}`}
+                                    </div>
+                                {/if}
+                                <div class:text-lime-900={targetNumber != null && higherThanTN}
+                                     class:text-red-900={targetNumber != null && !higherThanTN}>
+                                    <span>{duelTotal.value}</span>
+                                    <span><TextSuits suits={duelTotal.suits}/></span>
+                                    {#if flippedCard.suit === "redJoker"}<span>J</span>{/if}
                                 </div>
-                            {/if}
-                            <!--<div class="text-text-dark-secondary text-13 small-caps">Total</div>-->
-                            <div class:text-lime-900={targetNumber != null && higherThanTN}
-                                 class:text-red-900={targetNumber != null && !higherThanTN}>
-                                <span>{duelTotal.value}</span>
-                                <span><TextSuits suits={duelTotal.suits}/></span>
-                                {#if flippedCard.suit === "redJoker"}<span>J</span>{/if}
                             </div>
-                        </div>
+                        {/if}
                     </div>
                     {#if !canBeChosen}
                         <div class="row-start-1 row-end-1 col-start-1 col-end-1 rounded bg-slate-700/60"></div>
@@ -191,5 +154,7 @@
             </div>
         {/each}
     </div>
-
+<!--    <div>-->
+<!--        <button class="bg-black/10 my-1" disabled={!canCheat}>{canCheat ? "Cheat!" : "No cheating."}</button>-->
+<!--    </div>-->
 </div>

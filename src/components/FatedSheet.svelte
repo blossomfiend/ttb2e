@@ -70,7 +70,7 @@
     </header>
 
     <!-- svelte-ignore a11y-missing-attribute -->
-    <nav class="sheet-tabs tabs sticky top-0 backdrop-blur-lg">
+    <nav class="sheet-tabs tabs sticky top-0 backdrop-blur-lg dark:bg-[var(--background)]">
         <TabMenu tabs={tabs} onTabChange={t => currentTab = t} currentTab={currentTab}/>
     </nav>
 

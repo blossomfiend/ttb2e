@@ -6,6 +6,8 @@ import TtbChatMessage from "./documents/chat-message.js";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.js";
 import FlipChatMessageData from "./data/chat-message/flip.js";
 import FlipChatMessage from "./components/FlipChatMessage.svelte";
+import ControlCenterApplication from "./applications/control-center.js";
+import TtbCards from "./documents/cards.js";
 
 Hooks.once("init", async () => {
     game.ttb2e = TTB2E;
@@ -24,6 +26,7 @@ Hooks.once("init", async () => {
     CONFIG.ChatMessage.documentClass = TtbChatMessage;
     CONFIG.ChatMessage.dataModels.flip = FlipChatMessageData;
     CONFIG.ui.cards = TtbCardsDirectory;
+    CONFIG.Cards.documentClass = TtbCards;
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
@@ -50,14 +53,12 @@ Hooks.on("updateSetting", setting => {
 });
 
 Hooks.on("getSceneControlButtons", controls => {
-    //TODO)) make this actually do something useful
     controls.find(group => group.name === "token").tools.push({
         name: "cardsApp",
         title: "Cards App",
         icon: "fa-solid fa-cards",
-        toggle: true,
-        active: game.settings.get("core", NotesLayer.TOGGLE_SETTING),
-        onClick: toggled => game.settings.set("core", NotesLayer.TOGGLE_SETTING, toggled),
+        button: true,
+        onClick: () => (new ControlCenterApplication()).render(true),
     });
     // controls.push({
     //     name: "cardsApp",
@@ -70,12 +71,12 @@ Hooks.on("getSceneControlButtons", controls => {
 });
 
 Hooks.on("renderChatMessage", (message, html, data) => {
-   if (message.type === "flip") {
-       new FlipChatMessage({
-           target: html[0],
-           props: {},
-       });
-   }
+    if (message.type === "flip") {
+        new FlipChatMessage({
+            target: html[0],
+            props: message.system,
+        });
+    }
 });
 
 function registerSettings() {

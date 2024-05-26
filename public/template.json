@@ -12,5 +12,9 @@
   "ChatMessage": {
     "types": ["flip"],
     "flip": {}
+  },
+  "Cards": {
+    "types": ["temporary"],
+    "temporary": {}
   }
 }

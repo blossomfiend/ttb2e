@@ -1,17 +1,17 @@
 import DuelComponent from "../components/DuelDialog.svelte";
 import SvelteApplicationMixin from "./svelte-application.js";
-import Flip from "../flip.js";
+import {localize} from "../util.js";
 
 export default class DuelApplication extends SvelteApplicationMixin(foundry.applications.api.ApplicationV2) {
+    #actor;
     #aspect;
     #skill;
-    #av;
 
-    constructor(options = {}) {
+    constructor(actor, {aspect, skill} = {}) {
         super();
-        this.#aspect = options.aspect;
-        this.#skill = options.skill;
-        this.#av = options.av;
+        this.#actor = actor;
+        this.#aspect = aspect;
+        this.#skill = skill;
     }
 
     static SVELTE_COMPONENT = DuelComponent;
@@ -20,18 +20,10 @@ export default class DuelApplication extends SvelteApplicationMixin(foundry.appl
      * @override
      */
     static DEFAULT_OPTIONS = {
-        tag: "form",
+        tag: "div",
         window: {
             contentClasses: ["standard-form"],
             icon: "fa-regular fa-cards",
-        },
-        form: {
-            closeOnSubmit: true,
-            handler: async (event, form, formData) => {
-                const fateModifier = +event.submitter.dataset.fateModifier;
-                let flip = new Flip({fateModifier}, formData.object);
-                await flip.postFlip();
-            },
         },
         position: {
             width: 480,
@@ -45,10 +37,10 @@ export default class DuelApplication extends SvelteApplicationMixin(foundry.appl
      */
     async _prepareContext(options) {
         return {
-            actor: this.document,
+            close: () => this.close(),
+            actor: this.#actor,
             aspect: this.#aspect,
             skill: this.#skill,
-            av: this.#av,
         };
     }
 
@@ -56,6 +48,9 @@ export default class DuelApplication extends SvelteApplicationMixin(foundry.appl
      * @override
      */
     get title() {
-        return "Flip";
+        return localize("ttb.ui.duelConfigTitle", {
+            skill: localize(`ttb.${this.#skill}.name`),
+            aspect: localize(`ttb.aspects.${this.#aspect}.name`),
+        });
     }
 }
