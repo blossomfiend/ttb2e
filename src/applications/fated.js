@@ -1,12 +1,11 @@
 import SvelteApplicationMixin from "./svelte-application.js";
 import FatedSheet from "../components/FatedSheet.svelte";
 
-const DocumentSheetV2 = foundry.applications.api.DocumentSheetV2;
 /**
- * @extends DocumentSheetV2
+ * @extends foundry.applications.sheets.ActorSheetV2
  * @mixes SvelteApplication
  */
-export default class FatedApplication extends SvelteApplicationMixin(DocumentSheetV2) {
+export default class FatedApplication extends SvelteApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
     /**
      * @override
      */
@@ -24,6 +23,10 @@ export default class FatedApplication extends SvelteApplicationMixin(DocumentShe
         form: {
             submitOnChange: true,
         },
+        position: {
+            height: 800,
+            width: 600,
+        },
     };
 
     /**
@@ -31,6 +34,9 @@ export default class FatedApplication extends SvelteApplicationMixin(DocumentShe
      * @override
      */
     async _prepareContext(options) {
-        return { actor: this.document };
+        return {
+            actor: this.actor,
+            token: this.token,
+        };
     }
 }

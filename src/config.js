@@ -298,11 +298,6 @@ const TTB2E = {
             category: "training",
         },
         {
-            name: "acrobatics",
-            aspects: ["grace"],
-            category: "training",
-        },
-        {
             name: "athletics",
             aspects: ["might"],
             category: "training",

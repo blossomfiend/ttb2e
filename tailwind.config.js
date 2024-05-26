@@ -43,7 +43,7 @@ export default {
                 "foundry": "0 0 6px var(--tw-shadow-color)",
             },
             height: {
-                "texticon": "1em",
+                "texticon": "1.4cap",
             },
             colors: {
                 "warm-1": "var(--color-warm-1)",

@@ -5,9 +5,9 @@ import FatedActorData from "./data/actor/fated.js";
 import TtbChatMessage from "./documents/chat-message.js";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.js";
 import FlipChatMessageData from "./data/chat-message/flip.js";
+import FlipChatMessage from "./components/FlipChatMessage.svelte";
 
 Hooks.once("init", async () => {
-    console.log("HI FROM TTB");
     game.ttb2e = TTB2E;
 
     registerSettings();
@@ -36,18 +36,21 @@ Hooks.on("renderTtbCardsDirectory", async (_directory, el, _data) => {
         el.find(`li.directory-item[data-document-id="${fateDeckId}"] .entry-name>a`)
             .prepend('<i class="fa-solid fa-bookmark"></i> ');
     }
+    const fateDiscardId = game.settings.get("ttb2e", "fateDiscard");
+    if (fateDiscardId !== "") {
+        el.find(`li.directory-item[data-document-id="${fateDiscardId}"] .entry-name>a`)
+            .prepend('<i class="fa-solid fa-bookmark"></i> ');
+    }
 });
 
 Hooks.on("updateSetting", setting => {
-    console.log(setting);
-    if (setting.key === "ttb2e.fateDeck") {
+    if (setting.key === "ttb2e.fateDeck" || setting.key === "ttb2e.fateDiscard") {
         ui.cards.render();
     }
 });
 
 Hooks.on("getSceneControlButtons", controls => {
-    console.log(controls);
-    // TODO make this actually do something useful
+    //TODO)) make this actually do something useful
     controls.find(group => group.name === "token").tools.push({
         name: "cardsApp",
         title: "Cards App",
@@ -66,10 +69,28 @@ Hooks.on("getSceneControlButtons", controls => {
     // });
 });
 
+Hooks.on("renderChatMessage", (message, html, data) => {
+   if (message.type === "flip") {
+       new FlipChatMessage({
+           target: html[0],
+           props: {},
+       });
+   }
+});
+
 function registerSettings() {
     game.settings.register("ttb2e", "fateDeck", {
         name: "Fate Deck",
         hint: "The ID of the fate deck used.",
+        scope: "world",
+        config: true,
+        type: String,
+        default: "",
+    });
+
+    game.settings.register("ttb2e", "fateDiscard", {
+        name: "Fate Deck Discard Pile",
+        hint: "The ID of the discard pile for the fate deck.",
         scope: "world",
         config: true,
         type: String,

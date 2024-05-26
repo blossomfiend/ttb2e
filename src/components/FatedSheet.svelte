@@ -8,7 +8,6 @@
     import AttributesTab from "./AttributesTab.svelte";
 
     export let actor;
-    console.log(actor);
     const rest = $$restProps;
 
     $: system = actor.system;

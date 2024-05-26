@@ -2,9 +2,18 @@ import DuelComponent from "../components/DuelDialog.svelte";
 import SvelteApplicationMixin from "./svelte-application.js";
 import Flip from "../flip.js";
 
-const ApplicationV2 = foundry.applications.api.ApplicationV2;
+export default class DuelApplication extends SvelteApplicationMixin(foundry.applications.api.ApplicationV2) {
+    #aspect;
+    #skill;
+    #av;
 
-export default class DuelApplication extends SvelteApplicationMixin(ApplicationV2) {
+    constructor(options = {}) {
+        super();
+        this.#aspect = options.aspect;
+        this.#skill = options.skill;
+        this.#av = options.av;
+    }
+
     static SVELTE_COMPONENT = DuelComponent;
 
     /**
@@ -19,12 +28,13 @@ export default class DuelApplication extends SvelteApplicationMixin(ApplicationV
         form: {
             closeOnSubmit: true,
             handler: async (event, form, formData) => {
-                let flip = new Flip({}, formData.object);
+                const fateModifier = +event.submitter.dataset.fateModifier;
+                let flip = new Flip({fateModifier}, formData.object);
                 await flip.postFlip();
             },
         },
         position: {
-            width: 360,
+            width: 480,
             height: "auto"
         },
     };
@@ -36,6 +46,9 @@ export default class DuelApplication extends SvelteApplicationMixin(ApplicationV
     async _prepareContext(options) {
         return {
             actor: this.document,
+            aspect: this.#aspect,
+            skill: this.#skill,
+            av: this.#av,
         };
     }
 
@@ -43,6 +56,6 @@ export default class DuelApplication extends SvelteApplicationMixin(ApplicationV
      * @override
      */
     get title() {
-        return "Roll";
+        return "Flip";
     }
 }

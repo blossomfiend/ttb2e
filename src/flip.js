@@ -1,8 +1,16 @@
 /**
  * @typedef {Object} FlipOptions
+ * @property {-3|-2|-1|0|1|2|3} fateModifier
+ */
+
+/**
+ * @typedef {Object} FlipData
+ * @property {SuitedValue|null} targetNumber
+ * @property {SuitedValue|null} actingValue
  */
 
 import "./components/FlipChatMessage.svelte";
+import TtbChatMessage from "./documents/chat-message.js";
 
 /**
  *
@@ -11,7 +19,7 @@ export default class Flip {
     /**
      *
      * @param {FlipOptions} options This flips definition
-     * @param {Object} data The roll data context of this flip
+     * @param {FlipData} data The roll data context of this flip
      */
     constructor(options, data) {
         this.options = options;
@@ -24,14 +32,13 @@ export default class Flip {
     options;
 
     /**
-     * @type {Object}
+     * @type {FlipData}
      */
     data;
 
     async postFlip() {
-        const message = await ChatMessage.create({
+        const message = await TtbChatMessage.create({
             type: "flip",
         }, {});
-        logger.log(message);
     }
 }

@@ -9,6 +9,7 @@
 export default function SvelteApplicationMixin(BaseApplication) {
     /**
      * @extends {ApplicationV2}
+     * @mixin
      */
     class SvelteApplication extends BaseApplication {
         /**
@@ -43,8 +44,7 @@ export default function SvelteApplicationMixin(BaseApplication) {
          * @override
          */
         _replaceHTML(result, content, options) {
-            console.log(result);
-            if (this.#svelteComponent === null) {
+            if (options.isFirstRender) {
                 this.#svelteComponent = new this.constructor.SVELTE_COMPONENT({
                     target: content,
                     props: result,
@@ -58,9 +58,8 @@ export default function SvelteApplicationMixin(BaseApplication) {
          * @protected
          * @override
          */
-        async _preClose(options) {
+        _onClose(options) {
             this.#svelteComponent.$destroy();
-            this.#svelteComponent = null;
         }
     }
 

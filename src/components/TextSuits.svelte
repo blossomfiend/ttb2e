@@ -1,6 +1,4 @@
 <script>
-    import Suit from "./Icons/Suit.svelte";
-
     /**
      * @type {Suits}
      */
@@ -11,5 +9,5 @@
 </script>
 
 {#each displayedSuits as suit}
-    <Suit suit={suit} classes="h-texticon inline align-bottom"/>
+    <i class={`ttb-icon-${suit}`}/>
 {/each}

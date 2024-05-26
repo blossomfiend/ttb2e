@@ -10,8 +10,7 @@
     $: skills = Object.values(actor.system.skills);
 
     const renderDuel = (skill, aspect) => {
-        const dialog = new DuelApplication();
-        dialog.render({ force: true });
+        new DuelApplication({skill, aspect}).render({force: true});
     }
 </script>
 
@@ -42,7 +41,7 @@
                             {#each skill.aspects as aspect (aspect)}
                                 <div
                                     class="flex flex-col gap-0 items-center hover:drop-shadow-red hover:cursor-pointer min-w-10 h-full justify-center"
-                                    on:click={() => renderDuel(skill, aspect)}>
+                                    on:click={() => renderDuel(skill.name, aspect)}>
                                     <div class="leading-none">
                                         <span>{ skill.av[aspect].value }</span>
                                         <TextSuits suits={skill.av[aspect].suits}/>
