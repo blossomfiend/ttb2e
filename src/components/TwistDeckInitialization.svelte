@@ -15,6 +15,8 @@
                 sort: value,
                 value,
                 suit,
+                faces: [{}],
+                face: 0,
             }));
         });
         console.log(toCreate);
