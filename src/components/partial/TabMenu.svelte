@@ -9,7 +9,11 @@
 </script>
 
 {#each tabs as tab}
-    <a class={`overflow-x-hidden text-clip overflow-y-visible p-2${(idFunction(currentTab) === idFunction(tab)) ? ' active' : ''}`} on:click={handleClick(tab)}>{nameFunction(tab)}</a>
+    <a class="overflow-x-hidden text-clip overflow-y-visible p-2"
+       class:active={idFunction(currentTab) === idFunction(tab)}
+       on:click={handleClick(tab)}>
+        {nameFunction(tab)}
+    </a>
 {/each}
 
 <style>

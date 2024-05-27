@@ -16,3 +16,9 @@ export function objMap(obj, func) {
  * @return {string}
  */
 export let localize = (key, data = {}) => game.i18n.format(key, data);
+
+export function localizeCardName({value, suit}) {
+    if (suit === "redJoker" || suit === "blackJoker") return localize(`ttb.cardNames.${suit}`);
+    const localizedSuit = localize(`ttb.suits.${suit}.name`);
+    return localize(`ttb.cardNames.regular`, {value, suit: localizedSuit});
+}

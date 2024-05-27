@@ -23,6 +23,11 @@
         "name": "Masks"
       }
     },
+    "cardNames": {
+      "regular": "{value} of {suit}",
+      "redJoker": "Red Joker",
+      "blackJoker": "Black Joker"
+    },
     "aspects": {
       "might": {
         "name": "Might"
@@ -306,6 +311,24 @@
       "toughness": {
         "name": "Toughness",
         "description": "The ability to withstand physical abuse."
+      }
+    },
+    "suitRoles": {
+      "defining": {
+        "name": "Defining Suit",
+        "hint": "This suit determines which of your cards will have values 1, 5, 9, and 13."
+      },
+      "ascendant": {
+        "name": "Ascendant Suit",
+        "hint": "This suit determines which of your cards will have values 4, 8, and 12."
+      },
+      "center": {
+        "name": "Center Suit",
+        "hint": "This suit determines which of your cards will have values 3, 7, and 11."
+      },
+      "descendant": {
+        "name": "Descendant Suit",
+        "hint": "This suit determines which of your cards will have values 2, 6, and 10."
       }
     }
   },

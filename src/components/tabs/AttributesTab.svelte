@@ -4,6 +4,7 @@
     import TextSuits from "../partial/TextSuits.svelte";
     import SkillConfigApplication from "../../applications/skill-config.js";
     import DuelApplication from "../../applications/duel.js";
+    import TwistDeckInitApplication from "../../applications/twist-deck-init.js";
 
     export let actor;
     $: system = actor.system;

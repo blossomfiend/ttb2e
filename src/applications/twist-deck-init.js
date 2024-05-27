@@ -10,7 +10,7 @@ export default class TwistDeckInitApplication extends SvelteApplicationMixin(fou
             contentClasses: ["standard-form"],
         },
         position: {
-            width: 300,
+            width: 480,
         },
     };
 

@@ -333,6 +333,24 @@ const TTB2E = {
             category: "training",
         },
     ],
+    suitRoles: [
+        {
+            name: "defining",
+            values: [1, 5, 9, 13],
+        },
+        {
+            name: "ascendant",
+            values: [4, 8, 12],
+        },
+        {
+            name: "center",
+            values: [3, 7, 11],
+        },
+        {
+            name: "descendant",
+            values: [2, 6, 10],
+        },
+    ],
 };
 
 export default TTB2E;

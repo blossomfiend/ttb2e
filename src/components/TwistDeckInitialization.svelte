@@ -1,50 +1,52 @@
 <script>
-    import {localize} from "../util.js";
+    import {localize, localizeCardName} from "../util.js";
 
     export let document;
-    export let close;
+    export let close = () => {};
 
-    let roles = [
-        {
-            name: "defining",
-            cards: [1, 5, 9, 13],
-        },
-        {
-            name: "ascendant",
-            cards: [4, 8, 12],
-        },
-        {
-            name: "center",
-            cards: [3, 7, 11],
-        },
-        {
-            name: "descendant",
-            cards: [2, 6, 10],
-        },
-    ]
+    let suitRoles = {};
 
-    function submit() {
-
+    async function submit() {
+        console.log(suitRoles);
+        const toCreate = game.ttb2e.suitRoles.flatMap(({name: suitRole, values}) => {
+            const suit = suitRoles[suitRole];
+            return values.map(value => ({
+                name: `${localizeCardName({value, suit})} (${document.name})`,
+                sort: value,
+                value,
+                suit,
+            }));
+        });
+        console.log(toCreate);
+        const twistDeck = document.system.cards.twistDeck;
+        const toDelete = twistDeck.cards.map(card => card.id);
+        await Promise.all([
+            twistDeck.deleteEmbeddedDocuments("Card", toDelete),
+            twistDeck.createEmbeddedDocuments("Card", toCreate),
+        ]);
+        close();
     }
 </script>
 
 <form on:submit|preventDefault class="standard-form">
-    <div class="form-group">
-        <label>Defining Suit</label>
-        <div class="form-fields">
-            <select bind:value={definingSuit}>
-                {#each Object.keys(game.ttb2e.suits) as suit}
-                    <option value={suit}>{localize(`ttb.suits.${suit}.name`)}</option>
-                {/each}
-            </select>
+    {#each game.ttb2e.suitRoles as suitRole}
+        <div class="form-group">
+            <label>{localize(`ttb.suitRoles.${suitRole.name}.name`)}</label>
+            <div class="form-fields">
+                <select bind:value={suitRoles[suitRole.name]}>
+                    {#each Object.keys(game.ttb2e.suits) as suit}
+                        <option value={suit}>{localize(`ttb.suits.${suit}.name`)}</option>
+                    {/each}
+                </select>
+            </div>
+            <p class="hint">
+                {localize(`ttb.suitRoles.${suitRole.name}.hint`)}
+            </p>
         </div>
-        <p class="hint">
-            This suit will be on the cards with values 1, 5, 9, and 13.
-        </p>
-    </div>
+    {/each}
     <footer>
         <button on:click={submit}>
-            Initialize
+            Replace Twist Deck
         </button>
     </footer>
 </form>
