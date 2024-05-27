@@ -7,11 +7,11 @@ export default class DuelApplication extends SvelteApplicationMixin(foundry.appl
     #aspect;
     #skill;
 
-    constructor(actor, {aspect, skill} = {}) {
-        super();
-        this.#actor = actor;
-        this.#aspect = aspect;
-        this.#skill = skill;
+    constructor(options = {}) {
+        super(options);
+        this.#actor = options.actor;
+        this.#aspect = options.aspect;
+        this.#skill = options.skill;
     }
 
     static SVELTE_COMPONENT = DuelComponent;
@@ -48,9 +48,6 @@ export default class DuelApplication extends SvelteApplicationMixin(foundry.appl
      * @override
      */
     get title() {
-        return localize("ttb.ui.duelConfigTitle", {
-            skill: localize(`ttb.${this.#skill}.name`),
-            aspect: localize(`ttb.aspects.${this.#aspect}.name`),
-        });
+        return localize("ttb.ui.duelConfigTitle");
     }
 }

@@ -2,6 +2,8 @@
     import NumberInput from "./NumberInput.svelte";
     import {localize} from "../util.js";
     import TextSuits from "./TextSuits.svelte";
+    import SkillConfigApplication from "../applications/skill-config.js";
+    import DuelApplication from "../applications/duel.js";
 
     export let actor;
     $: system = actor.system;
@@ -19,24 +21,28 @@
         {#each aspects as aspect}
             <label class="flex flex-row gap-1">
                 <span class="flex-1">{localize(`ttb.aspects.${aspect.name}.name`)}</span>
-                <span class="w-8">
+                <span class="w-12">
                     <NumberInput name={`system.aspects.${aspect.name}`} value={aspect.value}/>
                 </span>
             </label>
         {/each}
         <hr/>
         {#each derivedAspects as derivedAspect}
-            <label class="flex flex-row items-center gap-1">
-                <span class="flex-1">{localize(`ttb.derivedAspects.${derivedAspect.name}.name`)}</span>
-                <span class="w-8">
-                    <NumberInput name={`system.derivedAspects.${derivedAspect.name}.value.value`}
-                                 value={derivedAspect.value.value} disabled/>
-                </span>
-                <TextSuits suits={derivedAspect.value.suits}/>
-            </label>
+            <div class="w-full flex flex-row items-center gap-1 justify-between">
+                <div class="flex-1 hover:text-shadow-red hover:cursor-pointer"
+                     on:click={() => new SkillConfigApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
+                    {localize(`ttb.derivedAspects.${derivedAspect.name}.name`)}
+                </div>
+                <div class="w-12 text-center hover:text-shadow-red hover:cursor-pointer"
+                    on:click={() => new DuelApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
+                    {derivedAspect.value.value}
+                    <TextSuits suits={derivedAspect.value.suits}/>
+                </div>
+            </div>
         {/each}
     </div>
     <div>
         Fate steps here
+        <button>Initialize Twist Deck</button>
     </div>
 </div>

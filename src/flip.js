@@ -52,11 +52,16 @@ export default class Flip {
         }));
         await TtbChatMessage.create({
             type: "flip",
+            style: CONST.CHAT_MESSAGE_STYLES.OTHER,
+            author: game.user.id,
+            speaker: {
+                actor: this.data?.actor ?? undefined,
+            },
             system: {
                 ...this.data,
                 fateModifier: this.options.fateModifier,
                 flippedCards: flippedCards,
-            }
+            },
         });
     }
 }

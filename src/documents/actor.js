@@ -216,10 +216,10 @@ export default class TtbActor extends Actor {
     getActingValue(skill, aspect) {
         const [category, skillName] = skill.split(".");
         if (category === "skills") {
-            const aspectValue = this.system.aspects[aspect];
-            const theSkill = this.system.skills[skillName];
-            const baseValue = theSkill.override ?? (aspectValue + theSkill.rank);
-            return combine(sum, suited(baseValue), theSkill.bonus);
+            return this.system.skills[skillName].av[aspect];
+        }
+        if (category === "derivedAspects") {
+            return this.system.derivedAspects[skillName].value
         }
         return null;
     }

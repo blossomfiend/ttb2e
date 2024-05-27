@@ -1,7 +1,7 @@
 <script>
     /** @type number */
     export let fateModifier;
-    let className;
+    let className = "";
     export {className as class};
     $: modifierCount = Math.abs(fateModifier);
     $: modifierType = fateModifier > 0 ? "plus" : "minus";

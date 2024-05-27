@@ -10,8 +10,6 @@
     export let actingValue;
     export let fateModifier;
 
-    console.log(flippedCards, targetNumber, actingValue, fateModifier);
-
     $: title = (() => {
         let titleElements = [];
         if (skill != null) {
@@ -19,6 +17,9 @@
         }
         if (aspect != null) {
             titleElements.push(localize(`ttb.aspects.${aspect}.name`));
+        }
+        if (titleElements.length === 0) {
+            titleElements.push(localize(`ttb.ui.flip`));
         }
         return titleElements.join(" + ");
     })();

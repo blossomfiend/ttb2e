@@ -1,8 +1,9 @@
 <script>
+    export let name = "";
     export let value = null;
 
-    let numberValue = "";
-    let suits = {
+    let numberValue = value?.value ?? "";
+    let suits = value?.suits ?? {
         rams: 0,
         crows: 0,
         tomes: 0,
@@ -33,17 +34,18 @@
 </script>
 
 <div class="flex flex-col gap-2">
-    <input type="number" name="targetNumber.value" on:keydown={inputKeydown} bind:value={numberValue}/>
+    <input type="number" name={`${name}.value`} on:keydown={inputKeydown} bind:value={numberValue}/>
     <div class="flex flex-row gap-2 justify-between">
         {#each Object.entries(suits) as [suit, count]}
             <div class="grow flex flex-col items-center gap-1">
                 <button class="w-full"
-                        on:click={() => {suits = {...suits, [suit]: suits[suit] + 1}}}>
+                        on:click|preventDefault={() => {suits = {...suits, [suit]: suits[suit] + 1}}}>
                     +
                 </button>
                 <div>{count} <i class={`ttb-icon-${suit}`}/></div>
+                <input type="hidden" name={`${name}.suits.${suit}`} value={count}/>
                 <button
-                    on:click={() => {suits = {...suits, [suit]: Math.max(0, suits[suit] - 1)}}}
+                    on:click|preventDefault={() => {suits = {...suits, [suit]: Math.max(0, suits[suit] - 1)}}}
                     disabled={suits[suit] <= 0}>-
                 </button>
             </div>

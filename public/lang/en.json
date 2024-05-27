@@ -5,7 +5,8 @@
       "flip": "Flip",
       "setAsFateDeck": "Set as Fate Deck",
       "controlCenter": "Fate Control Center",
-      "duelConfigTitle": "Duel: {skill} + {aspect}"
+      "duelConfigTitle": "Duel Configuration",
+      "skillConfigTitle": "{name} Skill Config: {skill}"
     },
     "suits": {
       "rams": {

@@ -4,13 +4,18 @@
     import {localize} from "../util.js";
     import TextSuits from "./TextSuits.svelte";
     import DuelApplication from "../applications/duel.js";
+    import SkillConfigApplication from "../applications/skill-config.js";
 
     export let actor;
     let categories = game.ttb2e.skillCategories;
     $: skills = Object.values(actor.system.skills);
 
     $: renderDuel = (skill, aspect) => {
-        new DuelApplication(actor, {skill, aspect}).render({force: true});
+        new DuelApplication({actor, skill, aspect}).render({force: true});
+    }
+
+    $: renderSkillConfig = (skill) => {
+        new SkillConfigApplication({actor, skill}).render({force: true});
     }
 </script>
 
@@ -33,8 +38,10 @@
                                 <span
                                     class="text-13 leading-none small-caps text-text-dark-secondary dark:text-stone-300">{localize("ttb.ui.rank")}</span>
                             </label>
-                            <div class="p-1 hover:text-shadow-red truncate">
+                            <div class="p-1 hover:text-shadow-red hover:cursor-pointer truncate"
+                                on:click={() => renderSkillConfig(`skills.${skill.name}`)}>
                                 { localize(`ttb.skills.${skill.name}.name`) }
+                                {#if skill.override != null}*{/if}
                             </div>
                         </div>
                         <div class="flex flex-row gap-2 h-full">
