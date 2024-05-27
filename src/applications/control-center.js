@@ -1,8 +1,8 @@
 import SvelteApplicationMixin from "./svelte-application.js";
-import ControlCenterApp from "../components/ControlCenterApp.svelte";
+import ControlCenter from "../components/ControlCenter.svelte";
 
 export default class ControlCenterApplication extends SvelteApplicationMixin(foundry.applications.api.ApplicationV2) {
-    static SVELTE_COMPONENT = ControlCenterApp;
+    static SVELTE_COMPONENT = ControlCenter;
     static DEFAULT_OPTIONS = {
         id: "card-control-center",
         tag: "aside",

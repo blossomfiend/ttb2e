@@ -1,8 +1,8 @@
 <svelte:options accessors={true}/>
 <script>
-    import InlineFateModifiers from "./InlineFateModifiers.svelte";
+    import InlineFateModifiers from "./partial/InlineFateModifiers.svelte";
     import Flip from "../flip.js";
-    import SuitedNumberFormField from "./SuitedNumberFormField.svelte";
+    import SuitedNumberFormField from "./partial/SuitedNumberFormField.svelte";
 
     export let actor = null;
     export let skill = null;

@@ -1,5 +1,5 @@
 <script>
-    import SuitedNumberFormField from "./SuitedNumberFormField.svelte";
+    import SuitedNumberFormField from "./partial/SuitedNumberFormField.svelte";
 
     export let actor;
     export let skill;

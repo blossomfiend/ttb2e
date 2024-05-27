@@ -1,6 +1,6 @@
 <script>
-    import TextSuits from "./TextSuits.svelte";
-    import InlineFateModifiers from "./InlineFateModifiers.svelte";
+    import TextSuits from "./partial/TextSuits.svelte";
+    import InlineFateModifiers from "./partial/InlineFateModifiers.svelte";
     import {localize} from "../util.js";
 
     export let skill = null;

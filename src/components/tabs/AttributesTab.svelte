@@ -1,9 +1,9 @@
 <script>
-    import NumberInput from "./NumberInput.svelte";
-    import {localize} from "../util.js";
-    import TextSuits from "./TextSuits.svelte";
-    import SkillConfigApplication from "../applications/skill-config.js";
-    import DuelApplication from "../applications/duel.js";
+    import NumberInput from "../partial/NumberInput.svelte";
+    import {localize} from "../../util.js";
+    import TextSuits from "../partial/TextSuits.svelte";
+    import SkillConfigApplication from "../../applications/skill-config.js";
+    import DuelApplication from "../../applications/duel.js";
 
     export let actor;
     $: system = actor.system;
@@ -34,7 +34,7 @@
                     {localize(`ttb.derivedAspects.${derivedAspect.name}.name`)}
                 </div>
                 <div class="w-12 text-center hover:text-shadow-red hover:cursor-pointer"
-                    on:click={() => new DuelApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
+                     on:click={() => new DuelApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
                     {derivedAspect.value.value}
                     <TextSuits suits={derivedAspect.value.suits}/>
                 </div>
@@ -43,6 +43,8 @@
     </div>
     <div>
         Fate steps here
-        <button>Initialize Twist Deck</button>
+        <button on:click={() => new TwistDeckInitApplication({document: actor}).render({force: true})}>
+            Initialize Twist Deck
+        </button>
     </div>
 </div>

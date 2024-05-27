@@ -1,11 +1,11 @@
 <svelte:options accessors={true}/>
 <script>
     import "../app.css"
-    import SkillsTab from "./SkillsTab.svelte";
-    import TabMenu from "./TabMenu.svelte";
-    import Tabs from "./Tabs.svelte";
-    import NumberInput from "./NumberInput.svelte";
-    import AttributesTab from "./AttributesTab.svelte";
+    import SkillsTab from "./tabs/SkillsTab.svelte";
+    import TabMenu from "./partial/TabMenu.svelte";
+    import Tabs from "./partial/Tabs.svelte";
+    import NumberInput from "./partial/NumberInput.svelte";
+    import AttributesTab from "./tabs/AttributesTab.svelte";
 
     export let actor;
     const rest = $$restProps;

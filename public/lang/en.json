@@ -6,7 +6,8 @@
       "setAsFateDeck": "Set as Fate Deck",
       "controlCenter": "Fate Control Center",
       "duelConfigTitle": "Duel Configuration",
-      "skillConfigTitle": "{name} Skill Config: {skill}"
+      "skillConfigTitle": "{name} Skill Config: {skill}",
+      "twistDeckInitTitle": "{name} Twist Deck Initialization"
     },
     "suits": {
       "rams": {

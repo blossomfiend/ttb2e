@@ -38,11 +38,13 @@ export default class Flip {
 
     flippedCards;
 
-    async evaluate() {
+    async evaluate({chatMessage = true}) {
         let fateDeck = game.cards.get(game.settings.get("ttb2e", "fateDeck"));
         let fateDiscard = game.cards.get(game.settings.get("ttb2e", "fateDiscard"));
         this.flippedCards = await fateDeck.flip(fateDiscard, Math.abs(this.options.fateModifier) + 1);
-        await this.postFlip();
+        if (chatMessage) {
+            await this.postFlip();
+        }
     }
 
     async postFlip() {

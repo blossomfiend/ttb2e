@@ -1,10 +1,10 @@
 <script>
     import {fly} from "svelte/transition";
-    import NumberInput from "./NumberInput.svelte";
-    import {localize} from "../util.js";
-    import TextSuits from "./TextSuits.svelte";
-    import DuelApplication from "../applications/duel.js";
-    import SkillConfigApplication from "../applications/skill-config.js";
+    import NumberInput from "../partial/NumberInput.svelte";
+    import {localize} from "../../util.js";
+    import TextSuits from "../partial/TextSuits.svelte";
+    import DuelApplication from "../../applications/duel.js";
+    import SkillConfigApplication from "../../applications/skill-config.js";
 
     export let actor;
     let categories = game.ttb2e.skillCategories;
