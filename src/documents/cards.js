@@ -5,7 +5,7 @@ export default class TtbCards extends Cards {
      * @param {number} [amount = 1]
      * @return {Promise<Card[]>}
      */
-    async flip(discardPile, amount = 1) {
+    async flip(discardPile, amount = 1, {updateData = {}} = {}) {
         if (!(discardPile instanceof TtbCards)) {
             throw new Error("You must provide a discard pile.");
         }
@@ -28,8 +28,9 @@ export default class TtbCards extends Cards {
         }
 
         const toCreate = drawn.map(card => {
-            let createData = card.toObject();
+            const createData = foundry.utils.mergeObject(card.toObject(), updateData);
             createData.origin = this.id;
+            createData.drawn = true;
             return createData;
         });
 

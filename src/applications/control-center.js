@@ -9,6 +9,10 @@ export default class ControlCenterApplication extends SvelteApplicationMixin(fou
         window: {
             title: "ttb.ui.controlCenter",
             icon: "fa-solid fa-cards",
+            resizable: true,
         },
+        position: {
+            width: 480,
+        }
     };
 }

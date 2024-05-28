@@ -22,3 +22,23 @@ export function localizeCardName({value, suit}) {
     const localizedSuit = localize(`ttb.suits.${suit}.name`);
     return localize(`ttb.cardNames.regular`, {value, suit: localizedSuit});
 }
+
+/**
+ * Determine if a card can be chosen in a flip
+ * @param {TtbCard} card
+ * @param {TtbCard[]} allCards
+ * @param {number} fateModifier
+ * @return {boolean}
+ */
+export function canCardBeChosen(card, allCards, fateModifier) {
+    if (allCards.some(c => c.suit === "blackJoker")) {
+        return card.suit === "blackJoker";
+    }
+    if (card.suit === "redJoker") {
+        return true;
+    }
+    if (fateModifier < 0) {
+        return card.value === Math.min(...allCards.map(c => c.value));
+    }
+    return true;
+}

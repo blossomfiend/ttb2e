@@ -15,6 +15,7 @@ export default class FatedApplication extends SvelteApplicationMixin(foundry.app
      * @override
      */
     static DEFAULT_OPTIONS = {
+        viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
         window: {
             minimizable: true,
             resizable: true,
