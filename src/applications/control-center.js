@@ -12,7 +12,7 @@ export default class ControlCenterApplication extends SvelteApplicationMixin(fou
             resizable: true,
         },
         position: {
-            width: 480,
+            width: 520,
         }
     };
 }

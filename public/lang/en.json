@@ -3,11 +3,27 @@
     "ui": {
       "rank": "Rank",
       "flip": "Flip",
+      "controlHand": "Control Hand",
+      "discardPile": "Discard Pile",
+      "twistDeck": "Twist Deck",
       "setAsFateDeck": "Set as Fate Deck",
       "controlCenter": "Fate Control Center",
       "duelConfigTitle": "Duel Configuration",
       "skillConfigTitle": "{name} Skill Config: {skill}",
-      "twistDeckInitTitle": "{name} Twist Deck Initialization"
+      "twistDeckInitTitle": "{name} Twist Deck Initialization",
+      "drawCard": "Draw Card",
+      "resetTwistDeck": "Reset Twist Deck",
+      "resetDiscardPile": "Reset Discard Pile",
+      "resetFateDeck": "Reset Fate Deck",
+      "show": "Show",
+      "discard": "Discard"
+    },
+    "chat": {
+      "showCard": "Showed {card} from {controlHand}.",
+      "discardCard": "Discarded {card} from {controlHand}."
+    },
+    "notifications": {
+      "cardsCreated": "The card stacks for {name} were created."
     },
     "suits": {
       "rams": {
@@ -330,6 +346,15 @@
         "name": "Descendant Suit",
         "hint": "This suit determines which of your cards will have values 2, 6, and 10."
       }
+    },
+    "cardPile": {
+      "fateDeck": "Fate Deck",
+      "fateDeckDiscardPile": "Fate Deck Discard Pile",
+      "twistDeck": "{owner}'s Twist Deck",
+      "controlHand": "{owner}'s Control Hand",
+      "discardPile": "{owner}'s Discard Pile",
+      "playArea": "{owner}'s Play Area",
+      "containerFolder": "{owner}'s Cards"
     }
   },
   "TYPES": {

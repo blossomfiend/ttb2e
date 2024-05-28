@@ -1,4 +1,4 @@
-import {objMap} from "../util.js";
+import {localize, objMap} from "../util.js";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -176,29 +176,57 @@ export default class TtbActor extends Actor {
 
     async _preCreate(data, options, userId) {
         await super._preCreate(data, options, userId);
+        await this.ensureCardsExist();
+    }
 
-        if (this.type === "fated") {
-            // Set up all the cards documents needed for fated to play the game
-            let folder = await Folder.create({name: `${this.name}'s Cards`, type: "Cards"});
-            let [twistDeck, controlHand, playArea, discardPile] = await Cards.createDocuments([
-                {name: `${this.name}'s Twist Deck`, type: "deck", folder: folder.id},
-                {name: `${this.name}'s Control Hand`, type: "hand", folder: folder.id},
-                {name: `${this.name}'s Play Area`, type: "pile", folder: folder.id},
-                {name: `${this.name}'s Discard Pile`, type: "pile", folder: folder.id},
-            ]);
-
-            this.updateSource({
-                system: {
-                    cards: {
-                        containerFolder: folder.id,
-                        twistDeck: twistDeck.id,
-                        controlHand: controlHand.id,
-                        playArea: playArea.id,
-                        discardPile: discardPile.id,
-                    },
-                },
-            });
+    /**
+     * Set up all the cards documents needed for fated to play the game
+     * @return {Promise<void>}
+     */
+    async ensureCardsExist() {
+        // only fated ever have these cards
+        if (this.type !== "fated") {
+            return;
         }
+        const getPileName = (cardsType) => localize(`ttb.cardPile.${cardsType}`, {owner: this.name});
+        const cards = {};
+
+        // recreate folder first
+        cards.containerFolder = this.system.cards.containerFolder;
+        if (cards.containerFolder == null) {
+            cards.containerFolder = await Folder.create({name: getPileName("containerFolder"), type: "Cards"});
+        } else {
+            cards.containerFolder.updateSource({name: getPileName("containerFolder")});
+        }
+
+        // then all the card piles
+        const cardsTypes = ["twistDeck", "controlHand", "discardPile", "playArea"];
+        const toCreate = [];
+        for (let cardsType of cardsTypes) {
+            cards[cardsType] = this.system.cards[cardsType];
+            if (cards[cardsType] == null) {
+                // recreate documents that got deleted
+                toCreate.push(cardsType);
+            } else {
+                // fix other's names
+                cards[cardsType].updateSource({name: getPileName(cardsType)});
+            }
+        }
+        const cardsDocumentTypes = {
+            twistDeck: "deck",
+            controlHand: "hand",
+            playArea: "pile",
+            discardPile: "pile",
+        }
+        const created = await Cards.createDocuments(toCreate.map(cardsType => ({
+            name: getPileName(cardsType),
+            type: cardsDocumentTypes[cardsType],
+            folder: cards.containerFolder.id,
+        })));
+        toCreate.forEach((cardsType, idx) => {
+            cards[cardsType] = created[idx];
+        });
+        this.updateSource({system: {cards}});
     }
 
     async _preDelete(options, user) {

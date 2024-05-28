@@ -34,16 +34,22 @@
                      on:click={() => new SkillConfigApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
                     {localize(`ttb.derivedAspects.${derivedAspect.name}.name`)}
                 </div>
-                <div class="w-12 text-center hover:text-shadow-red hover:cursor-pointer"
+                <button class="w-12 text-center hover:text-shadow-red hover:cursor-pointer"
                      on:click={() => new DuelApplication({actor, skill: `derivedAspects.${derivedAspect.name}`}).render({force: true})}>
                     {derivedAspect.value.value}
                     <TextSuits suits={derivedAspect.value.suits}/>
-                </div>
+                </button>
             </div>
         {/each}
     </div>
     <div>
         Fate steps here
+        <button on:click={() => {
+            actor.ensureCardsExist();
+            ui.notifications.info(localize("ttb.notifications.cardsCreated", {name: actor.name}));
+        }}>
+            Ensure Cards Documents exist
+        </button>
         <button on:click={() => new TwistDeckInitApplication({document: actor}).render({force: true})}>
             Initialize Twist Deck
         </button>

@@ -31,7 +31,11 @@
     }
 
     async function discard(card) {
-        await controlHand.pass(discardPile, [card.id]);
+        await controlHand.pass(discardPile, [card.id], {chatNotification: false});
+        await postMessage(localize("ttb.chat.discardCard", {
+            card: localizeCardName(card),
+            controlHand: controlHand.link,
+        }));
         userCharacter = userCharacter;
     }
 
@@ -47,14 +51,24 @@
         userCharacter = userCharacter;
     }
 
-    async function playCard(card) {
+    async function showCard(card) {
+        await postMessage(localize("ttb.chat.showCard", {
+            card: localizeCardName(card),
+            controlHand: controlHand.link,
+        }));
+    }
+
+    async function postMessage(message) {
         await TtbChatMessage.create({
             style: CONST.CHAT_MESSAGE_STYLES.OTHER,
             speaker: {actor: userCharacter},
-            content: `<p>Played ${localizeCardName(card)}.</p>`
+            content: `
+                <div class="cards-notification flexrow">
+                    <img class="icon" src="${controlHand.thumbnail}" alt="${controlHand.name}">
+                    <p>${message}</p>
+                </div>`
         });
-        await controlHand.pass(discardPile, [card.id], {chatNotification: false});
-        userCharacter = userCharacter;
+
     }
 
     async function resetFateDeck() {
@@ -74,27 +88,27 @@
 </script>
 
 <div class="flex flex-row gap-3">
-    <div class="flex flex-col gap-1">
+    <div class="w-32 shrink-0 flex flex-col gap-1">
         <button on:click={() => new DuelApplication().render({force: true})}>{localize("ttb.ui.flip")}</button>
         {#if controlHand != null}
-            <button on:click={draw}>Draw Card</button>
-            <button on:click={resetDeck}>Reset Twist Deck</button>
-            <button on:click={resetDiscard}>Reset Discard Pile</button>
+            <button on:click={draw}>{localize("ttb.ui.drawCard")}</button>
+            <button on:click={resetDeck}>{localize("ttb.ui.resetTwistDeck")}</button>
+            <button on:click={resetDiscard}>{localize("ttb.ui.resetDiscardPile")}</button>
         {/if}
     </div>
     {#if controlHand != null}
         <div class="grow flex flex-col gap-2">
             <div class="w-full flex flex-row justify-between">
-                <div>Control Hand: {controlHand.cards.size}</div>
-                <div>Twist Deck: {twistDeck.availableCards.length}</div>
-                <div>Discard Pile: {discardPile.cards.size}</div>
+                <div>{localize("ttb.ui.controlHand")}: {controlHand.cards.size}</div>
+                <div>{localize("ttb.ui.twistDeck")}: {twistDeck.availableCards.length}</div>
+                <div>{localize("ttb.ui.discardPile")}: {discardPile.cards.size}</div>
             </div>
-            <div class="flex flex-row gap-1">
+            <div class="flex flex-row gap-1 flex-wrap">
                 {#each controlHand.cards as card}
                     <div class="flex flex-col gap-1">
                         <PlayingCard {card}/>
-                        <button on:click={() => playCard(card)}>Play</button>
-                        <button on:click={() => discard(card)}>Discard</button>
+                        <button on:click={() => showCard(card)}>{localize("ttb.ui.show")}</button>
+                        <button on:click={() => discard(card)}>{localize("ttb.ui.discard")}</button>
                     </div>
                 {/each}
             </div>
@@ -102,7 +116,7 @@
     {:else if game.user.isGM}
         <div class="flex flex-col gap-2">
             Fatemaster Area
-            <button on:click={resetFateDeck}>Reset Fate Deck</button>
+            <button on:click={resetFateDeck}>{localize("ttb.ui.resetFateDeck")}</button>
         </div>
     {/if}
 </div>

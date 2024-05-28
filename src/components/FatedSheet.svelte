@@ -58,13 +58,6 @@
                         <NumberInput name="system.xp" value="{system.xp}"/>
                     </span>
                 </label>
-
-                <label class="flex flex-col text-center gap-1">
-                    <span class="resource-label">Level?</span>
-                    <span class="resource-content flex flex-row justify-between items-center">
-                        <NumberInput name="system.attributes.level.value" value="1"/>
-                    </span>
-                </label>
             </div>
         </div>
     </header>
