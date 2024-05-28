@@ -30,5 +30,5 @@
     "units": "yd"
   },
   "primaryTokenAttribute": "wounds",
-  "secondaryTokenAttribute": "power"
+  "secondaryTokenAttribute": "fatePoints"
 }

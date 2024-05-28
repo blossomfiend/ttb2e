@@ -12,7 +12,6 @@
             const suit = suitRoles[suitRole];
             return values.map(value => ({
                 name: `${localizeCardName({value, suit})} (${document.name})`,
-                sort: value,
                 value,
                 suit,
                 faces: [{}],
@@ -26,6 +25,7 @@
             twistDeck.deleteEmbeddedDocuments("Card", toDelete),
             twistDeck.createEmbeddedDocuments("Card", toCreate),
         ]);
+        await twistDeck.shuffle({chatNotification: false});
         close();
     }
 </script>

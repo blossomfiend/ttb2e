@@ -19,7 +19,7 @@ Hooks.once("init", async () => {
     CONFIG.Actor.dataModels.fated = FatedActorData;
     CONFIG.Actor.trackableAttributes = {
         fated: {
-            bar: ["wounds"],
+            bar: ["wounds", "fatePoints"],
             value: [],
         },
     };
