@@ -1,8 +1,7 @@
-import {objMap} from "../../util.js";
-import {intField, suitedValue} from "../utils.js";
-import CharacterDataMixin from "./mixin/character.js";
+import {intField} from "../utils.js";
+import CharacterDataModel from "./abstract/character.js";
 
-export default class FatedActorData extends CharacterDataMixin(foundry.abstract.TypeDataModel) {
+export default class FatedActorData extends CharacterDataModel {
     /** @inheritdoc */
     static defineSchema() {
         const fields = foundry.data.fields;

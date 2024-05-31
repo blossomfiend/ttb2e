@@ -1,6 +1,6 @@
 import {objMap} from "../../util.js";
 import {intField, suitedValue} from "../utils.js";
-import CharacterDataMixin from "./mixin/character.js";
+import CharacterDataMixin from "./abstract/character.js";
 
 export default class FatemasterCharacterActorData extends CharacterDataMixin(foundry.abstract.TypeDataModel) {
     /** @inheritdoc */

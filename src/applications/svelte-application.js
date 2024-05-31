@@ -11,7 +11,7 @@ export default function SvelteApplicationMixin(BaseApplication) {
      * @extends {ApplicationV2}
      * @mixin
      */
-    class SvelteApplication extends BaseApplication {
+    return class SvelteApplication extends BaseApplication {
         /**
          * @type {typeof SvelteComponent}
          */
@@ -62,6 +62,4 @@ export default function SvelteApplicationMixin(BaseApplication) {
             this.#svelteComponent.$destroy();
         }
     }
-
-    return SvelteApplication;
 }

@@ -164,7 +164,7 @@ export default class TtbActor extends Actor {
     /**
      * Prepare NPC roll data.
      */
-    _getNpcRollData(data) {
+    _getNpcRollData() {
         if (this.type !== 'npc') return;
 
         // Process additional NPC data here.
