@@ -1,20 +1,31 @@
 {
   "Actor": {
-    "types": ["fated", "fatemasterCharacter"],
+    "types": [
+      "fated",
+      "fatemasterCharacter"
+    ],
     "fated": {},
     "fatemasterCharacter": {}
   },
   "Item": {
-    "types": ["talent", "trigger", "pursuit"],
+    "types": [
+      "talent",
+      "trigger",
+      "pursuit"
+    ],
     "weapon": {},
     "spell": {}
   },
   "ChatMessage": {
-    "types": ["flip"],
+    "types": [
+      "flip"
+    ],
     "flip": {}
   },
   "Cards": {
-    "types": ["temporary"],
+    "types": [
+      "temporary"
+    ],
     "temporary": {}
   }
 }

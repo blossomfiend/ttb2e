@@ -1,0 +1,17 @@
+.name {
+  @apply text-24 w-full h-full text-left border-transparent bg-transparent p-2 leading-none
+    hover:shadow-foundry hover:shadow-shadow-primary hover:bg-black/5
+    focus:bg-black/5 focus:border-border-light-tertiary
+    disabled:shadow-none disabled:text-text-dark-primary disabled:bg-transparent
+    dark:text-stone-100 dark:disabled:text-stone-100 !important;
+}
+
+@keyframes pending-fade-out-animation {
+  to {
+    opacity: 0.5;
+  }
+}
+
+.pending-fade-out {
+  animation: pending-fade-out-animation 0.6s ease-in-out 1s forwards;
+}

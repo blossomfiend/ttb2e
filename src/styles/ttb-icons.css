@@ -1,17 +1,15 @@
 @font-face {
-  font-family: 'ttb-icons';
-  src:
-    url('/systems/ttb2e/fonts/ttb-icons.ttf?mlek8f') format('truetype'),
-    url('/systems/ttb2e/fonts/ttb-icons.woff?mlek8f') format('woff'),
-    url('/systems/ttb2e/fonts/ttb-icons.svg?mlek8f#ttb-icons') format('svg');
+  font-family: "ttb-icons";
+  src: url("../assets/fonts/ttb-icons.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="ttb-icon-"], [class*=" ttb-icon-"] {
+[class^="ttb-icon-"],
+[class*=" ttb-icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'ttb-icons' !important;
+  font-family: "ttb-icons" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -19,41 +17,50 @@
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .ttb-icon-rams:before {
   content: "\72";
 }
+
 .ttb-icon-crows:before {
   content: "\63";
 }
+
 .ttb-icon-masks:before {
   content: "\6d";
 }
+
 .ttb-icon-tomes:before {
   content: "\74";
 }
+
 .ttb-icon-pulse:before {
   content: "\70";
 }
+
 .ttb-icon-aura:before {
   content: "\61";
 }
+
 .ttb-icon-melee:before {
   content: "\31";
 }
+
 .ttb-icon-projectile:before {
   content: "\32";
 }
+
 .ttb-icon-blast:before {
   content: "\62";
 }
+
 .ttb-icon-plus:before {
   content: "\2b";
 }
+
 .ttb-icon-minus:before {
   content: "\2d";
 }

@@ -7,29 +7,29 @@
   "scripts": {
     "serve": "vite",
     "watch": "vite build --watch --minify false",
-    "build": "vite build"
+    "build": "vite build --minify esbuild --sourcemap false"
   },
   "browserslist": [
-    "last 3 versions"
+    "last 2 firefox versions",
+    "last 2 chrome versions",
+    "last 2 opera versions",
+    "last 2 edge versions"
   ],
   "author": "",
   "license": "",
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@types/jquery": "^3.5.29",
     "autoprefixer": "^10.4.19",
+    "browserslist": "^4.23.0",
+    "browserslist-to-esbuild": "^2.1.1",
     "lightningcss": "^1.24.1",
     "postcss": "^8.4.38",
+    "prettier": "^3.3.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "solid-devtools": "^0.30.1",
     "solid-js": "^1.8.17",
-    "svelte": "^4.2.12",
-    "svelte-language-server": "^0.16.7",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.2.7",
+    "vite": "^5.2.12",
     "vite-plugin-solid": "^2.10.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "svelte": "$svelte"
-    }
   }
 }

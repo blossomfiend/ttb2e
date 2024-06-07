@@ -6,11 +6,16 @@
   "description": "An implementation of Through the Breach.",
   "authors": [
     {
-      "name": "Lilith"
+      "name": "Lilith Schier",
+      "email": "lilith@naalunth.dev"
     }
   ],
-  "esmodules": ["ttb2e.js"],
-  "styles": ["style.css"],
+  "esmodules": [
+    "ttb2e.mjs"
+  ],
+  "styles": [
+    "style.css"
+  ],
   "packs": [],
   "packFolders": [],
   "languages": [
