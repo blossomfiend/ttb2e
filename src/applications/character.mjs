@@ -17,6 +17,7 @@ export default class CharacterApplication extends SolidApplicationMixin(
    */
   static DEFAULT_OPTIONS = {
     viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+    classes: ["no-application-padding"],
     window: {
       minimizable: true,
       resizable: true,
@@ -37,6 +38,7 @@ export default class CharacterApplication extends SolidApplicationMixin(
    */
   async _prepareContext(options) {
     return {
+      actorData: this.actor.toObject(false),
       actor: this.actor,
       token: this.token,
     };

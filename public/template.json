@@ -3,29 +3,24 @@
     "types": [
       "fated",
       "fatemasterCharacter"
-    ],
-    "fated": {},
-    "fatemasterCharacter": {}
+    ]
   },
   "Item": {
     "types": [
+      "pursuit",
       "talent",
       "trigger",
-      "pursuit"
-    ],
-    "weapon": {},
-    "spell": {}
+      "magia",
+      "immuto",
+      "equipment"
+    ]
   },
   "ChatMessage": {
     "types": [
       "flip"
-    ],
-    "flip": {}
+    ]
   },
   "Cards": {
-    "types": [
-      "temporary"
-    ],
-    "temporary": {}
+    "types": []
   }
 }

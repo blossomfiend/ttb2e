@@ -96,7 +96,7 @@ Hooks.on("renderTtbCardsDirectory", (cardsDirectory, html, data) => {
     .after(
       `<div class="action-buttons flexrow">
         <button class="create-fate-deck">
-          <i class="ttb-icon-rams"></i> Create Fate Deck
+           <i class="fa-solid fa-wand-sparkles"></i> Create Fate Deck
         </button>
       </div>`,
     )

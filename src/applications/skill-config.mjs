@@ -4,7 +4,7 @@ import SolidApplicationMixin from "./solid-application.mjs";
 export default class SkillConfigApplication extends SolidApplicationMixin(
   foundry.applications.api.DocumentSheetV2,
 ) {
-  static SOLID_COMPONENT_LOADer = () =>
+  static SOLID_COMPONENT_LOADER = () =>
     import("../components/skill-config.jsx");
   static DEFAULT_OPTIONS = {
     tag: "form",

@@ -10,7 +10,7 @@ import TtbCards from "./documents/cards.mjs";
 import TtbChatMessage from "./documents/chat-message.mjs";
 
 import ControlCenterApplication from "./applications/control-center.mjs";
-import CharacterApplication from "./applications/fated.mjs";
+import CharacterApplication from "./applications/character.mjs";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
 
 Hooks.once("init", async () => {
@@ -36,7 +36,7 @@ Hooks.once("init", async () => {
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("ttb2e", CharacterApplication, {
-    types: ["fated"],
+    types: ["fated", "fatemasterCharacter"],
     makeDefault: true,
   });
 });

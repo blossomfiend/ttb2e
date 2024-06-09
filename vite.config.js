@@ -1,6 +1,7 @@
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import path from "path";
 import { defineConfig } from "vite";
+import { patchCssModules } from "vite-css-modules";
 import solidPlugin from "vite-plugin-solid";
 
 // https://vitejs.dev/config/
@@ -46,5 +47,5 @@ export default defineConfig({
   esbuild: {
     keepNames: true,
   },
-  plugins: [solidPlugin()],
+  plugins: [patchCssModules(), solidPlugin()],
 });

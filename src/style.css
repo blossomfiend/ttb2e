@@ -2,3 +2,7 @@
 
 @tailwind utilities;
 @tailwind variants;
+
+.application.no-application-padding .window-content {
+    padding: 0;
+}

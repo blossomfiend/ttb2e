@@ -1,4 +1,11 @@
-import { createMemo, createSignal, lazy, Suspense, useContext } from "solid-js";
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  lazy,
+  Suspense,
+  useContext,
+} from "solid-js";
 import { localize } from "../util.mjs";
 import { AppContainerContext } from "./app-container.jsx";
 import styles from "./character-sheet.module.css";
@@ -6,17 +13,31 @@ import BarLoader from "./partial/bar-loader.jsx";
 import NumberInput from "./partial/number-input.jsx";
 import TabMenu from "./partial/tab-menu.jsx";
 import Tabs from "./partial/tabs.jsx";
-import AttributesTab from "./tabs/attributes-tab.jsx";
+import OverviewTab from "./tabs/overview-tab.jsx";
 
 export default function CharacterSheet(props) {
   const system = createMemo(() => props.actor.system);
+  createEffect(() => {
+    logger.info("character sheet system data", system());
+  });
+  createEffect(() => {
+    logger.info("speed", props.actor.system.aspects.speed);
+  });
   let tabs = [
-    { id: "attributes", component: AttributesTab },
-    { id: "skills", component: lazy(() => import("./tabs/skills-tab.jsx")) },
-    { id: "talents", component: null },
-    { id: "items", component: null },
-    { id: "magic", component: null },
-    { id: "effects", component: null },
+    {
+      id: "overview",
+      component: OverviewTab,
+      icon: "fa-solid fa-user",
+    },
+    {
+      id: "skills",
+      component: lazy(() => import("./tabs/skills-tab.jsx")),
+      icon: "fa-solid fa-plus-minus",
+    },
+    { id: "talents", component: null, icon: "fa-solid fa-scroll" },
+    { id: "items", component: null, icon: "fa-solid fa-treasure-chest" },
+    { id: "magic", component: null, icon: "fa-solid fa-hand-holding-magic" },
+    { id: "effects", component: null, icon: "fa-solid fa-sparkles" },
   ].map((tab) => ({
     ...tab,
     name: localize(`ttb.ui.tabs.${tab.id}.name`),
@@ -25,7 +46,7 @@ export default function CharacterSheet(props) {
   const appContext = useContext(AppContainerContext);
 
   return (
-    <div class="flex flex-col ttb scrollable">
+    <div class="flex flex-col ttb overflow-y-auto overflow-x-hidden">
       <header class="sheet-header flex flex-row gap-2 mb-3">
         <img
           alt="portrait of the character"
@@ -55,7 +76,7 @@ export default function CharacterSheet(props) {
                   name="system.wounds.value"
                   value={system().wounds.value}
                 />
-                <span class="px-1"> / </span>
+                <span class="px-1">/</span>
                 <NumberInput
                   disabled
                   name="system.wounds.max"
@@ -74,7 +95,7 @@ export default function CharacterSheet(props) {
         </div>
       </header>
 
-      <nav class="sheet-tabs tabs sticky top-0 backdrop-blur-lg dark:bg-[var(--background)]">
+      <nav class="sticky top-0 backdrop-blur-lg dark:bg-[var(--background)]">
         <TabMenu
           currentTab={currentTab()}
           onTabChange={(tab) => appContext.start(() => setCurrentTab(tab))}

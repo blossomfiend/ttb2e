@@ -19,7 +19,7 @@ export function objMap(obj, func) {
  * @param {Object} data
  * @return {string}
  */
-export let localize = (key, data = {}) => game.i18n.format(key, data);
+export const localize = (key, data = {}) => game.i18n.format(key, data);
 
 export function localizeCardName({ value, suit }) {
   if (suit === "redJoker" || suit === "blackJoker")
