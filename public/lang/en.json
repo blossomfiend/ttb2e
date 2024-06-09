@@ -19,8 +19,8 @@
       "show": "Show",
       "discard": "Discard",
       "tabs": {
-        "attributes": {
-          "name": "Attributes"
+        "overview": {
+          "name": "Overview"
         },
         "skills": {
           "name": "Skills"
@@ -29,7 +29,7 @@
           "name": "Talents"
         },
         "items": {
-          "name": "Items"
+          "name": "Inventory"
         },
         "magic": {
           "name": "Magic"
@@ -78,11 +78,11 @@
       "resilience": {
         "name": "Resilience"
       },
-      "intellect": {
-        "name": "Intellect"
-      },
       "charm": {
         "name": "Charm"
+      },
+      "intellect": {
+        "name": "Intellect"
       },
       "cunning": {
         "name": "Cunning"
@@ -380,7 +380,16 @@
   },
   "TYPES": {
     "Actor": {
-      "fated": "Fated"
+      "fated": "Fated",
+      "fatemasterCharacter": "Fatemaster Character"
+    },
+    "Item": {
+      "pursuit": "Pursuit",
+      "talent": "Talent",
+      "trigger": "Trigger",
+      "magia": "Magia",
+      "immuto": "Immuto",
+      "equipment": "Equipment"
     }
   }
 }
