@@ -43,9 +43,6 @@ export default {
         ".text-shadow-none": {
           "text-shadow": "none",
         },
-        ".drop-shadow-red": {
-          filter: "drop-shadow(0 0 4px var(--color-shadow-primary))",
-        },
         ".small-caps": {
           "font-variant": "small-caps",
         },
@@ -53,15 +50,15 @@ export default {
       matchUtilities(
         {
           "text-shadow": (value) => ({
-            "text-shadow": `0 0 8px ${value},
+            "text-shadow": `0 0 8px ${value}`,
           }),
           scrollbar: (value) => ({
-            "scrollbar-color": `${value} transparent,
-          },
+            "scrollbar-color": `${value} transparent`,
+          }),
         },
         {
-          values: theme("colors",
-        ,
+          values: theme("colors"),
+        },
       );
     }),
   ],

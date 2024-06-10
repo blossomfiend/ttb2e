@@ -196,7 +196,7 @@ export default class TtbActor extends Actor {
         type: "Cards",
       });
     } else {
-      cards.containerFolder.updateSource({
+      await cards.containerFolder.update({
         name: getPileName("containerFolder"),
       });
     }
@@ -219,10 +219,10 @@ export default class TtbActor extends Actor {
         });
       } else {
         // fix other's names
-        cards[cardsType].updateSource({ name: getPileName(cardsType) });
+        await cards[cardsType].update({ name: getPileName(cardsType) });
       }
     }
-    this.updateSource({ system: { cards } });
+    await this.update({ system: { cards } });
   }
 
   async _preDelete(options, user) {

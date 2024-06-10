@@ -22,7 +22,7 @@ export default function TabMenu(inputProps) {
             text-shadow-none dark:drop-shadow"
           classList={{
             selected:
-              props.idFunction(props.currentTab) === props.idFnction(tab),
+              props.idFunction(props.currentTab) === props.idFunction(tab),
           }}
           onClick={() => props.onTabChange(tab)}
         >

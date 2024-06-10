@@ -395,7 +395,7 @@ const TTB2E = {
       values: [14],
     },
   ],
-  thems: [
+  themes: [
     {
       name: "guildRed",
       color: "#ac0324",
@@ -427,7 +427,7 @@ const TTB2E = {
   ],
 };
 
-TT2E.fatDeck = [
+TTB2E.fateDeck = [
   ...Object.keys(TTB2E.suits).flatMap((suit) =>
     [...inclusiveRange(1, 13)].map((value) => ({
       suit,
@@ -441,7 +441,7 @@ TT2E.fatDeck = [
 TTB2E.rankByValue = Object.fromEntries(
   [...inclusiveRange(1, 14)].map((value) => [
     value,
-    TTB2E.ranks.find((rank) => rank.values.incudes(alue)),
+    TTB2E.ranks.find((rank) => rank.values.includes(value)),
   ]),
 );
 

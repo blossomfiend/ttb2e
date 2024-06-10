@@ -11,6 +11,10 @@ root {
 
   @layer components {
     .subtle-input {
+      /*@apply border-transparent bg-transparent p-0.5 leading-none transition-all outline-transparent*/
+      /*      hover:shadow hover:bg-black/10 dark:hover:bg-white/10*/
+      /*      focus:shadow focus:bg-black/10 dark:focus:bg-white/10 focus:outline focus:outline-theme*/
+      /*      disabled:shadow-none;*/
       border-color: transparent;
       background-color: transparent;
       outline-color: transparent;
@@ -22,28 +26,27 @@ root {
       transition-property: all;
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
-
       &:hover {
         border-color: oklch(0 0 0 / 0.2);
-
         .theme-dark & {
           border-color: oklch(1 0 0 / 0.2);
         }
       }
-
       &:hover, &:focus {
         box-shadow: theme("boxShadow.DEFAULT");
         background-color: theme("colors.black / 10%");
-
         .theme-dark & {
           border-color: theme("colors.zinc.600");
           background-color: theme("colors.white / 10%");
         }
       }
-
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
+        /*border-color: theme("colors.theme-dark");*/
+        /*.theme-dark & {*/
+        /*  border-color: theme("colors.theme-light");*/
+        /*}*/
       }
     }
 
@@ -58,33 +61,26 @@ root {
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
       border-color: oklch(0 0 0 / 0.2);
-
       .theme-dark & {
         border-color: oklch(1 0 0 / 0.2);
       }
-
       &:hover {
         border-color: transparent;
         background-color: theme("colors.theme-lighter");
-
         .theme-dark & {
           background-color: theme("colors.theme-darker");
         }
       }
-
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
       }
-
       &:hover, &:focus {
         box-shadow: theme("boxShadow.md");
       }
-
       &:active {
         box-shadow: theme("boxShadow.DEFAULT");
         background-color: theme("colors.theme-light");
-
         .theme-dark & {
           background-color: theme("colors.theme-dark");
         }
@@ -100,27 +96,21 @@ root {
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
       background-color: oklch(0 0 0 / 0.1);
-
       .theme-dark & {
         background-color: oklch(1 0 0 / 0.1);
       }
-
       &:hover {
         background-color: oklch(0 0 0 / 0.15);
-
         .theme-dark & {
           background-color: oklch(1 0 0 / 0.15);
         }
       }
-
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
       }
-
       &:active {
         background-color: theme("colors.zinc.100");
-
         .theme-dark & {
           background-color: theme("colors.zinc.900");
         }
