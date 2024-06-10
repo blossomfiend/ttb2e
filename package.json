@@ -13,7 +13,8 @@
     "last 3 firefox versions",
     "last 3 chrome versions",
     "last 3 opera versions",
-    "last 3 edge versions"
+    "last 3 edge versions",
+    "last 3 safari versions"
   ],
   "author": "Lilith Schier",
   "license": "",
@@ -22,6 +23,7 @@
     "autoprefixer": "^10.4.19",
     "browserslist": "^4.23.1",
     "browserslist-to-esbuild": "^2.1.1",
+    "colorjs.io": "^0.5.0",
     "lightningcss": "^1.25.1",
     "postcss": "^8.4.38",
     "prettier": "^3.3.1",

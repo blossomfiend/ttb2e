@@ -11,6 +11,7 @@ import TextButton from "./partial/text-button.jsx";
 import TextSuits from "./partial/text-suits.jsx";
 import OverviewTab from "./tabs/overview-tab.jsx";
 import CharacteristicsConfig from "../applications/characteristics-config.mjs";
+import { themeColorCss } from "./color.mts";
 
 export default function CharacterSheet(props) {
   const system = createMemo(() => props.actor.system);
@@ -47,14 +48,14 @@ export default function CharacterSheet(props) {
   }));
   const [currentTab, setCurrentTab] = createSignal(tabs[0]);
   const appContext = useContext(AppContainerContext);
-  const canEdit = createMemo(() => game.user?.isGM || props.actor);
+  const canEdit = createMemo(() => props.actor.isOwner);
 
   return (
     <div
       class="size-full flex flex-col ttb overflow-y-scroll overflow-x-hidden text-sm
         bg-stone-200 text-stone-800 dark:bg-zinc-900 dark:text-zinc-50
         scrollbar-theme-lighter dark:scrollbar-theme-darker transition-all"
-      style={{ "--char-theme-color": system().colors.finalColor }}
+      style={themeColorCss(system().colors.finalColor)}
     >
       <header class="z-20 flex flex-row gap-2 p-2 pt-4">
         <div class="flex flex-col items-center gap-2">

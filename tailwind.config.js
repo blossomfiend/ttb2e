@@ -22,15 +22,20 @@ export default {
       backgroundImage: {},
       boxShadow: {},
       colors: {
-        theme: "var(--char-theme-color)",
-        "theme-light":
-          "oklch(from var(--char-theme-color) calc(0.57 + 0.23 * l) calc(c * 0.9) h)",
-        "theme-lighter":
-          "oklch(from var(--char-theme-color) calc(0.7 + 0.2 * l) calc(c * 0.5) h)",
-        "theme-dark":
-          "oklch(from var(--char-theme-color) calc(0.25 + 0.3 * l) calc(c * 0.8) h)",
-        "theme-darker":
-          "oklch(from var(--char-theme-color) calc(0.18 + 0.25 * l) calc(c * 0.4) h)",
+        theme: "var(--ttb-color-theme)",
+        "theme-lighter": "var(--ttb-color-theme-lighter)",
+        "theme-light": "var(--ttb-color-theme-light)",
+        "theme-dark": "var(--ttb-color-theme-dark)",
+        "theme-darker": "var(--ttb-color-theme-darker)",
+        // for whenever firefox is done implementing relative colors
+        // "theme-lighter":
+        //   "oklch(from var(--char-theme-color) calc(0.7 + 0.2 * l) calc(c * 0.5) h)",
+        // "theme-light":
+        //   "oklch(from var(--char-theme-color) calc(0.57 + 0.23 * l) calc(c * 0.9) h)",
+        // "theme-dark":
+        //   "oklch(from var(--char-theme-color) calc(0.25 + 0.3 * l) calc(c * 0.8) h)",
+        // "theme-darker":
+        //   "oklch(from var(--char-theme-color) calc(0.18 + 0.25 * l) calc(c * 0.4) h)",
       },
       transitionTimingFunction: {
         "fast-in": "cubic-bezier(.2,.8,0,1)",
