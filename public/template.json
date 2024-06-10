@@ -12,7 +12,8 @@
       "trigger",
       "magia",
       "immuto",
-      "equipment"
+      "equipment",
+      "action"
     ]
   },
   "ChatMessage": {

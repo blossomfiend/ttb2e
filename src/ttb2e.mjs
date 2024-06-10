@@ -13,8 +13,6 @@ import ControlCenterApplication from "./applications/control-center.mjs";
 import CharacterApplication from "./applications/character.mjs";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
 
-console.log("HELLO I AM TTB2E, NICE TO SEE YOU.");
-
 Hooks.once("init", async () => {
   game.ttb2e = TTB2E;
 
@@ -65,8 +63,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
 
 Hooks.on("renderChatMessage", async (message, html, data) => {
   if (message.type === "flip") {
-    const { default: renderChatMessage } = await import(
-      "./render-chat-message.jsx"
+    const { renderChatMessage } = await import(
+      "./components/flip-chat-message.jsx"
     );
     renderChatMessage(message, html, data);
   }

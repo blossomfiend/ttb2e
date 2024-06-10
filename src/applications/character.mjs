@@ -16,7 +16,7 @@ export default class CharacterApplication extends SolidApplicationMixin(
    * @override
    */
   static DEFAULT_OPTIONS = {
-    viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+    viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
     classes: ["no-application-padding"],
     window: {
       minimizable: true,

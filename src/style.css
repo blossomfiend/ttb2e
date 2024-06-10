@@ -48,6 +48,12 @@ root {
         /*  border-color: theme("colors.theme-light");*/
         /*}*/
       }
+      &:disabled {
+        color: inherit;
+        border-color: transparent;
+        background-color: transparent;
+        outline-color: transparent;
+      }
     }
 
     .sheet-button {
@@ -84,6 +90,36 @@ root {
         .theme-dark & {
           background-color: theme("colors.theme-dark");
         }
+      }
+    }
+
+    .text-button {
+      display: inline;
+      background-color: transparent;
+      color: inherit;
+      line-height: inherit;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      transition-property: all;
+      transition-timing-function: theme("transitionTimingFunction.in");
+      transition-duration: theme("transitionDuration.75");
+      &:hover:not(&:disabled) {
+        color: theme("colors.theme-dark");
+        text-decoration: theme("colors.theme-light");
+        cursor: pointer;
+        .theme-dark & {
+          color: theme("colors.theme-light");
+          text-decoration: theme("colors.theme-dark");
+        }
+      }
+      &:disabled {
+        color: inherit;
+        text-shadow: none;
       }
     }
 

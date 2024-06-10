@@ -7,19 +7,14 @@ import TextSuits from "../partial/text-suits.jsx";
 import TextButton from "../partial/text-button.jsx";
 
 export default function SkillsTab(props) {
+  const canEdit = createMemo(() => props.actor.isOwner);
   const skills = createMemo(() => Object.values(props.actor.system.skills));
 
-  function renderDuel(skill, aspect) {
-    new DuelApplication({ actor: props.actor, skill, aspect }).render({
-      force: true,
-    });
-  }
-
-  function renderSkillConfig(skill) {
-    new SkillConfigApplication({ actor: props.actor, skill }).render({
-      force: true,
-    });
-  }
+  return (
+    <div class="grid grid-cols-2 gap-3 py-4 px-2">
+      {game.ttb2e.skillCategories.map(Category)}
+    </div>
+  );
 
   function Category(category) {
     return (
@@ -43,11 +38,13 @@ export default function SkillsTab(props) {
         <div class="flex flex-row items-center gap-1 overflow-hidden">
           <NumberInput
             class="self-stretch text-base w-8 m-px"
+            disabled={!canEdit()}
             name={`system.skills.${name()}.rank`}
             value={props.skill.rank}
           />
           <TextButton
             class="p-1 truncate"
+            disabled={!canEdit()}
             onClick={() => renderSkillConfig(`skills.${name()}`)}
           >
             {localize(`ttb.skills.${name()}.name`)}
@@ -58,6 +55,7 @@ export default function SkillsTab(props) {
             {(aspect) => (
               <button
                 class="py-0.5 sheet-button flex flex-col items-center min-w-14 justify-center leading-none border-none"
+                disabled={!canEdit()}
                 onClick={() => renderDuel(`skills.${name()}`, aspect())}
               >
                 <div class="italic text-xs text-stone-700 dark:text-zinc-300">
@@ -75,9 +73,17 @@ export default function SkillsTab(props) {
     );
   }
 
-  return (
-    <div class="grid grid-cols-2 gap-3 py-4 px-2">
-      {game.ttb2e.skillCategories.map(Category)}
-    </div>
-  );
+  function renderDuel(skill, aspect) {
+    if (!canEdit()) return;
+    new DuelApplication({ actor: props.actor, skill, aspect }).render({
+      force: true,
+    });
+  }
+
+  function renderSkillConfig(skill) {
+    if (!canEdit()) return;
+    new SkillConfigApplication({ actor: props.actor, skill }).render({
+      force: true,
+    });
+  }
 }

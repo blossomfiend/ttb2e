@@ -26,6 +26,9 @@ export default function SolidApplicationMixin(BaseApplication) {
      * @override
      */
     async _renderHTML(context, options) {
+      // preload component
+      this.constructor.SOLID_COMPONENT_LOADER();
+      // and get app creation stuff at the same time
       const { createApp } = await import("../components/app-container.jsx");
       return {
         createApp,

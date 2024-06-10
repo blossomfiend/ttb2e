@@ -17,8 +17,8 @@ export default function TabMenu(inputProps) {
         <a
           class="flex-1 text-center overflow-x-hidden text-clip overflow-y-visible p-1 transition-all
             rounded-t-lg border-b-0 border-x border-t border-solid border-transparent
+            hover:border-theme-light dark:hover:border-theme-dark
             [&.selected]:bg-theme-light dark:[&.selected]:bg-theme-dark
-            hover:border-theme-dark dark:hover:border-theme-light
             text-shadow-none dark:drop-shadow"
           classList={{
             selected:

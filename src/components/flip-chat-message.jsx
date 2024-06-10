@@ -1,9 +1,10 @@
-import { createMemo, For, Show } from "solid-js";
+import { createMemo, For, Show, Suspense } from "solid-js";
 import { canCardBeChosen, localize } from "../util.mjs";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import PlayingCard from "./partial/playing-card.jsx";
 import TextSuits from "./partial/text-suits.jsx";
 import { trackDocument } from "./rendering-utils.mjs";
+import { ErrorBoundary, render } from "solid-js/web";
 
 export default function FlipChatMessage(props) {
   const message = trackDocument(props.message);
@@ -87,3 +88,23 @@ function HeaderField(props) {
     </Show>
   );
 }
+
+export function renderChatMessage(message, html, data) {
+  render(
+    () => (
+      <ErrorBoundary
+        fallback={(e) => {
+          logger.error(e);
+          return <div>Error: {e.toString()}</div>;
+        }}
+      >
+        <Suspense>
+          <FlipChatMessage message={message} />
+        </Suspense>
+      </ErrorBoundary>
+    ),
+    html[0]
+  );
+}
+
+requestAnimationFrame(() => ui.chat.scrollBottom({ waitImages: true }));
