@@ -43,7 +43,7 @@ export default function TwistDeckInit(props) {
                 setState("suitRoles", suitRole.name, e.target.value)
               }
             >
-              {Object.keys(game.ttb2e.suits).map((suit) => (
+              {game.ttb2e.suits.map((suit) => (
                 <option value={suit}>
                   {localize(`ttb.suits.${suit}.name`)}
                 </option>

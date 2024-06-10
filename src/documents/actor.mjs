@@ -1,4 +1,4 @@
-import { localize, objMap } from "../util.mjs";
+import { localize, objMap, rankByValue } from "../util.mjs";
 import TtbCards from "./cards.mjs";
 
 /**
@@ -41,6 +41,11 @@ export default class TtbActor extends Actor {
     const aspects = systemData.aspects;
     const derivedAspects = systemData.derivedAspects;
     const flags = actorData.flags.boilerplate || {};
+
+    if (this.type === "fatemasterCharacter") {
+      systemData.rank = rankByValue(systemData.rankValue);
+      systemData.fatePoints.max = systemData.rank.fatePoints;
+    }
 
     for (const skillConstants of game.ttb2e.skills) {
       const skill = skills[skillConstants.name];
@@ -110,37 +115,12 @@ export default class TtbActor extends Actor {
       );
     }
 
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
-  }
-
-  /**
-   * Prepare Character type specific data
-   */
-  _prepareCharacterData(actorData) {
-    if (actorData.type !== "character") return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
-
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
-    }
-  }
-
-  /**
-   * Prepare NPC type specific data.
-   */
-  _prepareNpcData(actorData) {
-    if (actorData.type !== "npc") return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
-    systemData.xp = systemData.cr * systemData.cr * 100;
+    systemData.colors.finalColor = Color.from(
+      systemData.colors.customColor ??
+        game.ttb2e.themes.find(
+          (t) => t.name === (systemData.colors.theme ?? "malifauxYellow"),
+        ).color,
+    );
   }
 
   /**

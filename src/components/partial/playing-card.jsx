@@ -1,5 +1,4 @@
 import { createMemo, For, Show } from "solid-js";
-import { getSeverity } from "../../util.mjs";
 import TextSuits from "./text-suits.jsx";
 
 /**
@@ -19,11 +18,11 @@ export default function PlayingCard(props) {
   );
   const valueDifference = () =>
     duelTotal().value - (props.targetNumber?.value ?? 0);
-  const severity = () => getSeverity(props.card.value);
+  const severity = () => game.ttb2e.severityByCardValue[props.card.value];
 
   return (
     <div
-      class="w-16 h-24 leading-none rounded grid grid-cols-1 grid-rows-1 text-slate-900"
+      class="w-16 h-24 leading-none rounded grid grid-cols-1 grid-rows-1 text-zinc-900"
       classList={{
         "shadow-md": props.canBeChosen,
         "shadow-sm": !props.canBeChosen,
@@ -32,7 +31,7 @@ export default function PlayingCard(props) {
       <div
         class="row-start-1 row-end-1 col-start-1 col-end-1 flex flex-col justify-between rounded"
         classList={{
-          "bg-slate-100": props.targetNumber == null,
+          "bg-zinc-100": props.targetNumber == null,
           "bg-lime-100": props.targetNumber != null && higherThanTN(),
           "bg-red-100": props.targetNumber != null && !higherThanTN(),
         }}
@@ -64,7 +63,7 @@ export default function PlayingCard(props) {
         <Show when={props.targetNumber != null || props.actingValue != null}>
           <div class="self-end flex flex-col items-end rounded-b w-full p-1 pt-1.5">
             <Show when={props.targetNumber != null}>
-              <div class="text-text-dark-secondary text-13 italic pr-1">
+              <div class="text-text-dark-secondary text-sm italic pr-1">
                 {`${valueDifference() > 0 ? "+" : ""}${valueDifference()}`}
               </div>
             </Show>
@@ -83,7 +82,7 @@ export default function PlayingCard(props) {
         </Show>
       </div>
       <Show when={!(props.canBeChosen ?? true)}>
-        <div class="row-start-1 row-end-1 col-start-1 col-end-1 rounded bg-slate-700/60" />
+        <div class="row-start-1 row-end-1 col-start-1 col-end-1 rounded bg-zinc-900/50" />
       </Show>
     </div>
   );

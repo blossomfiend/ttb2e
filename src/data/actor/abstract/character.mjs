@@ -46,10 +46,14 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
         {
           required: true,
           nullable: false,
-          initial: ["Living", "Fated"],
+          initial: [],
         },
       ),
       actionPoints: new fields.SchemaField({ value: intField(2) }),
+      colors: new fields.SchemaField({
+        customColor: new fields.ColorField(),
+        theme: new fields.StringField(,
+      },
     };
   }
 }

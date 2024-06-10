@@ -1,7 +1,6 @@
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import path from "path";
 import { defineConfig } from "vite";
-import { patchCssModules } from "vite-css-modules";
 import solidPlugin from "vite-plugin-solid";
 
 // https://vitejs.dev/config/
@@ -17,12 +16,6 @@ export default defineConfig({
         target: "ws://localhost:30000",
         ws: true,
       },
-    },
-  },
-  css: {
-    transformer: "postcss",
-    modules: {
-      localsConvention: "camelCaseOnly",
     },
   },
   build: {
@@ -41,11 +34,11 @@ export default defineConfig({
       },
       preserveEntrySignatures: false,
     },
-    cssMinify: "esbuild",
+    cssMinify: "lightningcss",
     cssCodeSplit: false,
   },
   esbuild: {
     keepNames: true,
   },
-  plugins: [patchCssModules(), solidPlugin()],
+  plugins: [solidPlugin()],
 });

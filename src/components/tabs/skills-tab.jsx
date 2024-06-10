@@ -4,6 +4,7 @@ import SkillConfigApplication from "../../applications/skill-config.mjs";
 import { localize } from "../../util.mjs";
 import NumberInput from "../partial/number-input.jsx";
 import TextSuits from "../partial/text-suits.jsx";
+import TextButton from "../partial/text-button.jsx";
 
 export default function SkillsTab(props) {
   const skills = createMemo(() => Object.values(props.actor.system.skills));
@@ -23,9 +24,9 @@ export default function SkillsTab(props) {
   function Category(category) {
     return (
       <div class="flex flex-col gap-1">
-        <h3 class="border-none text-16">
+        <div class="border-none text-base">
           {localize(`ttb.skillCategories.${category}`)}
-        </h3>
+        </div>
         <div class="flex flex-col divide-y w-full">
           <Index each={skills().filter((skill) => skill.category === category)}>
             {(skill, skillIdx) => <Skill skill={skill()} skillIdx={skillIdx} />}
@@ -38,41 +39,35 @@ export default function SkillsTab(props) {
   function Skill(props) {
     const name = createMemo(() => props.skill.name);
     return (
-      <div class="flex flex-row justify-between items-center border-border-dark-5 dark:border-border-light-2/50 w-full p-0">
-        <div class="flex flex-row items-center gap-2 overflow-hidden">
-          <label class="flex flex-col items-center p-1">
-            <span class="w-8">
-              <NumberInput
-                name={`system.skills.${name()}.rank`}
-                value={props.skill.rank}
-              />
-            </span>
-            <span class="text-13 leading-none small-caps text-text-dark-secondary dark:text-stone-300">
-              {localize("ttb.ui.rank")}
-            </span>
-          </label>
-          <div
-            class="p-1 hover:text-shadow-red hover:cursor-pointer truncate"
+      <div class="flex flex-row justify-between items-center w-full">
+        <div class="flex flex-row items-center gap-1 overflow-hidden">
+          <NumberInput
+            class="self-stretch text-base w-8 m-px"
+            name={`system.skills.${name()}.rank`}
+            value={props.skill.rank}
+          />
+          <TextButton
+            class="p-1 truncate"
             onClick={() => renderSkillConfig(`skills.${name()}`)}
           >
             {localize(`ttb.skills.${name()}.name`)}
-          </div>
+          </TextButton>
         </div>
-        <div class="flex flex-row gap-2 h-full">
+        <div class="self-stretch flex flex-row gap-1">
           <Index each={props.skill.aspects}>
             {(aspect) => (
-              <div
-                class="flex flex-col gap-0 items-center hover:drop-shadow-red hover:cursor-pointer min-w-10 h-full justify-center"
+              <button
+                class="py-0.5 sheet-button flex flex-col items-center min-w-14 justify-center leading-none border-none"
                 onClick={() => renderDuel(`skills.${name()}`, aspect())}
               >
-                <div class="leading-none">
+                <div class="italic text-xs text-stone-700 dark:text-zinc-300">
+                  {localize(`ttb.aspects.${aspect()}.name`)}
+                </div>
+                <div class="">
                   {props.skill.av[aspect()].value}{" "}
                   <TextSuits suits={props.skill.av[aspect()].suits} />
                 </div>
-                <div class="italic text-11 leading-none text-text-dark-secondary dark:text-stone-300">
-                  {localize(`ttb.aspects.${aspect()}.name`)}
-                </div>
-              </div>
+              </button>
             )}
           </Index>
         </div>
@@ -81,7 +76,7 @@ export default function SkillsTab(props) {
   }
 
   return (
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 gap-3 py-4 px-2">
       {game.ttb2e.skillCategories.map(Category)}
     </div>
   );

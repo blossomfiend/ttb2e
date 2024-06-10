@@ -1,7 +1,7 @@
 /**
  * @typedef Ttb2e
  * @type {Object}
- * @property {Object<Object>} suits
+ * @property {string[]} suits
  * @property {Array<string>} aspects
  * @property {Array<string>} derivedAspects
  * @property {Array<string>} skillCategories
@@ -20,12 +20,7 @@ import { inclusiveRange } from "./util.mjs";
  * @type Ttb2e
  */
 const TTB2E = {
-  suits: {
-    rams: {},
-    crows: {},
-    tomes: {},
-    masks: {},
-  },
+  suits: ["rams", "crows", "tomes", "masks"],
   aspects: [
     "might",
     "grace",
@@ -354,9 +349,85 @@ const TTB2E = {
       values: [2, 6, 10],
     },
   ],
+  // prettier-ignore
+  severityByCardValue: [
+    /* blackJoker */ 0,
+    /*  1- 5 */ 1, 1, 1, 1, 1,
+    /*  6-10 */ 2, 2, 2, 2, 2,
+    /* 11-13 */ 3, 3, 3,
+    /* redJoker */ 4
+  ],
+  ranks: [
+    {
+      name: "peon",
+      fatePoints: 0,
+      unconsciousAtZero: true,
+      values: [1, 2, 3, 4],
+    },
+    {
+      name: "minion",
+      fatePoints: 1,
+      unconsciousAtZero: true,
+      values: [5, 6],
+    },
+    {
+      name: "enforcer",
+      fatePoints: 2,
+      unconsciousAtZero: false,
+      values: [7, 8],
+    },
+    {
+      name: "henchman",
+      fatePoints: 3,
+      unconsciousAtZero: false,
+      values: [9, 10, 11],
+    },
+    {
+      name: "master",
+      fatePoints: 4,
+      unconsciousAtZero: false,
+      values: [12, 13],
+    },
+    {
+      name: "tyrant",
+      fatePoints: 5,
+      unconsciousAtZero: false,
+      values: [14],
+    },
+  ],
+  thems: [
+    {
+      name: "guildRed",
+      color: "#ac0324",
+    },
+    {
+      name: "bayouBrown",
+      color: "#5e3729",
+    },
+    {
+      name: "tenThundersOrange",
+      color: "#d68221",
+    },
+    {
+      name: "malifauxYellow",
+      color: "#f6eb23",
+    },
+    {
+      name: "resurrectionistGreen",
+      color: "#057749",
+    },
+    {
+      name: "arcanistBlue",
+      color: "#009fdd",
+    },
+    {
+      name: "neverbornPurple",
+      color: "#7c33ef",
+    },
+  ],
 };
 
-TTB2E.fateDeck = [
+TT2E.fatDeck = [
   ...Object.keys(TTB2E.suits).flatMap((suit) =>
     [...inclusiveRange(1, 13)].map((value) => ({
       suit,
@@ -366,5 +437,12 @@ TTB2E.fateDeck = [
   { suit: "blackJoker", value: 0 },
   { suit: "redJoker", value: 14 },
 ];
+
+TTB2E.rankByValue = Object.fromEntries(
+  [...inclusiveRange(1, 14)].map((value) => [
+    value,
+    TTB2E.ranks.find((rank) => rank.values.incudes(alue)),
+  ]),
+);
 
 export default TTB2E;

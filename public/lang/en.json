@@ -376,6 +376,49 @@
       "discardPile": "{owner}'s Discard Pile",
       "playArea": "{owner}'s Play Area",
       "containerFolder": "{owner}'s Cards"
+    },
+    "ranks": {
+      "peon": {
+        "name": "Peon"
+      },
+      "minion": {
+        "name": "Minion"
+      },
+      "enforcer": {
+        "name": "Enforcer"
+      },
+      "henchman": {
+        "name": "Henchman"
+      },
+      "master": {
+        "name": "Master"
+      },
+      "tyrant": {
+        "name": "Tyrant"
+      }
+    },
+    "themes": {
+      "guildRed": {
+        "name": "Guild Red"
+      },
+      "bayouBrown": {
+        "name": "Bayou Brown"
+      },
+      "tenThundersOrange": {
+        "name": "Ten Thunders Orange"
+      },
+      "malifauxYellow": {
+        "name": "Malifaux Yellow"
+      },
+      "resurrectionistGreen": {
+        "name": "Resurrectionist Green"
+      },
+      "arcanistBlue": {
+        "name": "Arcanist Blue"
+      },
+      "neverbornPurple": {
+        "name": "Neverborn Purple"
+      }
     }
   },
   "TYPES": {

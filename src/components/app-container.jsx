@@ -42,9 +42,6 @@ export function createApp(componentLoader, mountElement, initialProps = {}) {
       </AppContainer>
     );
   }, mountElement);
-  const setter = (newProps) => {
-    logger.info("updating store", store, newProps);
-    return setStore(newProps);
-  };
+  const setter = (newProps) => setStore(newProps);
   return [store, setter, dispose];
 }

@@ -12,6 +12,10 @@ export default function SolidApplicationMixin(BaseApplication) {
    * @mixin
    */
   return class SolidApplication extends BaseApplication {
+    static DEFAULT_OPTIONS = {
+      classes: ["use-tailwind"],
+    };
+
     static SOLID_COMPONENT_LOADER;
     #propStore = null;
     #setPropStore = null;

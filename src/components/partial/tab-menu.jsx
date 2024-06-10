@@ -15,10 +15,14 @@ export default function TabMenu(inputProps) {
     <For each={props.tabs}>
       {(tab) => (
         <a
-          class="overflow-x-hidden text-clip overflow-y-visible p-2"
+          class="flex-1 text-center overflow-x-hidden text-clip overflow-y-visible p-1 transition-all
+            rounded-t-lg border-b-0 border-x border-t border-solid border-transparent
+            [&.selected]:bg-theme-light dark:[&.selected]:bg-theme-dark
+            hover:border-theme-dark dark:hover:border-theme-light
+            text-shadow-none dark:drop-shadow"
           classList={{
-            "text-shadow-red":
-              props.idFunction(props.currentTab) === props.idFunction(tab),
+            selected:
+              props.idFunction(props.currentTab) === props.idFnction(tab),
           }}
           onClick={() => props.onTabChange(tab)}
         >

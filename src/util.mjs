@@ -48,12 +48,19 @@ export function canCardBeChosen(card, allCards, fateModifier) {
   return true;
 }
 
-const SEVERITY_BY_VALUE = [0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4];
-
-export function getSeverity(value) {
-  return SEVERITY_BY_VALUE[value];
-}
-
 export function* inclusiveRange(first, last) {
   for (let i = first; i <= last; i++) yield i;
+}
+
+export function* intersperse(a, delim) {
+  let first = true;
+  for (const x of a) {
+    if (!first) yield delim;
+    first = false;
+    yield x;
+  }
+}
+
+export function rankByValue(rankValue) {
+  return game.ttb2e.rankByValue[rankValue];
 }

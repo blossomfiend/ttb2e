@@ -1,5 +1,3 @@
-import { objMap } from "../util.mjs";
-
 export function intField(initial, options = {}) {
   return new foundry.data.fields.NumberField({
     required: true,
@@ -12,7 +10,9 @@ export function intField(initial, options = {}) {
 
 export function suits(options = {}) {
   return new foundry.data.fields.SchemaField(
-    objMap(game.ttb2e.suits, () => intField(0, options)),
+    Object.fromEntries(
+      game.ttb2e.suits.map((suit) => [suit, intField(0, options)]),
+    ),
     options,
   );
 }

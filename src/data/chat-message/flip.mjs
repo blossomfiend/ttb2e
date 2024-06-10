@@ -17,11 +17,7 @@ export default class FlipChatMessageData extends foundry.abstract.DataModel {
       flippedCards: new fields.ArrayField(
         new fields.SchemaField({
           suit: new fields.StringField({
-            choices: [
-              ...Object.keys(game.ttb2e.suits),
-              "redJoker",
-              "blackJoker",
-            ],
+            choices: [...game.ttb2e.suits, "redJoker", "blackJoker"],
           }),
           value: intField(0),
         }),

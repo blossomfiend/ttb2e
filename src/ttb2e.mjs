@@ -1,5 +1,5 @@
-import TTB2E from "./config.mjs";
 import "./style.css";
+import TTB2E from "./game-data.mjs";
 
 import FatedActorData from "./data/actor/fated.mjs";
 import FatemasterCharacterActorData from "./data/actor/fatemaster-character.mjs";
@@ -12,6 +12,8 @@ import TtbChatMessage from "./documents/chat-message.mjs";
 import ControlCenterApplication from "./applications/control-center.mjs";
 import CharacterApplication from "./applications/character.mjs";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
+
+console.log("HELLO I AM TTB2E, NICE TO SEE YOU.");
 
 Hooks.once("init", async () => {
   game.ttb2e = TTB2E;

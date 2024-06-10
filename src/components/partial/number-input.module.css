@@ -1,5 +1,0 @@
-.ttb-number {
-  @apply w-full h-full text-center border-transparent bg-transparent p-0.5 leading-none
-    hover:shadow-foundry hover:shadow-shadow-primary hover:bg-black/10
-    disabled:shadow-none !important;
-}

@@ -66,7 +66,7 @@ export default function Duel(props) {
       <footer class="flex flex-row gap-1">
         {buttons.map((buttonFateModifier, buttonIdx) => (
           <button onClick={() => startFlip(buttonFateModifier)}>
-            <span class="text-16">
+            <span class="text-base">
               <Show
                 when={buttonFateModifier !== 0}
                 fallback={<span class="alight">Flip</span>}

@@ -44,28 +44,30 @@ export default function FlipChatMessage(props) {
   ];
 
   return (
-    <div class="extra-content flex flex-col gap-2">
-      <div class="text-center text-16">
-        {title()} <InlineFateModifiers fateModifier={fateModifier()} />
-      </div>
-      <div class="flex flex-row justify-evenly">
-        <For each={headerFields}>{(props) => <HeaderField {...props} />}</For>
-      </div>
-      <div class="flex flex-row gap-1 justify-center">
-        <For each={flippedCards()}>
-          {(flippedCard) => (
-            <PlayingCard
-              card={flippedCard}
-              actingValue={actingValue()}
-              targetNumber={targetNumber()}
-              canBeChosen={canCardBeChosen(
-                flippedCard,
-                flippedCards(),
-                fateModifier(),
-              )}
-            />
-          )}
-        </For>
+    <div class="extra-content use-tailwind">
+      <div class="size-full flex flex-col gap-2">
+        <div class="text-center text-base">
+          {title()} <InlineFateModifiers fateModifier={fateModifier()} />
+        </div>
+        <div class="flex flex-row justify-evenly">
+          <For each={headerFields}>{(props) => <HeaderField {...props} />}</For>
+        </div>
+        <div class="flex flex-row gap-1 justify-center">
+          <For each={flippedCards()}>
+            {(flippedCard) => (
+              <PlayingCard
+                card={flippedCard}
+                actingValue={actingValue()}
+                targetNumber={targetNumber()}
+                canBeChosen={canCardBeChosen(
+                  flippedCard,
+                  flippedCards(),
+                  fateModifier(),
+                )}
+              />
+            )}
+          </For>
+        </div>
       </div>
     </div>
   );
@@ -78,7 +80,7 @@ function HeaderField(props) {
         <div>
           {props.value().value} <TextSuits suits={props.value().suits} />
         </div>
-        <div class="text-13 small-caps text-text-dark-secondary">
+        <div class="text-sm small-caps text-text-dark-secondary">
           {props.title}
         </div>
       </div>
