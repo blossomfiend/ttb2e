@@ -1,11 +1,4 @@
-import {
-  createMemo,
-  createSignal,
-  Index,
-  lazy,
-  Suspense,
-  useContext,
-} from "solid-js";
+import { createMemo, createSignal, Index, lazy, Suspense, useContext } from "solid-js";
 import DuelApplication from "../applications/duel.mjs";
 import SkillConfigApplication from "../applications/skill-config.mjs";
 import { localize } from "../util.mjs";
@@ -17,39 +10,40 @@ import Tabs from "./partial/tabs.jsx";
 import TextButton from "./partial/text-button.jsx";
 import TextSuits from "./partial/text-suits.jsx";
 import OverviewTab from "./tabs/overview-tab.jsx";
+import CharacteristicsConfig from "../applications/characteristics-config.mjs";
 
 export default function CharacterSheet(props) {
   const system = createMemo(() => props.actor.system);
   const aspects = createMemo(() =>
     game.ttb2e.aspects.map((aspect) => ({
       name: aspect,
-      value: system().aspects[aspect],
-    })),
+      value: system().aspects[aspect]
+    }))
   );
   const derivedAspects = createMemo(() =>
     game.ttb2e.derivedAspects.map((derivedAspect) => ({
       name: derivedAspect,
-      ...system().derivedAspects[derivedAspect],
-    })),
+      ...system().derivedAspects[derivedAspect]
+    }))
   );
   let tabs = [
     {
       id: "overview",
       component: OverviewTab,
-      icon: "fa-solid fa-user",
+      icon: "fa-solid fa-user"
     },
     {
       id: "skills",
       component: lazy(() => import("./tabs/skills-tab.jsx")),
-      icon: "fa-solid fa-plus-minus",
+      icon: "fa-solid fa-plus-minus"
     },
     { id: "talents", component: null, icon: "fa-solid fa-scroll" },
     { id: "items", component: null, icon: "fa-solid fa-treasure-chest" },
     { id: "magic", component: null, icon: "fa-solid fa-hand-holding-magic" },
-    { id: "effects", component: null, icon: "fa-solid fa-sparkles" },
+    { id: "effects", component: null, icon: "fa-solid fa-sparkles" }
   ].map((tab) => ({
     ...tab,
-    name: localize(`ttb.ui.tabs.${tab.id}.name`),
+    name: localize(`ttb.ui.tabs.${tab.id}.name`)
   }));
   const [currentTab, setCurrentTab] = createSignal(tabs[0]);
   const appContext = useContext(AppContainerContext);
@@ -83,7 +77,7 @@ export default function CharacterSheet(props) {
             <span class="flex-1 text-start flex flex-row justify-between items-center">
               <span class="px-0.5">{system().wounds.max}</span>
               <TextButton class="self-stretch align-middle p-1">
-                <i class="fa-solid fa-cog" />
+                <i class="m-0 fa-solid fa-cog" />
               </TextButton>
             </span>
           </div>
@@ -122,7 +116,7 @@ export default function CharacterSheet(props) {
             )}
             <div class="flex flex-row gap-1">
               {system().characteristics.join(", ")}
-              <TextButton>
+              <TextButton onClick={() => (new CharacteristicsConfig({ document: props.actor })).render({ force: true })}>
                 <i class="fa-solid fa-cog" />
               </TextButton>
             </div>
@@ -161,7 +155,7 @@ export default function CharacterSheet(props) {
                       onClick={() =>
                         new SkillConfigApplication({
                           actor: props.actor,
-                          skill: `derivedAspects.${name()}`,
+                          skill: `derivedAspects.${name()}`
                         }).render({ force: true })
                       }
                     >
@@ -172,7 +166,7 @@ export default function CharacterSheet(props) {
                       onClick={() =>
                         new DuelApplication({
                           actor: props.actor,
-                          skill: `derivedAspects.${name()}`,
+                          skill: `derivedAspects.${name()}`
                         }).render({ force: true })
                       }
                     >

@@ -18,6 +18,9 @@
       "resetFateDeck": "Reset Fate Deck",
       "show": "Show",
       "discard": "Discard",
+      "characteristicsConfig": {
+        "title": "{name} Characteristics Configuration"
+      },
       "tabs": {
         "overview": {
           "name": "Overview"
