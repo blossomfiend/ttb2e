@@ -40,7 +40,6 @@ export default class TtbActor extends Actor {
     const skills = systemData.skills;
     const aspects = systemData.aspects;
     const derivedAspects = systemData.derivedAspects;
-    const flags = actorData.flags.boilerplate || {};
 
     if (this.type === "fatemasterCharacter") {
       systemData.rank = rankByValue(systemData.rankValue);
@@ -123,63 +122,27 @@ export default class TtbActor extends Actor {
     );
   }
 
-  /**
-   * Override getRollData() that's supplied to rolls.
-   */
-  getRollData() {
-    const data = super.getRollData();
-
-    // Prepare character roll data.
-    this._getCharacterRollData(data);
-    this._getNpcRollData(data);
-
-    data.testField = "hello from getRollData()";
-    this.items;
-
-    return data;
-  }
-
-  /**
-   * Prepare character roll data.
-   */
-  _getCharacterRollData(data) {
-    if (this.type !== "character") return;
-
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
-    }
-  }
-
-  /**
-   * Prepare NPC roll data.
-   */
-  _getNpcRollData() {
-    // Process additional NPC data here.
-  }
-
-  _onUpdate(data, options, userId) {
-    return super._onUpdate(data, options, userId);
-  }
-
   async _preCreate(data, options, userId) {
     await super._preCreate(data, options, userId);
-    await this.ensureCardsExist();
+    await this.ensureCardsExist({ inCreation: true });
+
+    // Configure prototype token settings
+    if (this.type === "fated") {
+      this.updateSource({
+        prototypeToken: {
+          sight: { enabled: true },
+          actorLink: true,
+          disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+        },
+      });
+    }
   }
 
   /**
    * Set up all the cards documents needed for fated to play the game
    * @return {Promise<void>}
    */
-  async ensureCardsExist() {
+  async ensureCardsExist({ inCreation = false } = {}) {
     // only fated ever have these cards
     if (this.type !== "fated") {
       return;
@@ -222,7 +185,10 @@ export default class TtbActor extends Actor {
         await cards[cardsType].update({ name: getPileName(cardsType) });
       }
     }
-    await this.update({ system: { cards } });
+    const updateData = { system: { cards } };
+    console.log(updateData);
+    if (inCreation) await this.updateSource(updateData);
+    else await this.update(updateData);
   }
 
   async _preDelete(options, user) {
