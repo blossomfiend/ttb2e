@@ -1,10 +1,10 @@
-import { createMemo, For, Show, Suspense } from "solid-js";
+import { createMemo, For, onMount, Show, Suspense } from "solid-js";
+import { ErrorBoundary, render } from "solid-js/web";
 import { canCardBeChosen, localize } from "../util.mjs";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import PlayingCard from "./partial/playing-card.jsx";
 import TextSuits from "./partial/text-suits.jsx";
 import { trackDocument } from "./rendering-utils.mjs";
-import { ErrorBoundary, render } from "solid-js/web";
 
 export default function FlipChatMessage(props) {
   const message = trackDocument(props.message);
@@ -44,9 +44,13 @@ export default function FlipChatMessage(props) {
     { value: actingValue, title: "AV" },
   ];
 
+  onMount(() => {
+    if (ui.chat.isAtBottom) ui.chat.scrollBottom();
+  });
+
   return (
     <div class="extra-content use-tailwind">
-      <div class="size-full flex flex-col gap-2">
+      <div class="size-full flex flex-col gap-2 items-stretch">
         <div class="text-center text-base">
           {title()} <InlineFateModifiers fateModifier={fateModifier()} />
         </div>
@@ -78,11 +82,11 @@ function HeaderField(props) {
   return (
     <Show when={props.value() != null}>
       <div class="flex flex-col items-center">
-        <div>
-          {props.value().value} <TextSuits suits={props.value().suits} />
-        </div>
-        <div class="text-sm small-caps text-text-dark-secondary">
+        <div class="text-sm leading-tight italic text-stone-700">
           {props.title}
+        </div>
+        <div class="text-base leading-tight">
+          {props.value().value} <TextSuits suits={props.value().suits} />
         </div>
       </div>
     </Show>
@@ -103,8 +107,6 @@ export function renderChatMessage(message, html, data) {
         </Suspense>
       </ErrorBoundary>
     ),
-    html[0]
+    html[0],
   );
 }
-
-requestAnimationFrame(() => ui.chat.scrollBottom({ waitImages: true }));

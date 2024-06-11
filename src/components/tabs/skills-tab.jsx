@@ -56,7 +56,7 @@ export default function SkillsTab(props) {
               <button
                 class="py-0.5 sheet-button flex flex-col items-center min-w-14 justify-center leading-none border-none"
                 disabled={!canEdit()}
-                onClick={() => renderDuel(`skills.${name()}`, aspect())}
+                onClick={() => renderDuel(`skills.${name()}`, aspect(), props.skill.av[aspect()])}
               >
                 <div class="italic text-xs text-stone-700 dark:text-zinc-300">
                   {localize(`ttb.aspects.${aspect()}.name`)}
@@ -73,9 +73,10 @@ export default function SkillsTab(props) {
     );
   }
 
-  function renderDuel(skill, aspect) {
+  function renderDuel(skill, aspect, actingValue) {
     if (!canEdit()) return;
-    new DuelApplication({ actor: props.actor, skill, aspect }).render({
+    console.log(skill, aspect, actingValue);
+    new DuelApplication({ actor: props.actor, skill, aspect, actingValue }).render({
       force: true,
     });
   }

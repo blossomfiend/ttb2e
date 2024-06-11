@@ -1,6 +1,13 @@
 import { localize } from "../util.mjs";
 import SolidApplicationMixin from "./solid-application.mjs";
 
+/**
+ * @typedef {import("../flip.mjs").FlipData | any} DuelOptions
+ * @property {TtbActor} actor
+ * @property {string} skill A string like "skill.sorcery" or "derivedAspect.defense"
+ * @property {string} aspect
+ */
+
 export default class DuelApplication extends SolidApplicationMixin(
   foundry.applications.api.ApplicationV2,
 ) {
@@ -19,15 +26,16 @@ export default class DuelApplication extends SolidApplicationMixin(
       height: "auto",
     },
   };
-  #actor;
-  #aspect;
-  #skill;
 
+  #options;
+
+  /**
+   *
+   * @param {DuelOptions} options
+   */
   constructor(options = {}) {
     super(options);
-    this.#actor = options.actor;
-    this.#aspect = options.aspect;
-    this.#skill = options.skill;
+    this.#options = options;
   }
 
   /**
@@ -44,9 +52,7 @@ export default class DuelApplication extends SolidApplicationMixin(
   async _prepareContext(options) {
     return {
       close: () => this.close(),
-      actor: this.#actor,
-      aspect: this.#aspect,
-      skill: this.#skill,
+      ...this.#options,
     };
   }
 }

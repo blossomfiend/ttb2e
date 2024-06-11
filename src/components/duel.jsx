@@ -1,30 +1,15 @@
 import { Show } from "solid-js";
-import { createStore, reconcile } from "solid-js/store";
+import { createStore, reconcile, unwrap } from "solid-js/store";
 import Flip from "../flip.mjs";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import SuitedNumberFormField from "./partial/suited-number-form-field.jsx";
 
 export default function Duel(props) {
   const [state, setState] = createStore({
-    targetNumber: null,
-    actingValue: null,
+    targetNumber: props.targetNumber,
+    actingValue: props.actingValue,
   });
   const buttons = [3, 2, 1, 0, -1, -2, -3];
-
-  const startFlip = async (fateModifier) => {
-    let flip = new Flip(
-      { fateModifier },
-      {
-        actor: props.actor,
-        skill: props.skill,
-        aspect: props.aspect,
-        targetNumber: state.targetNumber,
-        actingValue: state.actingValue,
-      },
-    );
-    await flip.evaluate();
-    props.close();
-  };
 
   return (
     <form
@@ -82,4 +67,19 @@ export default function Duel(props) {
       </footer>
     </form>
   );
+
+  async function startFlip(fateModifier) {
+    let flip = new Flip(
+      { fateModifier },
+      {
+        actor: props.actor,
+        skill: props.skill,
+        aspect: props.aspect,
+        targetNumber: state.targetNumber,
+        actingValue: state.actingValue,
+      },
+    );
+    await flip.evaluate();
+    props.close();
+  }
 }
