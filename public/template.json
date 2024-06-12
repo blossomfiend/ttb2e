@@ -7,13 +7,14 @@
   },
   "Item": {
     "types": [
-      "pursuit",
-      "talent",
-      "trigger",
+      "equipment",
       "magia",
       "immuto",
-      "equipment",
-      "action"
+      "action",
+      "ability",
+      "trigger",
+      "talent",
+      "pursuit"
     ]
   },
   "ChatMessage": {

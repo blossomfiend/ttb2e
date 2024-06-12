@@ -3,25 +3,35 @@
  */
 
 /**
- * @template {Constructor} BaseApplication
- * @param {ApplicationV2} BaseApplication
+ * @template {new (...args: any[]) => ApplicationV2} TBase
+ * @param {TBase} BaseApplication
  */
 export default function SolidApplicationMixin(BaseApplication) {
   /**
-   * @extends {ApplicationV2}
+   * @augments BaseApplication
    * @mixin
    */
   return class SolidApplication extends BaseApplication {
+    /**
+     * @inheritDoc
+     * @override
+     */
     static DEFAULT_OPTIONS = {
       classes: ["use-tailwind"],
     };
 
+    /**
+     * @template T
+     * @type {() => Promise<{ default: (...T) => JSX.Element; }>}
+     */
     static SOLID_COMPONENT_LOADER;
+
     #propStore = null;
     #setPropStore = null;
     #disposeSolidApplication = null;
 
     /**
+     * @inheritDoc
      * @protected
      * @override
      */
@@ -37,6 +47,7 @@ export default function SolidApplicationMixin(BaseApplication) {
     }
 
     /**
+     * @inheritDoc
      * @protected
      * @override
      */
@@ -68,6 +79,7 @@ export default function SolidApplicationMixin(BaseApplication) {
     }
 
     /**
+     * @inheritDoc
      * @protected
      * @override
      */

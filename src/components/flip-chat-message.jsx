@@ -1,6 +1,6 @@
 import { createMemo, For, onMount, Show, Suspense } from "solid-js";
 import { ErrorBoundary, render } from "solid-js/web";
-import { canCardBeChosen, localize } from "../util.mjs";
+import { canCardBeChosen, localize } from "../util.mts";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import PlayingCard from "./partial/playing-card.jsx";
 import TextSuits from "./partial/text-suits.jsx";

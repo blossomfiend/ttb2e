@@ -1,4 +1,4 @@
-import { localize, localizeCardName } from "../../util.mjs";
+import { localize, localizeCardName } from "../../util.mts";
 
 export default class TtbCardsDirectory extends CardsDirectory {
   /** @inheritDoc */

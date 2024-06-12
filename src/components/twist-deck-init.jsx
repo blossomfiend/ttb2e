@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { localize, localizeCardName } from "../util.mjs";
+import { localize, localizeCardName } from "../util.mts";
 
 export default function TwistDeckInit(props) {
   const [state, setState] = createStore({

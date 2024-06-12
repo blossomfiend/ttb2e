@@ -1,15 +1,37 @@
 @import "styles/ttb-icons.css";
 
-root {
-  --char-theme-color: #ff6400;
-}
-
 .use-tailwind:not(#I-am-so-sorry-for-this-hack) {
   @tailwind components;
   @tailwind utilities;
   @tailwind variants;
 
   @layer components {
+    .sheet-root {
+      color: theme("colors.stone.800");
+      background-attachment: local;
+
+      background-color: theme("colors.stone.200");
+      background-image: radial-gradient(
+        ellipse 50rem 19rem at left 2rem top 2rem,
+        theme("colors.theme-lighter") 0,
+        transparent 50%
+      );
+
+      .theme-light & :is(input, select) {
+        --input-text-color: oklch(39% 0.06 77.21);
+      }
+
+      .theme-dark & {
+        color: theme("colors.zinc.100");
+        background-color: theme("colors.zinc.900");
+        background-image: radial-gradient(
+          ellipse 50rem 19rem at left 2rem top 2rem,
+          theme("colors.theme-dark") 0px,
+          transparent 50%
+        );
+      }
+    }
+
     .subtle-input {
       /*@apply border-transparent bg-transparent p-0.5 leading-none transition-all outline-transparent*/
       /*      hover:shadow hover:bg-black/10 dark:hover:bg-white/10*/
@@ -26,20 +48,26 @@ root {
       transition-property: all;
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
+
       &:hover {
         border-color: oklch(0 0 0 / 0.2);
+
         .theme-dark & {
           border-color: oklch(1 0 0 / 0.2);
         }
       }
-      &:hover, &:focus {
+
+      &:hover,
+      &:focus {
         box-shadow: theme("boxShadow.DEFAULT");
         background-color: theme("colors.black / 10%");
+
         .theme-dark & {
           border-color: theme("colors.zinc.600");
           background-color: theme("colors.white / 10%");
         }
       }
+
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
@@ -48,6 +76,7 @@ root {
         /*  border-color: theme("colors.theme-light");*/
         /*}*/
       }
+
       &:disabled {
         color: inherit;
         border-color: transparent;
@@ -67,26 +96,34 @@ root {
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
       border-color: oklch(0 0 0 / 0.2);
+
       .theme-dark & {
         border-color: oklch(1 0 0 / 0.2);
       }
+
       &:hover {
         border-color: transparent;
         background-color: theme("colors.theme-lighter");
+
         .theme-dark & {
           background-color: theme("colors.theme-darker");
         }
       }
+
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
       }
-      &:hover, &:focus {
+
+      &:hover,
+      &:focus {
         box-shadow: theme("boxShadow.md");
       }
+
       &:active {
         box-shadow: theme("boxShadow.DEFAULT");
         background-color: theme("colors.theme-light");
+
         .theme-dark & {
           background-color: theme("colors.theme-dark");
         }
@@ -108,15 +145,18 @@ root {
       transition-property: all;
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
+
       &:hover:not(&:disabled) {
         color: theme("colors.theme-dark");
-        text-decoration: theme("colors.theme-light");
+        text-shadow: theme("colors.theme-light") 0 0 8px;
         cursor: pointer;
+
         .theme-dark & {
           color: theme("colors.theme-light");
-          text-decoration: theme("colors.theme-dark");
+          text-shadow: theme("colors.theme-dark") 0 0 8px;
         }
       }
+
       &:disabled {
         color: inherit;
         text-shadow: none;
@@ -132,25 +172,48 @@ root {
       transition-timing-function: theme("transitionTimingFunction.in");
       transition-duration: theme("transitionDuration.75");
       background-color: oklch(0 0 0 / 0.1);
+
       .theme-dark & {
         background-color: oklch(1 0 0 / 0.1);
       }
+
       &:hover {
         background-color: oklch(0 0 0 / 0.15);
+
         .theme-dark & {
           background-color: oklch(1 0 0 / 0.15);
         }
       }
+
       &:focus {
         outline-width: theme("outlineWidth.1");
         outline-color: theme("colors.theme");
       }
+
       &:active {
         background-color: theme("colors.zinc.100");
+
         .theme-dark & {
           background-color: theme("colors.zinc.900");
         }
       }
+    }
+
+    .label-text {
+      font-size: theme("fontSize.xs");
+      font-style: italic;
+      color: theme("colors.stone.700");
+      .theme-dark & {
+        color: theme("colors.zinc.300");
+      }
+    }
+
+    .prose, .prose * {
+      user-select: text;
+      font-family: inherit;
+      border: none;
+      text-shadow: none;
+      background-color: inherit;
     }
   }
 }

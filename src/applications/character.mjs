@@ -1,9 +1,10 @@
 import SolidApplicationMixin from "./solid-application.mjs";
 
 /**
- * @extends foundry.applications.sheets.ActorSheetV2
+ * @extends ActorSheetV2
+ * @mixes SolidApplication
  */
-export default class CharacterApplication extends SolidApplicationMixin(
+export default class CharacterSheet extends SolidApplicationMixin(
   foundry.applications.sheets.ActorSheetV2,
 ) {
   /**
@@ -38,7 +39,6 @@ export default class CharacterApplication extends SolidApplicationMixin(
    */
   async _prepareContext(options) {
     return {
-      actorData: this.actor.toObject(false),
       actor: this.actor,
       token: this.token,
     };

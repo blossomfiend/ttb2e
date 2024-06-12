@@ -1,26 +1,46 @@
-/**
- * @typedef Ttb2e
- * @type {Object}
- * @property {string[]} suits
- * @property {Array<string>} aspects
- * @property {Array<string>} derivedAspects
- * @property {Array<string>} skillCategories
- * @property {Array<{name: string, aspects: string|Array<string>, category: string}>} skills
- * @property {TtbCard[]} fateDeck
- */
+import { inclusiveRange } from "./util.mts";
 
-/**
- * @name Game#ttb2e
- * @property {Ttb2e} ttb2e
- */
-
-import { inclusiveRange } from "./util.mjs";
-
-/**
- * @type Ttb2e
- */
-const TTB2E = {
-  suits: ["rams", "crows", "tomes", "masks"],
+const suits = ["rams", "crows", "tomes", "masks"] as const;
+const ranks = [
+  {
+    name: "peon",
+    fatePoints: 0,
+    unconsciousAtZero: true,
+    values: [1, 2, 3, 4],
+  },
+  {
+    name: "minion",
+    fatePoints: 1,
+    unconsciousAtZero: true,
+    values: [5, 6],
+  },
+  {
+    name: "enforcer",
+    fatePoints: 2,
+    unconsciousAtZero: false,
+    values: [7, 8],
+  },
+  {
+    name: "henchman",
+    fatePoints: 3,
+    unconsciousAtZero: false,
+    values: [9, 10, 11],
+  },
+  {
+    name: "master",
+    fatePoints: 4,
+    unconsciousAtZero: false,
+    values: [12, 13],
+  },
+  {
+    name: "tyrant",
+    fatePoints: 5,
+    unconsciousAtZero: false,
+    values: [14],
+  },
+] as const;
+const ttbGameData = {
+  suits,
   aspects: [
     "might",
     "grace",
@@ -357,44 +377,7 @@ const TTB2E = {
     /* 11-13 */ 3, 3, 3,
     /* redJoker */ 4
   ],
-  ranks: [
-    {
-      name: "peon",
-      fatePoints: 0,
-      unconsciousAtZero: true,
-      values: [1, 2, 3, 4],
-    },
-    {
-      name: "minion",
-      fatePoints: 1,
-      unconsciousAtZero: true,
-      values: [5, 6],
-    },
-    {
-      name: "enforcer",
-      fatePoints: 2,
-      unconsciousAtZero: false,
-      values: [7, 8],
-    },
-    {
-      name: "henchman",
-      fatePoints: 3,
-      unconsciousAtZero: false,
-      values: [9, 10, 11],
-    },
-    {
-      name: "master",
-      fatePoints: 4,
-      unconsciousAtZero: false,
-      values: [12, 13],
-    },
-    {
-      name: "tyrant",
-      fatePoints: 5,
-      unconsciousAtZero: false,
-      values: [14],
-    },
-  ],
+  ranks,
   themes: [
     {
       name: "guildRed",
@@ -402,15 +385,15 @@ const TTB2E = {
     },
     {
       name: "bayouBrown",
-      color: "#5e3729",
+      color: "#683e2e",
     },
     {
       name: "tenThundersOrange",
-      color: "#d68221",
+      color: "#e17d0a",
     },
     {
       name: "malifauxYellow",
-      color: "#f6eb23",
+      color: "#dde40e",
     },
     {
       name: "resurrectionistGreen",
@@ -418,31 +401,38 @@ const TTB2E = {
     },
     {
       name: "arcanistBlue",
-      color: "#009fdd",
+      color: "#0c91ca",
     },
     {
       name: "neverbornPurple",
-      color: "#7c33ef",
+      color: "#7141ba",
     },
   ],
-};
-
-TTB2E.fateDeck = [
-  ...Object.keys(TTB2E.suits).flatMap((suit) =>
-    [...inclusiveRange(1, 13)].map((value) => ({
-      suit,
+  fateDeck: [
+    ...Object.keys(suits).flatMap((suit) =>
+      [...inclusiveRange(1, 13)].map((value) => ({
+        suit,
+        value,
+      })),
+    ),
+    { suit: "blackJoker", value: 0 },
+    { suit: "redJoker", value: 14 },
+  ],
+  rankByValue: Object.fromEntries(
+    [...inclusiveRange(1, 14)].map((value) => [
       value,
-    })),
+      // @ts-ignore
+      ranks.find((rank) => rank.values.includes(value)),
+    ]),
   ),
-  { suit: "blackJoker", value: 0 },
-  { suit: "redJoker", value: 14 },
-];
+} as const;
 
-TTB2E.rankByValue = Object.fromEntries(
-  [...inclusiveRange(1, 14)].map((value) => [
-    value,
-    TTB2E.ranks.find((rank) => rank.values.includes(value)),
-  ]),
-);
+export type TtbGameData = typeof ttbGameData;
 
-export default TTB2E;
+declare global {
+  namespace game {
+    let ttb2e: TtbGameData;
+  }
+}
+
+export default ttbGameData;

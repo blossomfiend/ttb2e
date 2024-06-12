@@ -1,24 +1,27 @@
 import "./style.css";
-import TTB2E from "./game-data.mjs";
+import ttbGameData from "./game-data.mts";
 
 import FatedActorData from "./data/actor/fated.mjs";
 import FatemasterCharacterActorData from "./data/actor/fatemaster-character.mjs";
+import TriggerData from "./data/item/trigger.mjs";
 import FlipChatMessageData from "./data/chat-message/flip.mjs";
 
 import TtbActor from "./documents/actor.mjs";
+import TtbItem from "./documents/item.mjs";
 import TtbCards from "./documents/cards.mjs";
 import TtbChatMessage from "./documents/chat-message.mjs";
 
-import ControlCenterApplication from "./applications/control-center.mjs";
-import CharacterApplication from "./applications/character.mjs";
+import CharacterSheet from "./applications/character.mjs";
+import TriggerSheet from "./applications/trigger.mjs";
 import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
+import ControlCenterApplication from "./applications/control-center.mjs";
 
 Hooks.once("init", async () => {
-  game.ttb2e = TTB2E;
+  game.ttb2e = ttbGameData;
 
   registerSettings();
 
-  // Define custom Document classes
+  // Actors
   CONFIG.Actor.documentClass = TtbActor;
   CONFIG.Actor.dataModels.fated = FatedActorData;
   CONFIG.Actor.dataModels.fatemasterCharacter = FatemasterCharacterActorData;
@@ -28,17 +31,25 @@ Hooks.once("init", async () => {
       value: [],
     },
   };
-  CONFIG.ChatMessage.documentClass = TtbChatMessage;
-  CONFIG.ChatMessage.dataModels.flip = FlipChatMessageData;
-  CONFIG.ui.cards = TtbCardsDirectory;
-  CONFIG.Cards.documentClass = TtbCards;
-
-  // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ttb2e", CharacterApplication, {
+  Actors.registerSheet("ttb2e", CharacterSheet, {
     types: ["fated", "fatemasterCharacter"],
     makeDefault: true,
   });
+
+  // Items
+  CONFIG.Item.documentClass = TtbItem;
+  CONFIG.Item.dataModels.trigger = TriggerData;
+  Items.registerSheet("ttb2e", TriggerSheet, {
+    types: ["trigger"],
+    makeDefault: true,
+  });
+
+  CONFIG.ChatMessage.documentClass = TtbChatMessage;
+  CONFIG.ChatMessage.dataModels.flip = FlipChatMessageData;
+
+  CONFIG.Cards.documentClass = TtbCards;
+  CONFIG.ui.cards = TtbCardsDirectory;
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {

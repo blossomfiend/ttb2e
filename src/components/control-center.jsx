@@ -11,7 +11,7 @@ import {
 } from "solid-js";
 import DuelApplication from "../applications/duel.mjs";
 import TtbChatMessage from "../documents/chat-message.mjs";
-import { localize, localizeCardName } from "../util.mjs";
+import { localize, localizeCardName } from "../util.mts";
 import PlayingCard from "./partial/playing-card.jsx";
 import { createHook, trackDocument } from "./rendering-utils.mjs";
 

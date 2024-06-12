@@ -1,7 +1,8 @@
-const plugin = require("tailwindcss/plugin");
+import type {Config} from "tailwindcss";
+import plugin from "tailwindcss/plugin";
+import typography from "@tailwindcss/typography";
 
-/** @type {import("tailwindcss").Config} */
-export default {
+const config: Config = {
   content: ["./src/**/*.{html,js,svelte,ts,jsx,tsx}"],
   darkMode: ["selector", ".theme-dark"],
   theme: {
@@ -43,6 +44,7 @@ export default {
     },
   },
   plugins: [
+    typography,
     plugin(function ({ addUtilities, matchUtilities, theme }) {
       addUtilities({
         ".text-shadow-none": {
@@ -68,3 +70,5 @@ export default {
     }),
   ],
 };
+
+export default config;

@@ -13,13 +13,13 @@ import {
 ColorSpace.register(sRGB);
 ColorSpace.register(OKLCH);
 
-export function themeColorCss(color: string) {
+export function themeColorCss(color: string = "#00fff7") {
   const c = to(parse(color), "oklch");
   return {
     "--ttb-color-theme": serialize(c),
     "--ttb-color-theme-lighter": serialize(
       set(clone(c), {
-        l: 0.7 + 0.2 * get(c, "l"),
+        l: 0.75 + 0.2 * get(c, "l"),
         c: 0.5 * get(c, "c"),
       }),
     ),

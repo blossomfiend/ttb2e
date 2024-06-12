@@ -1,6 +1,6 @@
 import { createMemo } from "solid-js";
 import TwistDeckInitApplication from "../../applications/twist-deck-init.mjs";
-import { localize } from "../../util.mjs";
+import { localize } from "../../util.mts";
 
 export default function OverviewTab(props) {
   const system = createMemo(() => props.actor.system);
@@ -38,6 +38,7 @@ export default function OverviewTab(props) {
           name="system.colors.theme"
           value={system().colors.theme}
         >
+          <option value="">None</option>
           {game.ttb2e.themes.map((theme) => (
             <option value={theme.name}>
               {localize(`ttb.themes.${theme.name}.name`)}

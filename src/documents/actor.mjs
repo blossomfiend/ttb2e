@@ -1,4 +1,4 @@
-import { localize, objMap, rankByValue } from "../util.mjs";
+import { localize, objMap, rankByValue } from "../util.mts";
 import TtbCards from "./cards.mjs";
 
 /**
@@ -116,9 +116,9 @@ export default class TtbActor extends Actor {
 
     systemData.colors.finalColor = Color.from(
       systemData.colors.customColor ??
-        game.ttb2e.themes.find(
-          (t) => t.name === (systemData.colors.theme ?? "malifauxYellow"),
-        ).color,
+        game.ttb2e.themes.find((t) => t.name === systemData.colors.theme)
+          ?.color ??
+        game.ttb2e.themes.find((t) => t.name === "malifauxYellow").color,
     );
   }
 

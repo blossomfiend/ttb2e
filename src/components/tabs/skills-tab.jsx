@@ -1,10 +1,10 @@
 import { createMemo, Index } from "solid-js";
 import DuelApplication from "../../applications/duel.mjs";
 import SkillConfigApplication from "../../applications/skill-config.mjs";
-import { localize } from "../../util.mjs";
+import { localize } from "../../util.mts";
 import NumberInput from "../partial/number-input.jsx";
 import TextSuits from "../partial/text-suits.jsx";
-import TextButton from "../partial/text-button.jsx";
+import TextButton from "../partial/text-button.tsx";
 
 export default function SkillsTab(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
@@ -58,7 +58,7 @@ export default function SkillsTab(props) {
                 disabled={!canEdit()}
                 onClick={() => renderDuel(`skills.${name()}`, aspect(), props.skill.av[aspect()])}
               >
-                <div class="italic text-xs text-stone-700 dark:text-zinc-300">
+                <div class="label-text">
                   {localize(`ttb.aspects.${aspect()}.name`)}
                 </div>
                 <div class="">

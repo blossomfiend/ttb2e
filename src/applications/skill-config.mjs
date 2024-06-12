@@ -1,4 +1,4 @@
-import { localize } from "../util.mjs";
+import { localize } from "../util.mts";
 import SolidApplicationMixin from "./solid-application.mjs";
 
 export default class SkillConfigApplication extends SolidApplicationMixin(

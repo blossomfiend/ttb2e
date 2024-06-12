@@ -52,7 +52,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
       actionPoints: new fields.SchemaField({ value: intField(2) }),
       colors: new fields.SchemaField({
         customColor: new fields.ColorField(),
-        theme: new fields.StringField(),
+        theme: new fields.StringField({ initial: "" }),
       }),
     };
   }
