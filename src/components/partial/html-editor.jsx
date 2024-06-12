@@ -1,8 +1,11 @@
 import {
   createContext,
+  createMemo,
+  createResource,
   createSignal,
   onMount,
   Show,
+  Suspense,
   untrack,
   useContext,
 } from "solid-js";
@@ -12,27 +15,44 @@ const HtmlEditorContext = createContext();
 
 export function HtmlEditorRoot(props) {
   const [editor, setEditor] = createSignal(null);
+
+  function setEditorWithPermission(editor) {
+    if (!props.canEdit) return;
+    setEditor(editor);
+  }
+
   return (
-    <HtmlEditorContext.Provider value={{ editor, setEditor }}>
-      <Show when={editor() !== null} fallback={props.children}>
-        <HtmlBox
-          title={editor().title}
-          collapsed={false}
-          onHeaderClicked={() => {}}
-          onEditClicked={() => setEditor(null)}
-        >
-          <prose-mirror
-            attr:value={editor().value}
-            use:setPmValue={{}}
-            class="p-2 h-full"
-            onChange={(e) => {
-              untrack(() => {
-                editor().onChange(e.target.value);
-              });
-            }}
-          />
-        </HtmlBox>
-      </Show>
+    <HtmlEditorContext.Provider
+      value={{
+        editor,
+        setEditor: setEditorWithPermission,
+        canEdit: props.canEdit,
+      }}
+    >
+      <Suspense>
+        <Show when={editor() !== null} fallback={props.children}>
+          <HtmlBox
+            title={editor().title}
+            collapsed={false}
+            onHeaderClicked={() => {}}
+            onEditClicked={() => setEditor(null)}
+            canEdit={false}
+          >
+            <prose-mirror
+              attr:value={editor().value}
+              attr:data-document={editor().document}
+              use:setPmValue={{}}
+              class="h-full"
+              onChange={(e) => {
+                untrack(() => {
+                  editor().onChange(e.target.value);
+                  setEditor(null);
+                });
+              }}
+            />
+          </HtmlBox>
+        </Show>
+      </Suspense>
     </HtmlEditorContext.Provider>
   );
 
@@ -41,7 +61,7 @@ export function HtmlEditorRoot(props) {
       requestAnimationFrame(() => {
         element.getElementsByClassName("editor-content")[0].innerHTML =
           editor().value;
-      })
+      });
     });
   }
 }
@@ -52,16 +72,23 @@ export function HtmlField(props) {
 
   const [collapsed, setCollapsed] = createSignal(false);
 
+  const value = createMemo(() => props.value);
+  const [contentHtml] = createResource(value, async (v) => {
+    if (props.value == null || props.value === "") return "";
+    return await TextEditor.enrichHTML(v);
+  });
+
   return (
     <HtmlBox
       title={props.title}
       collapsed={collapsed()}
       onHeaderClicked={() => setCollapsed(!collapsed())}
       onEditClicked={() => context.setEditor(props)}
+      canEdit={context.canEdit}
     >
       <div
         class="self-center p-2 prose prose-sm prose-stone dark:prose-zinc dark:prose-invert"
-        innerHTML={props.value || `<p>No description yet!</p>`}
+        innerHTML={contentHtml()}
       />
     </HtmlBox>
   );
@@ -73,15 +100,17 @@ function HtmlBox(props) {
       header={
         <div class="flex flex-row justify-between">
           <span class="p-2">{props.title}</span>
-          <TextButton
-            class="p-2"
-            onClick={(e) => {
-              e.stopPropagation();
-              props.onEditClicked();
-            }}
-          >
-            <i class="fa-solid fa-edit" />
-          </TextButton>
+          <Show when={props.canEdit}>
+            <TextButton
+              class="p-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onEditClicked();
+              }}
+            >
+              <i class="fa-solid fa-edit" />
+            </TextButton>
+          </Show>
         </div>
       }
       onHeaderClicked={() => props.onHeaderClicked()}
@@ -112,9 +141,7 @@ function Accordion(props) {
           {props.header}
         </div>
       </div>
-      <Show when={!props.collapsed}>
-        {props.children}
-      </Show>
+      <Show when={!props.collapsed}>{props.children}</Show>
     </div>
   );
 }

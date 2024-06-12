@@ -215,6 +215,34 @@
       text-shadow: none;
       background-color: inherit;
     }
+
+    prose-mirror {
+      menu.editor-menu {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 1px;
+        border-style: solid;
+
+        .theme-light & {
+          border-bottom-color: theme("colors.black / 5%");
+        }
+
+        .theme-dark & {
+          border-bottom-color: theme("colors.white / 5%");
+        }
+      }
+
+      .theme-light & {
+        --menu-background: theme("colors.black / 5%");
+      }
+
+      .theme-dark & {
+        --menu-background: theme("colors.white / 5%");
+      }
+    }
   }
 }
 

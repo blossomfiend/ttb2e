@@ -86,7 +86,7 @@ function HeaderField(props) {
           {props.title}
         </div>
         <div class="text-base leading-tight">
-          {props.value().value} <TextSuits suits={props.value().suits} />
+          {props.value().value}<TextSuits suits={props.value().suits} />
         </div>
       </div>
     </Show>

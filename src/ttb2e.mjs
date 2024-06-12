@@ -1,20 +1,22 @@
-import "./style.css";
 import ttbGameData from "./game-data.mts";
+import "./style.css";
 
 import FatedActorData from "./data/actor/fated.mjs";
 import FatemasterCharacterActorData from "./data/actor/fatemaster-character.mjs";
-import TriggerData from "./data/item/trigger.mjs";
 import FlipChatMessageData from "./data/chat-message/flip.mjs";
+import TriggerData from "./data/item/trigger.mjs";
 
 import TtbActor from "./documents/actor.mjs";
-import TtbItem from "./documents/item.mjs";
 import TtbCards from "./documents/cards.mjs";
 import TtbChatMessage from "./documents/chat-message.mjs";
+import TtbItem from "./documents/item.mjs";
 
 import CharacterSheet from "./applications/character.mjs";
-import TriggerSheet from "./applications/trigger.mjs";
-import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
 import ControlCenterApplication from "./applications/control-center.mjs";
+import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
+import TriggerSheet from "./applications/trigger.mjs";
+
+import "./prosemirror-additions.mts";
 
 Hooks.once("init", async () => {
   game.ttb2e = ttbGameData;

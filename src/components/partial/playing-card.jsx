@@ -40,7 +40,7 @@ export default function PlayingCard(props) {
           class="grow flex flex-row justify-between rounded shadow-sm bg-white"
           classList={{ "text-red-700": props.card?.suit === "redJoker" }}
         >
-          <div class="self-start flex flex-col items-center p-1">
+          <div class="self-start flex flex-col items-center w-6 p-1">
             <div>{props.card.value}</div>
             <div>
               <Show
@@ -73,7 +73,7 @@ export default function PlayingCard(props) {
                 "text-red-900": props.targetNumber != null && !higherThanTN(),
               }}
             >
-              {duelTotal().value} <TextSuits suits={duelTotal().suits} />
+              {duelTotal().value}<TextSuits suits={duelTotal().suits} />
               <Show when={props.card.suit === "redJoker"}>
                 <span>J</span>
               </Show>

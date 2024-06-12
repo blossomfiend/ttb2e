@@ -42,6 +42,11 @@
         }
       }
     },
+    "editor": {
+      "insert": {
+
+      }
+    },
     "chat": {
       "showCard": "Showed {card} from {controlHand}.",
       "discardCard": "Discarded {card} from {controlHand}."

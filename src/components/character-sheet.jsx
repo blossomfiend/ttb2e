@@ -41,7 +41,7 @@ export default function CharacterSheet(props) {
     {
       id: "skills",
       component: lazy(() => import("./tabs/skills-tab.jsx")),
-      icon: "fa-solid fa-plus-minus",
+      icon: "fa-solid fa-head-side-gear",
     },
     { id: "talents", component: null, icon: "fa-solid fa-scroll" },
     { id: "items", component: null, icon: "fa-solid fa-treasure-chest" },
