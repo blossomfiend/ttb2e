@@ -58,51 +58,49 @@ Hooks.on("renderTtbCardsDirectory", (cardsDirectory, html, data) => {
   }
 
   // inject a fate deck creation button
-  async function createFateDeck() {
-    const toCreate = game.ttb2e.fateDeck.map(({ value, suit }) => ({
-      value,
-      suit,
-      name: localizeCardName({ value, suit }),
-      faces: [{}],
-      face: 0,
-    }));
-    const folder = await Folder.create({
-      name: localize("ttb.cardPile.fateDeck"),
-      type: "Cards",
-      color: "#5d142b",
-      sorting: "m",
-      sort: -1000000,
-    });
-    const [fateDeck, fateDiscard] = await Cards.createDocuments([
-      {
-        name: localize("ttb.cardPile.fateDeck"),
-        type: "deck",
-        folder,
-      },
-      {
-        name: localize("ttb.cardPile.fateDeckDiscardPile"),
-        type: "pile",
-        folder,
-      },
-    ]);
-    game.settings.set("ttb2e", "fateDeck", fateDeck.id);
-    game.settings.set("ttb2e", "fateDiscard", fateDiscard.id);
-    await fateDeck.createEmbeddedDocuments("Card", toCreate);
-    await fateDeck.shuffle({ chatNotification: false });
-  }
-
-  html
-    .find(".header-actions")
-    .after(
-      `<div class="action-buttons flexrow">
+  html.find(".header-actions").after(
+    $(`<div class="action-buttons flexrow">
         <button class="create-fate-deck">
            <i class="fa-solid fa-wand-sparkles"></i> Create Fate Deck
         </button>
-      </div>`,
-    )
-    .find(".create-fate-deck")
-    .on("click", createFateDeck);
+      </div>`)
+      .find("button.create-fate-deck")
+      .on("click", createFateDeck),
+  );
 });
+
+async function createFateDeck() {
+  const toCreate = game.ttb2e.fateDeck.map(({ value, suit }) => ({
+    value,
+    suit,
+    name: localizeCardName({ value, suit }),
+    faces: [{}],
+    face: 0,
+  }));
+  const folder = await Folder.create({
+    name: localize("ttb.cardPile.fateDeck"),
+    type: "Cards",
+    color: "#5d142b",
+    sorting: "m",
+    sort: -1000000,
+  });
+  const [fateDeck, fateDiscard] = await Cards.createDocuments([
+    {
+      name: localize("ttb.cardPile.fateDeck"),
+      type: "deck",
+      folder,
+    },
+    {
+      name: localize("ttb.cardPile.fateDeckDiscardPile"),
+      type: "pile",
+      folder,
+    },
+  ]);
+  game.settings.set("ttb2e", "fateDeck", fateDeck.id);
+  game.settings.set("ttb2e", "fateDiscard", fateDiscard.id);
+  await fateDeck.createEmbeddedDocuments("Card", toCreate);
+  await fateDeck.shuffle({ chatNotification: false });
+}
 
 Hooks.on("updateSetting", (setting) => {
   // rerender the cards directory to show the small little icons

@@ -12,6 +12,9 @@ export default function SheetRoot(props: {
       class={`size-full flex flex-col items-stretch overflow-y-scroll overflow-x-hidden text-sm
         sheet-root
         scrollbar-theme-lighter dark:scrollbar-theme-darker transition-all`}
+      classList={{
+        "color-splash": !(props.noColorSplash ?? false),
+      }}
       style={themeColorCss(props.themeColor)}
     >
       {props.children}

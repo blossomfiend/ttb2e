@@ -133,7 +133,8 @@ export default class TtbActor extends Actor {
     if (update === current) return this;
 
     let updates;
-    if (isBar) updates = { [`system.${attribute}.value`]: Math.min(update, attr.max) };
+    if (isBar)
+      updates = { [`system.${attribute}.value`]: Math.min(update, attr.max) };
     else updates = { [`system.${attribute}`]: update };
 
     // Allow a hook to override these changes
@@ -209,7 +210,6 @@ export default class TtbActor extends Actor {
       }
     }
     const updateData = { system: { cards } };
-    console.log(updateData);
     if (inCreation) await this.updateSource(updateData);
     else await this.update(updateData);
   }
@@ -233,10 +233,20 @@ export default class TtbActor extends Actor {
   getActingValue(skill, aspect) {
     const [category, skillName] = skill.split(".");
     if (category === "skills") {
-      return this.system.skills[skillName].av[aspect];
+      let source;
+      if (aspect) source = this.system.skills[skillName].av[aspect];
+      else source = this.system.skills[skillName].av;
+      return {
+        value: source.value,
+        suits: source.suits,
+      };
     }
     if (category === "derivedAspects") {
-      return this.system.derivedAspects[skillName].value;
+      const source =  this.system.derivedAspects[skillName].value;
+      return {
+        value: source.value,
+        suits: source.suits,
+      };
     }
     return null;
   }

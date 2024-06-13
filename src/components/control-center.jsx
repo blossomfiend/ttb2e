@@ -13,6 +13,7 @@ import DuelApplication from "../applications/duel.mjs";
 import TtbChatMessage from "../documents/chat-message.mjs";
 import { localize, localizeCardName } from "../util.mts";
 import PlayingCard from "./partial/playing-card.jsx";
+import SheetRoot from "./partial/sheet-root.tsx";
 import { createHook, trackDocument } from "./rendering-utils.mjs";
 
 export default function ControlCenter() {
@@ -91,62 +92,78 @@ export default function ControlCenter() {
   }
 
   return (
-    <div class="flex flex-row gap-3">
-      <div class="w-32 shrink-0 flex flex-col gap-1">
-        <button onClick={() => new DuelApplication().render({ force: true })}>
-          {localize("ttb.ui.flip")}
-        </button>
-        <Show when={controlHand() != null}>
-          <button onClick={draw}>{localize("ttb.ui.drawCard")}</button>
-          <button onClick={resetDeck}>
-            {localize("ttb.ui.resetTwistDeck")}
+    <SheetRoot
+      themeColor={userActor()?.system?.colors?.finalColor}
+      noColorSplash={true}
+    >
+      <div class="p-2 flex flex-row gap-3">
+        <div class="w-32 shrink-0 flex flex-col gap-1">
+          <button
+            class="sheet-button"
+            onClick={() => new DuelApplication().render({ force: true })}
+          >
+            {localize("ttb.ui.flip")}
           </button>
-          <button onClick={resetDiscard}>
-            {localize("ttb.ui.resetDiscardPile")}
-          </button>
-        </Show>
-      </div>
-      <Switch>
-        <Match when={controlHand() != null}>
-          <div class="grow flex flex-col gap-2">
-            <div class="w-full flex flex-row justify-between">
-              <div>
-                {localize("ttb.ui.controlHand")}: {controlHandCards()?.length}
-              </div>
-              <div>
-                {localize("ttb.ui.twistDeck")}: {twistDeckCards().length}
-              </div>
-              <div>
-                {localize("ttb.ui.discardPile")}: {discardPileCards()?.length}
-              </div>
-            </div>
-            <div class="flex flex-row gap-1 flex-wrap">
-              <For each={controlHandCards()}>
-                {(card) => (
-                  <div class="flex flex-col gap-1">
-                    <PlayingCard card={card} />
-                    <button onClick={() => showCard(card)}>
-                      {localize("ttb.ui.show")}
-                    </button>
-                    <button onClick={() => discard(card)}>
-                      {localize("ttb.ui.discard")}
-                    </button>
-                  </div>
-                )}
-              </For>
-            </div>
-          </div>
-        </Match>
-        <Match when={game.user?.isGM}>
-          <div class="flex flex-col gap-2">
-            Fatemaster Area
-            <button onClick={resetFateDeck}>
-              {localize("ttb.ui.resetFateDeck")}
+          <Show when={controlHand() != null}>
+            <button class="sheet-button" onClick={draw}>
+              {localize("ttb.ui.drawCard")}
             </button>
-          </div>
-        </Match>
-      </Switch>
-    </div>
+            <button class="sheet-button" onClick={resetDeck}>
+              {localize("ttb.ui.resetTwistDeck")}
+            </button>
+            <button class="sheet-button" onClick={resetDiscard}>
+              {localize("ttb.ui.resetDiscardPile")}
+            </button>
+          </Show>
+        </div>
+        <Switch>
+          <Match when={controlHand() != null}>
+            <div class="grow flex flex-col gap-2">
+              <div class="w-full flex flex-row justify-between">
+                <div>
+                  {localize("ttb.ui.controlHand")}: {controlHandCards()?.length}
+                </div>
+                <div>
+                  {localize("ttb.ui.twistDeck")}: {twistDeckCards().length}
+                </div>
+                <div>
+                  {localize("ttb.ui.discardPile")}: {discardPileCards()?.length}
+                </div>
+              </div>
+              <div class="flex flex-row gap-1 flex-wrap">
+                <For each={controlHandCards()}>
+                  {(card) => (
+                    <div class="flex flex-col gap-1">
+                      <PlayingCard card={card} />
+                      <button
+                        class="sheet-button"
+                        onClick={() => showCard(card)}
+                      >
+                        {localize("ttb.ui.show")}
+                      </button>
+                      <button
+                        class="sheet-button"
+                        onClick={() => discard(card)}
+                      >
+                        {localize("ttb.ui.discard")}
+                      </button>
+                    </div>
+                  )}
+                </For>
+              </div>
+            </div>
+          </Match>
+          <Match when={game.user?.isGM}>
+            <div class="flex flex-col gap-2">
+              Fatemaster Area
+              <button class="sheet-button" onClick={resetFateDeck}>
+                {localize("ttb.ui.resetFateDeck")}
+              </button>
+            </div>
+          </Match>
+        </Switch>
+      </div>
+    </SheetRoot>
   );
 }
 

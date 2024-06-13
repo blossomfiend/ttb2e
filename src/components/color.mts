@@ -51,3 +51,10 @@ export function themeColorCss(color: string = defaultColor) {
     ),
   };
 }
+
+const root = document.querySelector(':root');
+const color = themeColorCss();
+for (const name in color) {
+  // @ts-ignore
+  root.style.setProperty(name, color[name]);
+}

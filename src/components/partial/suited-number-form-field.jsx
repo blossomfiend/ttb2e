@@ -1,5 +1,6 @@
 import { createComputed, For } from "solid-js";
 import { createStore } from "solid-js/store";
+import NumberInput from "./number-input.jsx";
 
 export default function SuitedNumberFormField(props) {
   const [state, setState] = createStore({
@@ -51,7 +52,8 @@ export default function SuitedNumberFormField(props) {
 
   return (
     <div class="flex flex-col gap-2">
-      <input
+      <NumberInput
+        class="border-black/10 dark:border-white/10"
         type="number"
         name={`${props.name}.value`}
         onKeyDown={inputKeyDown}
@@ -63,7 +65,7 @@ export default function SuitedNumberFormField(props) {
           {([suit, count]) => (
             <div class="grow flex flex-col items-center gap-1">
               <button
-                class="w-full"
+                class="sheet-button w-full"
                 on:click={(event) => {
                   event.preventDefault();
                   setState("suits", suit, (x) => x + 1);
@@ -80,7 +82,7 @@ export default function SuitedNumberFormField(props) {
                 value={count}
               />
               <button
-                class="w-full"
+                class="sheet-button w-full"
                 on:click={(event) => {
                   event.preventDefault();
                   setState("suits", suit, (x) => x - 1);

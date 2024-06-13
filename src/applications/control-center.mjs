@@ -6,6 +6,7 @@ export default class ControlCenterApplication extends SolidApplicationMixin(
   static SOLID_COMPONENT_LOADER = () =>
     import("../components/control-center.jsx");
   static DEFAULT_OPTIONS = {
+    classes: ["no-application-padding"],
     id: "card-control-center",
     tag: "aside",
     window: {

@@ -11,11 +11,6 @@
       background-attachment: local;
 
       background-color: theme("colors.stone.200");
-      background-image: radial-gradient(
-        ellipse 50rem 19rem at left 2rem top 2rem,
-        theme("colors.theme-lighter") 0,
-        transparent 50%
-      );
 
       .theme-light & :is(input, select) {
         --input-text-color: oklch(39% 0.06 77.21);
@@ -24,11 +19,22 @@
       .theme-dark & {
         color: theme("colors.zinc.100");
         background-color: theme("colors.zinc.900");
+      }
+
+      &.color-splash {
         background-image: radial-gradient(
           ellipse 50rem 19rem at left 2rem top 2rem,
-          theme("colors.theme-dark") 0px,
+          theme("colors.theme-lighter") 0,
           transparent 50%
         );
+
+        .theme-dark & {
+          background-image: radial-gradient(
+            ellipse 50rem 19rem at left 2rem top 2rem,
+            theme("colors.theme-dark") 0px,
+            transparent 50%
+          );
+        }
       }
     }
 
@@ -203,12 +209,14 @@
       font-size: theme("fontSize.xs");
       font-style: italic;
       color: theme("colors.stone.700");
+
       .theme-dark & {
         color: theme("colors.zinc.300");
       }
     }
 
-    .prose, .prose * {
+    .prose,
+    .prose * {
       user-select: text;
       font-family: inherit;
       border: none;

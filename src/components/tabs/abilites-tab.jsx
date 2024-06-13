@@ -1,10 +1,10 @@
-import { createDeferred, createMemo, For, Show } from "solid-js";
+import { createDeferred, createEffect, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import TextButton from "../partial/text-button.tsx";
 import { trackDocument } from "../rendering-utils.mjs";
 import { softFade } from "../transitions.mjs";
 
-export default function SkillsTab(props) {
+export default function AbilitiesTab(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
   const abilities = createMemo(() =>
     props.actor.items.filter((item) => item.type === "ability"),
@@ -18,6 +18,7 @@ export default function SkillsTab(props) {
           {(untrackedAbility) => {
             const ability = createDeferred(
               trackDocument(() => untrackedAbility),
+              { equals: false },
             );
             return (
               <Show when={ability() != null}>
@@ -29,6 +30,7 @@ export default function SkillsTab(props) {
       </TransitionGroup>
       <button
         class="sheet-button"
+        disabled={!canEdit()}
         onClick={() => {
           props.actor.createEmbeddedDocuments("Item", [
             {
@@ -58,6 +60,7 @@ export default function SkillsTab(props) {
           </TextButton>
           <TextButton
             class="text-base font-bold"
+            disabled={!canEdit()}
             onClick={async () => {
               await Dialog.confirm({
                 title: "Are you sure?",

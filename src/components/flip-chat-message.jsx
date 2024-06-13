@@ -18,6 +18,7 @@ export default function FlipChatMessage(props) {
 
   const title = createMemo(
     () => {
+      if (system().title != null && system().title !== "") return system().title;
       const titleElements = [];
       if (skill() != null) {
         titleElements.push(localize(`ttb.${skill()}.name`));

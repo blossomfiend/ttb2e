@@ -105,7 +105,6 @@ export default function SkillsTab(props) {
 
   function renderDuel(skill, aspect, actingValue) {
     if (!canEdit()) return;
-    console.log(skill, aspect, actingValue);
     new DuelApplication({
       actor: props.actor,
       skill,

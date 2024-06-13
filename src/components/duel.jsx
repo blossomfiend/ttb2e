@@ -72,6 +72,7 @@ export default function Duel(props) {
     let flip = new Flip(
       { fateModifier },
       {
+        title: props.title,
         actor: props.actor,
         skill: props.skill,
         aspect: props.aspect,
