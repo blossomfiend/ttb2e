@@ -381,31 +381,31 @@ const ttbGameData = {
   themes: [
     {
       name: "guildRed",
-      color: "#ac0324",
+      color: "#b31a1c",
     },
     {
       name: "bayouBrown",
-      color: "#683e2e",
+      color: "#806133",
     },
     {
       name: "tenThundersOrange",
-      color: "#e17d0a",
+      color: "#fa9d1e",
     },
     {
       name: "malifauxYellow",
-      color: "#dde40e",
+      color: "#e7c712",
     },
     {
       name: "resurrectionistGreen",
-      color: "#057749",
+      color: "#018846",
     },
     {
       name: "arcanistBlue",
-      color: "#0c91ca",
+      color: "#0088be",
     },
     {
       name: "neverbornPurple",
-      color: "#7141ba",
+      color: "#6d2d82",
     },
   ],
   fateDeck: [
