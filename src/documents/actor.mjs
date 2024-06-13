@@ -120,6 +120,31 @@ export default class TtbActor extends Actor {
     );
   }
 
+  /**
+   * This is mostly a carbon copy of the original, but it doesn't clamp bar values below 0.
+   * TTB usually doesn't care much about limits and just sets values however it wants to.
+   * @inheritDoc
+   * @override
+   */
+  async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
+    const attr = foundry.utils.getProperty(this.system, attribute);
+    const current = isBar ? attr.value : attr;
+    const update = isDelta ? current + value : value;
+    if (update === current) return this;
+
+    let updates;
+    if (isBar) updates = { [`system.${attribute}.value`]: Math.min(update, attr.max) };
+    else updates = { [`system.${attribute}`]: update };
+
+    // Allow a hook to override these changes
+    const allowed = Hooks.call(
+      "modifyTokenAttribute",
+      { attribute, value, isDelta, isBar },
+      updates,
+    );
+    return allowed !== false ? this.update(updates) : this;
+  }
+
   async _preCreate(data, options, userId) {
     await super._preCreate(data, options, userId);
     await this.ensureCardsExist({ inCreation: true });
