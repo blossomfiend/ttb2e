@@ -164,16 +164,33 @@ export default function CharacterSheet(props) {
                 </TextButton>
                 <button
                   class="sheet-button border-none w-full h-5 p-0 text-center"
-                  disabled={!canEdit()}
+                  disabled={!canEdit() || ["walk", "charge"].includes(name())}
                   onClick={() => openDerivedAspectDuel(name())}
                 >
-                  {derivedAspect().value.value}
-                  <TextSuits suits={derivedAspect().value.suits} />
+                  {name() === "charge" && derivedAspect().value.value === 0
+                    ? "--"
+                    : derivedAspect().value.value}
+                  <Show when={["defense", "willpower"].includes(name())}>
+                    <TextSuits suits={derivedAspect().value.suits} />
+                  </Show>
                 </button>
               </div>
             );
           }}
         </Index>
+        <label class="p-px flex flex-col items-center justify-center">
+          <div class="label-text">
+            {localize(`ttb.derivedAspects.height.name`)}
+          </div>
+          <div>
+            <NumberInput
+              class="p-0 w-full h-5"
+              disabled={!canEdit()}
+              name={`system.height`}
+              value={system().height}
+            />
+          </div>
+        </label>
         <div class="col-span-2" />
       </div>
     );

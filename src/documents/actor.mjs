@@ -92,7 +92,6 @@ export default class TtbActor extends Actor {
     derivedAspects.charge.value = suited(
       Math.max(derivedAspects.walk.value.value, 4 + aspects.speed),
     );
-    derivedAspects.height.value = suited(2);
 
     for (let derivedAspectName in derivedAspects) {
       const derivedAspect = derivedAspects[derivedAspectName];

@@ -57,7 +57,6 @@ const ttbGameData = {
     "initiative",
     "walk",
     "charge",
-    "height",
   ],
   skillCategories: [
     "academic",

@@ -26,6 +26,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
           ]),
         ),
       ),
+      height: intField(2),
       skills: new fields.SchemaField(
         Object.fromEntries(
           game.ttb2e.skills.map((skill) => [
