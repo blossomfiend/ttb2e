@@ -5,8 +5,8 @@ export default class AbilityData extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      count: intField(null),
-      description: new fields.HTMLField(),
+      value: intField(null),
+      description: new fields.HTMLField({ initial: "" }),
     };
   }
 }

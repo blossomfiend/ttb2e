@@ -43,10 +43,15 @@ export default function CharacterSheet(props) {
       component: lazy(() => import("./tabs/skills-tab.jsx")),
       icon: "fa-solid fa-head-side-gear",
     },
-    { id: "talents", component: null, icon: "fa-solid fa-scroll" },
-    { id: "items", component: null, icon: "fa-solid fa-treasure-chest" },
-    { id: "magic", component: null, icon: "fa-solid fa-hand-holding-magic" },
-    { id: "effects", component: null, icon: "fa-solid fa-sparkles" },
+    {
+      id: "abilities",
+      component: lazy(() => import("./tabs/abilites-tab.jsx")),
+      icon: "fa-solid fa-scroll",
+    },
+    // { id: "talents", component: null, icon: "fa-solid fa-scroll" },
+    // { id: "items", component: null, icon: "fa-solid fa-treasure-chest" },
+    // { id: "magic", component: null, icon: "fa-solid fa-hand-holding-magic" },
+    // { id: "effects", component: null, icon: "fa-solid fa-sparkles" },
   ].map((tab) => ({
     ...tab,
     name: localize(`ttb.ui.tabs.${tab.id}.name`),
@@ -67,6 +72,14 @@ export default function CharacterSheet(props) {
         </>
       }
       tabs={tabs}
+      onDrop={async (e) => {
+        const data = TextEditor.getDragEventData(e);
+        if (data.type === "Item") {
+          const item = await Item.implementation.fromDropData(data);
+          const itemData = item.toObject();
+          return props.actor.createEmbeddedDocuments("Item", [itemData]);
+        }
+      }}
     />
   );
 

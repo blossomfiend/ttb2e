@@ -17,6 +17,7 @@ import TtbCardsDirectory from "./applications/sidebar/cards-directory.mjs";
 import TriggerSheet from "./applications/trigger.mjs";
 
 import "./prosemirror-additions.mts";
+import AbilitySheet from "./applications/ability.mjs";
 
 Hooks.once("init", async () => {
   game.ttb2e = ttbGameData;
@@ -44,6 +45,10 @@ Hooks.once("init", async () => {
   CONFIG.Item.dataModels.trigger = TriggerData;
   Items.registerSheet("ttb2e", TriggerSheet, {
     types: ["trigger"],
+    makeDefault: true,
+  });
+  Items.registerSheet("ttb2e", AbilitySheet, {
+    types: ["ability"],
     makeDefault: true,
   });
 

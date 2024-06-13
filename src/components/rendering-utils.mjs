@@ -28,11 +28,11 @@ export function trackDocument(document) {
     if (hasDocument()) {
       const name = documentName();
       untrack(() => {
-        createHook(`update${name}`, (_document, _updateData, _options, id) => {
-          if (id === doc().id) setDoc(doc());
+        createHook(`update${name}`, (document, _updateData, _options, _editorId) => {
+          if (document.id === doc().id) setDoc(document);
         });
-        createHook(`delete${name}`, (_document, _options, id) => {
-          if (id === doc().id) setDoc(null);
+        createHook(`delete${name}`, (document, _options, _id) => {
+          if (document.id === doc().id) setDoc(null);
         });
       });
     }

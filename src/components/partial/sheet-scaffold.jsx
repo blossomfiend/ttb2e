@@ -24,7 +24,7 @@ export default function SheetScaffold(props) {
   const canEdit = createMemo(() => props.document.isOwner);
   const [currentTab, setCurrentTab] = createSignal(props.tabs?.[0]);
   return (
-    <SheetRoot themeColor={props.themeColor}>
+    <SheetRoot themeColor={props.themeColor} onDrop={props.onDrop}>
       <header class="z-20 flex flex-row gap-2 p-2 pt-4">
         <div class="flex-none flex flex-col items-center gap-2">
           <EditableImage

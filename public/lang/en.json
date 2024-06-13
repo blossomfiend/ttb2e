@@ -39,6 +39,9 @@
         },
         "effects": {
           "name": "Effects"
+        },
+        "abilities": {
+          "name": "Abilities"
         }
       }
     },
@@ -439,6 +442,7 @@
     "Item": {
       "pursuit": "Pursuit",
       "talent": "Talent",
+      "ability": "Ability",
       "trigger": "Trigger",
       "magia": "Magia",
       "immuto": "Immuto",

@@ -26,7 +26,7 @@ export default function TabMenu(inputProps) {
           }}
           onClick={() => props.onTabChange(tab)}
         >
-          <i class={tab.icon}></i> {props.nameFunction(tab)}
+          {/*<i class={tab.icon}></i>*/} {props.nameFunction(tab)}
         </a>
       )}
     </For>
