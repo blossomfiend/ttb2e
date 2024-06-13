@@ -1,8 +1,7 @@
-import type {Config} from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 import typography from "@tailwindcss/typography";
 
-const config: Config = {
+const config = {
   content: ["./src/**/*.{html,js,svelte,ts,jsx,tsx}"],
   darkMode: ["selector", ".theme-dark"],
   theme: {
