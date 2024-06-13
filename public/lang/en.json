@@ -44,7 +44,6 @@
     },
     "editor": {
       "insert": {
-
       }
     },
     "chat": {
@@ -415,17 +414,20 @@
       "tenThundersOrange": {
         "name": "Ten Thunders Orange"
       },
-      "malifauxYellow": {
-        "name": "Malifaux Yellow"
+      "outcastYellow": {
+        "name": "Outcast Yellow"
       },
       "resurrectionistGreen": {
         "name": "Resurrectionist Green"
       },
       "arcanistBlue": {
-        "name": "Arcanist Blue"
+        "name": "Arcanist Azure"
       },
       "neverbornPurple": {
         "name": "Neverborn Purple"
+      },
+      "explorersTeal": {
+        "name": "Explorer's Teal"
       }
     }
   },

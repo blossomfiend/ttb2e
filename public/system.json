@@ -1,9 +1,9 @@
 {
   "id": "ttb2e",
   "version": "1.0.0",
-  "title": "Through the Breach Second Edition",
+  "title": "ttb2e - Through the Breach",
   "url": "",
-  "description": "An implementation of Through the Breach.",
+  "description": "A system for FoundryVTT, implementing Wyrd Miniatures' Through the Breach.",
   "authors": [
     {
       "name": "Lilith Schier",

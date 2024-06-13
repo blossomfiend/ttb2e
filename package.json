@@ -2,7 +2,7 @@
   "private": true,
   "name": "ttb2e",
   "version": "1.0.0",
-  "description": "Through the Breach system for Foundry",
+  "description": "A system for FoundryVTT, implementing Wyrd Miniatures' Through the Breach.",
   "type": "module",
   "scripts": {
     "serve": "vite",

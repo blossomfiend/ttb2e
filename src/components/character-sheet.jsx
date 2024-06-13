@@ -58,7 +58,7 @@ export default function CharacterSheet(props) {
     <SheetScaffold
       document={props.actor}
       actor={props.actor}
-      themeColor={system().colors.finalColor}
+      themeColor={system().colors.finalColor.css}
       belowImage={<HealthBar />}
       header={
         <>

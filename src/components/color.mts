@@ -13,8 +13,16 @@ import {
 ColorSpace.register(sRGB);
 ColorSpace.register(OKLCH);
 
-export function themeColorCss(color: string = "#00fff7") {
-  const c = to(parse(color), "oklch");
+const defaultColor = "#dac3d4";
+
+export function themeColorCss(color: string = defaultColor) {
+  if (color == null || color === "") color = defaultColor;
+  let c;
+  try {
+    c = to(parse(color), "oklch");
+  } catch (err) {
+    c = to(parse(defaultColor), "oklch");
+  }
   return {
     "--ttb-color-theme": serialize(c),
     "--ttb-color-theme-lighter": serialize(

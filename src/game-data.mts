@@ -392,7 +392,7 @@ const ttbGameData = {
       color: "#fa9d1e",
     },
     {
-      name: "malifauxYellow",
+      name: "outcastYellow",
       color: "#e7c712",
     },
     {
@@ -407,6 +407,10 @@ const ttbGameData = {
       name: "neverbornPurple",
       color: "#6d2d82",
     },
+    {
+      name: "explorersTeal",
+      color: "#02a896"
+    }
   ],
   fateDeck: [
     ...Object.keys(suits).flatMap((suit) =>
