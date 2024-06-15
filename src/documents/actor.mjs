@@ -233,13 +233,22 @@ export default class TtbActor extends Actor {
   getActingValue(skill, aspect) {
     const [category, skillName] = skill.split(".");
     if (category === "skills") {
-      let source;
-      if (aspect) source = this.system.skills[skillName].av[aspect];
-      else source = this.system.skills[skillName].av;
-      return {
-        value: source.value,
-        suits: source.suits,
-      };
+      const skill = this.system.skills[skillName];
+      if (aspect == null) {
+        const defaultAspects = game.ttb2e.skills.find(
+          (s) => s.name === skillName,
+        ).aspects;
+        if (defaultAspects.length > 1) {
+          logger.debug(
+            `You can't get the acting value of the skill ${skillName} without providing an aspect`,
+          );
+          return null;
+        }
+        aspect = defaultAspects[0];
+      }
+      const baseValue =
+        skill.override ?? skill.rank + this.system.aspects[aspect];
+      return combine(sum, suited(baseValue), skill.bonus);
     }
     if (category === "derivedAspects") {
       const source = this.system.derivedAspects[skillName].value;
