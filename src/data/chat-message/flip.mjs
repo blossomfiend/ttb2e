@@ -5,15 +5,9 @@ export default class FlipChatMessageData extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      title: new fields.StringField(),
-      skill: new fields.StringField({
-        default: null,
-        nullable: true,
-      }),
-      aspect: new fields.StringField({
-        default: null,
-        nullable: true,
-      }),
+      title: new fields.StringField({ required: false }),
+      skill: new fields.StringField({ required: false }),
+      aspect: new fields.StringField({ required: false }),
       fateModifier: intField(0),
       flippedCards: new fields.ArrayField(
         new fields.SchemaField({

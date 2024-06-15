@@ -9,6 +9,10 @@
       "setAsFateDeck": "Set as Fate Deck",
       "setAsFateDiscard": "Set as the Fate Deck's Discard Pile",
       "controlCenter": "Fate Control Center",
+      "duelConfig": {
+        "defaultTitle": "Duel",
+        "titleWithData": "Duel: {title}"
+      },
       "duelConfigTitle": "Duel Configuration",
       "skillConfigTitle": "{name} Skill Config: {skill}",
       "twistDeckInitTitle": "{name} Twist Deck Initialization",

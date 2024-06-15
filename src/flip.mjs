@@ -1,74 +1,113 @@
 /**
- * @typedef {Object} FlipOptions
- * @property {-3|-2|-1|0|1|2|3} fateModifier
+ * @typedef FlipOptions
+ * @property {SuitedValue} [targetNumber]
+ * @property {SuitedValue} [actingValue]
+ * @property {TtbActor} [actor]
+ * @property {string} [skill] A string like "skills.sorcery" or "derivedAspects.defense"
+ * @property {string} [aspect]
+ * @property [action]
  */
 
-/**
- * @typedef {Object} FlipData
- * @property {SuitedValue|null} targetNumber
- * @property {SuitedValue|null} actingValue
- */
-
+import DuelApplication from "./applications/duel.mjs";
 import TtbChatMessage from "./documents/chat-message.mjs";
+import { canCardBeChosen, localize } from "./util.mts";
 
 /**
- *
+ * Flip exposes the primary way of initiating any sort of flips or duels.
  */
 export default class Flip {
-  /**
-   * @type {FlipOptions}
-   */
-  options;
-  /**
-   * @type {FlipData}
-   */
-  data;
   flippedCards;
 
   /**
    *
-   * @param {FlipOptions} options This flips definition
-   * @param {FlipData} data The roll data context of this flip
+   * @param {FlipOptions} options
    */
-  constructor(options, data) {
-    this.options = options;
-    this.data = data;
+  constructor(options = {}) {
+    this.options = foundry.utils.deepClone(options);
   }
 
-  async evaluate({ chatMessage = true } = {}) {
+  /**
+   * Open a dialog to the user that allows them to set the target number,
+   * acting value and fate modifier.
+   * @return {Promise<void>}
+   */
+  async openConfigurationUi() {
+    new DuelApplication({
+      targetNumber: foundry.utils.deepClone(this.options.targetNumber),
+      actingValue: foundry.utils.deepClone(this.options.actingValue),
+      title: this.title,
+      evaluate: ({ fateModifier, targetNumber, actingValue }) => {
+        this.options.targetNumber = targetNumber;
+        this.options.actingValue = actingValue;
+        this.evaluate({ fateModifier });
+      },
+    }).render(true);
+  }
+
+  get title() {
+    if (this.options.action != null) return this.options.action.name;
+    let titleElements = [];
+    if (this.options.skill != null)
+      titleElements.push(localize(`ttb.${this.options.skill}.name`));
+    if (this.options.aspect != null)
+      titleElements.push(localize(`ttb.aspects.${this.options.aspect}.name`));
+    if (titleElements.length === 0) titleElements.push(localize("ttb.ui.flip"));
+    return titleElements.join(" + ");
+  }
+
+  /**
+   * Actually draw the cards from the fate deck, and record the results.
+   * @throws Error When the primary fate deck or fate deck discard pile aren't set.
+   * @param fateModifier
+   * @param chatNotification
+   * @return {Promise<void>}
+   */
+  async evaluate({ fateModifier, chatNotification = true } = {}) {
     let fateDeck = game.cards.get(game.settings.get("ttb2e", "fateDeck"));
     let fateDiscard = game.cards.get(game.settings.get("ttb2e", "fateDiscard"));
+    if (fateDeck == null || fateDiscard == null) {
+      throw new Error(
+        "You need to set a fate deck and a fate deck discard pile to perform flips.",
+      );
+    }
     this.flippedCards = await fateDeck.flip(
       fateDiscard,
-      Math.abs(this.options.fateModifier) + 1,
+      Math.abs(fateModifier) + 1,
     );
-    // for (let card of this.flippedCards) {
-    //     card.canBeChosen = this.#canCardBeChosen()
-    // }
-    // this.flippedCards = this.flippedCards.map(card => ({
-    //     ...card,
-    //     canBeChosen: this.#canCardBeChosen(card),
-    // }));
-    if (chatMessage) {
+    for (let card of this.flippedCards) {
+      card.canBeChosen = canCardBeChosen(card, this.flippedCards, fateModifier);
+    }
+    if (chatNotification) {
       await this.postFlip();
     }
   }
 
-  async postFlip() {
-    const data = {
+  /**
+   * Post a chat notification displaying the flipped cards.
+   * @param fateModifier
+   * @param author
+   * @param actor
+   * @return {Promise<void>}
+   */
+  async postFlip({
+    fateModifier,
+    author = game.user.id,
+    actor = this.options.actor ?? undefined,
+  } = {}) {
+    const messageData = {
       type: "flip",
       style: CONST.CHAT_MESSAGE_STYLES.OTHER,
-      author: game.user.id,
+      author,
       speaker: {
-        actor: this.data?.actor ?? undefined,
+        actor,
       },
       system: {
-        ...this.data,
-        fateModifier: this.options.fateModifier,
+        ...this.options,
+        title: this.title,
+        fateModifier: fateModifier,
         flippedCards: this.flippedCards,
       },
     };
-    logger.info(data);
-    await TtbChatMessage.create(data);
+    await TtbChatMessage.create(messageData);
   }
 }

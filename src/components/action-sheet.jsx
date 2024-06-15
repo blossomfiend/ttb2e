@@ -29,6 +29,17 @@ export default function TriggerSheet(props) {
       header={
         <div class="flex flex-row flex-wrap gap-2 items-stretch">
           <label class="p-px flex flex-col items-center justify-center w-32">
+            <div class="label-text">AP</div>
+            <div class="self-stretch">
+              <NumberInput
+                class="h-5"
+                value={system().ap}
+                name="system.ap"
+                placeholder="AP"
+              />
+            </div>
+          </label>
+          <label class="p-px flex flex-col items-center justify-center w-32">
             <div class="label-text">Skill</div>
             <div class="self-stretch">
               <select
@@ -41,9 +52,9 @@ export default function TriggerSheet(props) {
                   });
                 }}
               >
-                {skillOptions.map(([value, text]) => {
-                  return <option value={value}>{text}</option>;
-                })}
+                {skillOptions.map(([value, text]) => (
+                  <option value={value}>{text}</option>
+                ))}
               </select>
             </div>
           </label>
@@ -60,9 +71,9 @@ export default function TriggerSheet(props) {
                   });
                 }}
               >
-                {aspectOptions.map(([value, text]) => {
-                  return <option value={value}>{text}</option>;
-                })}
+                {aspectOptions.map(([value, text]) => (
+                  <option value={value}>{text}</option>
+                ))}
               </select>
             </div>
           </label>

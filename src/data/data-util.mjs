@@ -1,6 +1,6 @@
 export function intField(initial, options = {}) {
   return new foundry.data.fields.NumberField({
-    required: true,
+    required: initial !== undefined,
     nullable: initial === null,
     initial,
     integer: true,

@@ -9,8 +9,8 @@ import {
   Switch,
   untrack,
 } from "solid-js";
-import DuelApplication from "../applications/duel.mjs";
 import TtbChatMessage from "../documents/chat-message.mjs";
+import Flip from "../flip.mjs";
 import { localize, localizeCardName } from "../util.mts";
 import PlayingCard from "./partial/playing-card.jsx";
 import SheetRoot from "./partial/sheet-root.tsx";
@@ -100,7 +100,7 @@ export default function ControlCenter() {
         <div class="w-32 shrink-0 flex flex-col gap-1">
           <button
             class="sheet-button"
-            onClick={() => new DuelApplication().render({ force: true })}
+            onClick={() => new Flip().openConfigurationUi()}
           >
             {localize("ttb.ui.flip")}
           </button>

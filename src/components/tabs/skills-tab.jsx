@@ -1,7 +1,7 @@
 import { createMemo, Index } from "solid-js";
 import { Transition } from "solid-transition-group";
-import DuelApplication from "../../applications/duel.mjs";
 import SkillConfigApplication from "../../applications/skill-config.mjs";
+import Flip from "../../flip.mjs";
 import { localize } from "../../util.mts";
 import NumberInput from "../partial/number-input.jsx";
 import TextButton from "../partial/text-button.tsx";
@@ -103,16 +103,14 @@ export default function SkillsTab(props) {
     );
   }
 
-  function renderDuel(skill, aspect, actingValue) {
+  async function renderDuel(skill, aspect, actingValue) {
     if (!canEdit()) return;
-    new DuelApplication({
+    await new Flip({
       actor: props.actor,
       skill,
       aspect,
       actingValue,
-    }).render({
-      force: true,
-    });
+    }).openConfigurationUi();
   }
 
   function renderSkillConfig(skill) {

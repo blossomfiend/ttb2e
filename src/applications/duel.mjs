@@ -2,10 +2,10 @@ import { localize } from "../util.mts";
 import SolidApplicationMixin from "./solid-application.mjs";
 
 /**
- * @typedef {import("../flip.mjs").FlipData | any} DuelOptions
- * @property {TtbActor} actor
- * @property {string} skill A string like "skill.sorcery" or "derivedAspect.defense"
- * @property {string} aspect
+ * @typedef DuelOptions
+ * @property {SuitedValue|null} targetNumber
+ * @property {SuitedValue|null} actingValue
+ * @property {string} [title]
  */
 
 export default class DuelApplication extends SolidApplicationMixin(
@@ -42,7 +42,11 @@ export default class DuelApplication extends SolidApplicationMixin(
    * @override
    */
   get title() {
-    return localize("ttb.ui.duelConfigTitle");
+    if (this.options.title)
+      return localize("ttb.ui.duelConfig.titleWithData", {
+        title: this.options.title,
+      });
+    return localize("ttb.ui.duelConfig.defaultTitle");
   }
 
   /**

@@ -1,6 +1,5 @@
-import { Show } from "solid-js";
+import { createEffect, Show } from "solid-js";
 import { createStore, reconcile } from "solid-js/store";
-import Flip from "../flip.mjs";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import SuitedNumberFormField from "./partial/suited-number-form-field.jsx";
 
@@ -69,18 +68,11 @@ export default function Duel(props) {
   );
 
   async function startFlip(fateModifier) {
-    let flip = new Flip(
-      { fateModifier },
-      {
-        title: props.title,
-        actor: props.actor,
-        skill: props.skill,
-        aspect: props.aspect,
-        targetNumber: state.targetNumber,
-        actingValue: state.actingValue,
-      },
-    );
-    await flip.evaluate();
-    props.close();
+    await props.evaluate({
+      fateModifier,
+      targetNumber: state.targetNumber,
+      actingValue: state.actingValue,
+    });
+    await props.close();
   }
 }

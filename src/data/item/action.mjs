@@ -7,31 +7,21 @@ export default class ActionData extends foundry.abstract.DataModel {
     return {
       ap: intField(1),
       resist: new fields.StringField({
-        required: true,
-        nullable: true,
         choices: ["defense", "willpower", "either"],
+        nullable: true,
       }),
       rangeType: new fields.StringField({
-        required: true,
-        nullable: true,
         choices: ["melee", "projectile"],
+        nullable: true,
       }),
       range: intField(null),
       targetNumber: suitedValue(null),
       // in the category.skill format, so for example
       // skills.doctor
       // derivedAspects.defense
-      skill: new fields.StringField({
-        required: true,
-        nullable: true,
-        blank: false,
-      }),
-      aspect: new fields.StringField({
-        required: true,
-        nullable: true,
-        choices: game.ttb2e.aspects,
-      }),
-      description: new fields.HTMLField({ required: true, initial: "" }),
+      skill: new fields.StringField({ blank: false, nullable: true }),
+      aspect: new fields.StringField({ choices: game.ttb2e.aspects, nullable: true }),
+      description: new fields.HTMLField({  initial: "" }),
     };
   }
 }

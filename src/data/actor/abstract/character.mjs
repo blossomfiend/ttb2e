@@ -8,7 +8,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
       wounds: new fields.SchemaField({
         value: intField(4),
         override: intField(null),
-        bonus: suitedValue(),
+        bonus: suitedValue(0),
       }),
       aspects: new fields.SchemaField(
         Object.fromEntries(
@@ -21,7 +21,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
             derivedAspect,
             new fields.SchemaField({
               override: intField(null),
-              bonus: suitedValue(),
+              bonus: suitedValue(0),
             }),
           ]),
         ),
@@ -34,7 +34,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
             new fields.SchemaField({
               rank: intField(0),
               override: intField(null),
-              bonus: suitedValue(),
+              bonus: suitedValue(0),
             }),
           ]),
         ),

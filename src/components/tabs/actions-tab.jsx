@@ -1,6 +1,6 @@
 import { createDeferred, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
-import DuelApplication from "../../applications/duel.mjs";
+import Flip from "../../flip.mjs";
 import TextButton from "../partial/text-button.tsx";
 import TextSuits from "../partial/text-suits.jsx";
 import { trackDocument } from "../rendering-utils.mjs";
@@ -60,17 +60,16 @@ export default function ActionsTab(props) {
           <div class="flex flex-row gap-2">
             <TextButton
               class="text-base font-bold"
-              onClick={() => {
+              onClick={async () => {
                 if (!av || !canEdit()) return;
-                const app = new DuelApplication({
-                  title: props.action.name,
+                await new Flip({
+                  action: props.action,
                   actor: props.actor,
                   skill: system().skill,
                   aspect: system().aspect,
                   targetNumber: system().targetNumber,
                   actingValue: av(),
-                });
-                app.render(true);
+                }).openConfigurationUi();
               }}
             >
               {props.action.name}

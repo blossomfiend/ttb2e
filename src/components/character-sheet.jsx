@@ -7,7 +7,6 @@ import {
   useContext,
 } from "solid-js";
 import CharacteristicsConfig from "../applications/characteristics-config.mjs";
-import DuelApplication from "../applications/duel.mjs";
 import SkillConfigApplication from "../applications/skill-config.mjs";
 import { localize } from "../util.mts";
 import { AppContainerContext } from "./app-container.jsx";
@@ -16,6 +15,7 @@ import SheetScaffold from "./partial/sheet-scaffold.jsx";
 import TextButton from "./partial/text-button.tsx";
 import TextSuits from "./partial/text-suits.jsx";
 import OverviewTab from "./tabs/overview-tab.jsx";
+import Flip from "../flip.mjs";
 
 export default function CharacterSheet(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
@@ -229,12 +229,12 @@ export default function CharacterSheet(props) {
     }).render({ force: true });
   }
 
-  function openDerivedAspectDuel(derivedAspect) {
+  async function openDerivedAspectDuel(derivedAspect) {
     if (!canEdit()) return;
-    new DuelApplication({
+    await new Flip({
       actor: props.actor,
       skill: `derivedAspects.${derivedAspect.name}`,
       actingValue: derivedAspect.value,
-    }).render({ force: true });
+    }).openConfigurationUi();
   }
 }
