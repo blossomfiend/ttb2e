@@ -8,6 +8,7 @@ import {
 } from "solid-js";
 import CharacteristicsConfig from "../applications/characteristics-config.mjs";
 import SkillConfigApplication from "../applications/skill-config.mjs";
+import Flip from "../flip.mjs";
 import { localize } from "../util.mts";
 import { AppContainerContext } from "./app-container.jsx";
 import NumberInput from "./partial/number-input.jsx";
@@ -15,7 +16,6 @@ import SheetScaffold from "./partial/sheet-scaffold.jsx";
 import TextButton from "./partial/text-button.tsx";
 import TextSuits from "./partial/text-suits.jsx";
 import OverviewTab from "./tabs/overview-tab.jsx";
-import Flip from "../flip.mjs";
 
 export default function CharacterSheet(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
@@ -112,35 +112,49 @@ export default function CharacterSheet(props) {
 
   function SubNameBar() {
     return (
-      <div class="flex flex-row gap-3">
-        {props.actor.type === "fated" ? (
-          <TextButton
-            onClick={() => {
-              /* TODO card config */
-            }}
-            disabled={!canEdit()}
-          >
-            Fated
-          </TextButton>
-        ) : (
-          <label class="flex flex-row gap-1 items-baseline">
-            <span>{localize(`ttb.ranks.${system().rank.name}.name`)}</span>
-            <NumberInput
-              class="flex-none w-6 p-0 leading-none select-all"
-              name="system.rankValue"
+      <div class="flex flex-row justify-between">
+        <div class="flex flex-row gap-3">
+          {props.actor.type === "fated" ? (
+            <TextButton
+              onClick={() => {
+                /* TODO card config */
+              }}
               disabled={!canEdit()}
-              value={system().rankValue}
-            />
-          </label>
-        )}
-        <div class="flex flex-row gap-1">
-          {system().characteristics.join(", ")}
-          <Show when={canEdit()}>
-            <TextButton onClick={openCharacteristicsConfig}>
-              <i class="fa-solid fa-cog" />
+            >
+              Fated
             </TextButton>
-          </Show>
+          ) : (
+            <label class="flex flex-row gap-1 items-baseline">
+              <span>{localize(`ttb.ranks.${system().rank.name}.name`)}</span>
+              <NumberInput
+                class="flex-none w-6 p-0 leading-none select-all"
+                name="system.rankValue"
+                disabled={!canEdit()}
+                value={system().rankValue}
+              />
+            </label>
+          )}
+          <div class="flex flex-row gap-1">
+            {system().characteristics.join(", ")}
+            <Show when={canEdit()}>
+              <TextButton onClick={openCharacteristicsConfig}>
+                <i class="fa-solid fa-cog" />
+              </TextButton>
+            </Show>
+          </div>
         </div>
+        <Show when={props.actor.type === "fatemasterCharacter"}>
+          <div class="flex flex-row gap-1 items-baseline">
+            <div class="italic">Fate Points:</div>
+            <NumberInput
+              class="w-5"
+              value={system().fatePoints.value}
+              name="system.fatePoints.value"
+            />
+            <div>/</div>
+            <NumberInput class="w-5" value={system().fatePoints.max} disabled />
+          </div>
+        </Show>
       </div>
     );
   }
@@ -190,6 +204,11 @@ export default function CharacterSheet(props) {
                     : derivedAspect().value.value}
                   <Show when={["defense", "willpower"].includes(name())}>
                     <TextSuits suits={derivedAspect().value.suits} />
+                    <Show when={props.actor.type === "fatemasterCharacter"}>
+                      {" ("}
+                      {derivedAspect().value.value + system().rankValue}
+                      <TextSuits suits={derivedAspect().value.suits} />)
+                    </Show>
                   </Show>
                 </button>
               </div>

@@ -65,5 +65,5 @@ export function* intersperse<T, U>(a: Iterable<T>, delim: U): Generator<T | U> {
 
 export function rankByValue(rankValue: RankValue): {} {
   // @ts-ignore
-  return game.ttb2e.rankByValue[rankValue];
+  return game.ttb2e.rankByValue[Math.clamp(rankValue, 1, 14)];
 }
