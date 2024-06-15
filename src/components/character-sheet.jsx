@@ -183,7 +183,7 @@ export default function CharacterSheet(props) {
                 <button
                   class="sheet-button border-none w-full h-5 p-0 text-center"
                   disabled={!canEdit() || ["walk", "charge"].includes(name())}
-                  onClick={() => openDerivedAspectDuel(name())}
+                  onClick={() => openDerivedAspectDuel(derivedAspect())}
                 >
                   {name() === "charge" && derivedAspect().value.value === 0
                     ? "--"
@@ -233,7 +233,8 @@ export default function CharacterSheet(props) {
     if (!canEdit()) return;
     new DuelApplication({
       actor: props.actor,
-      skill: `derivedAspects.${name()}`,
+      skill: `derivedAspects.${derivedAspect.name}`,
+      actingValue: derivedAspect.value,
     }).render({ force: true });
   }
 }

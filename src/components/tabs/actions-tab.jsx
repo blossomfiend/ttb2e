@@ -1,4 +1,4 @@
-import { createDeferred, createMemo, For, Show } from "solid-js";
+import { createDeferred, createEffect, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import TextButton from "../partial/text-button.tsx";
 import { trackDocument } from "../rendering-utils.mjs";
@@ -8,7 +8,7 @@ import DuelApplication from "../../applications/duel.mjs";
 
 export default function ActionsTab(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
-  const abilities = createMemo(() =>
+  const actions = createMemo(() =>
     props.actor.items.filter((item) => item.type === "action"),
   );
   const { onEnter, onExit } = softFade({ duration: 150 });
@@ -16,7 +16,7 @@ export default function ActionsTab(props) {
   return (
     <div class="py-4 px-2 flex flex-col gap-2">
       <TransitionGroup onEnter={onEnter} onExit={onExit} appear={false}>
-        <For each={abilities()}>
+        <For each={actions()}>
           {(untrackedAction) => {
             const action = createDeferred(
               trackDocument(() => untrackedAction),
@@ -49,7 +49,7 @@ export default function ActionsTab(props) {
 
   function Action(props) {
     const system = createMemo(() => props.action.system, { equals: false });
-    const av = props.actor.getActingValue(system().skill, system().aspect);
+    const av = createMemo(() => system().skill != null ? props.actor.getActingValue(system().skill, system().aspect) : null);
     return (
       <div class="flex flex-col gap-1">
         <div class="self-stretch flex flex-row justify-between">
@@ -62,7 +62,7 @@ export default function ActionsTab(props) {
                 skill: system().skill,
                 aspect: system().aspect,
                 targetNumber: system().targetNumber,
-                actingValue: av,
+                actingValue: av(),
               });
               app.render(true);
             }}>
@@ -96,12 +96,12 @@ export default function ActionsTab(props) {
         </div>
 
         <div class="flex flex-row gap-3">
-          <Show when={system().skill != null}>
+          <Show when={av() != null}>
             <div class="flex flex-row gap-1">
               <div class="text-stone-700 dark:text-zinc-300">AV</div>
               <div>
-                {av.value}
-                <TextSuits suits={av.suits} />
+                {av().value}
+                <TextSuits suits={av().suits} />
               </div>
             </div>
           </Show>

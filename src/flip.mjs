@@ -55,7 +55,7 @@ export default class Flip {
   }
 
   async postFlip() {
-    await TtbChatMessage.create({
+    const data = {
       type: "flip",
       style: CONST.CHAT_MESSAGE_STYLES.OTHER,
       author: game.user.id,
@@ -67,6 +67,8 @@ export default class Flip {
         fateModifier: this.options.fateModifier,
         flippedCards: this.flippedCards,
       },
-    });
+    };
+    logger.info(data);
+    await TtbChatMessage.create(data);
   }
 }

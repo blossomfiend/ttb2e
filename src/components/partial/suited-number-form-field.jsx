@@ -18,7 +18,7 @@ export default function SuitedNumberFormField(props) {
       state.value !== ""
         ? {
             value: state.value,
-            suits: state.suits,
+            suits: { ...state.suits },
           }
         : null,
     );
@@ -58,6 +58,7 @@ export default function SuitedNumberFormField(props) {
         name={`${props.name}.value`}
         onKeyDown={inputKeyDown}
         value={state.value}
+        placeholder="Value..."
         onChange={(event) => setState("value", event.target.value)}
       />
       <div class="flex flex-row gap-2 justify-between">
@@ -78,6 +79,7 @@ export default function SuitedNumberFormField(props) {
               </div>
               <input
                 type="hidden"
+                data-dtype="Number"
                 name={`${props.name}.suits.${suit}`}
                 value={count}
               />

@@ -5,6 +5,7 @@ export default class ActionData extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
+      ap: intField(1),
       resist: new fields.StringField({
         required: true,
         nullable: true,

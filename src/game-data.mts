@@ -412,7 +412,7 @@ const ttbGameData = {
     }
   ],
   fateDeck: [
-    ...Object.keys(suits).flatMap((suit) =>
+    ...suits.flatMap((suit) =>
       [...inclusiveRange(1, 13)].map((value) => ({
         suit,
         value,
