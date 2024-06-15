@@ -393,16 +393,16 @@ const ttbGameData = {
       color: "#018846",
     },
     {
+      name: "explorersTeal",
+      color: "#02a896",
+    },
+    {
       name: "arcanistBlue",
       color: "#0088be",
     },
     {
       name: "neverbornPurple",
       color: "#6d2d82",
-    },
-    {
-      name: "explorersTeal",
-      color: "#02a896",
     },
   ],
   fateDeck: [
