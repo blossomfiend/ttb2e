@@ -18,7 +18,8 @@ export default function FlipChatMessage(props) {
 
   const title = createMemo(
     () => {
-      if (system().title != null && system().title !== "") return system().title;
+      if (system().title != null && system().title !== "")
+        return system().title;
       const titleElements = [];
       if (skill() != null) {
         titleElements.push(localize(`ttb.${skill()}.name`));
@@ -87,7 +88,8 @@ function HeaderField(props) {
           {props.title}
         </div>
         <div class="text-base leading-tight">
-          {props.value().value}<TextSuits suits={props.value().suits} />
+          {props.value().value}
+          <TextSuits suits={props.value().suits} />
         </div>
       </div>
     </Show>

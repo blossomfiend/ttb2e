@@ -16,7 +16,7 @@ export default class CharacteristicsConfig extends SolidApplicationMixin(
     },
     form: {
       closeOnSubmit: false,
-    }
+    },
   };
 
   /**

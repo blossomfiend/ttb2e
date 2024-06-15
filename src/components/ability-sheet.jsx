@@ -1,5 +1,4 @@
 import { createMemo } from "solid-js";
-import { localize } from "../util.mts";
 import { HtmlEditorRoot, HtmlField } from "./partial/html-editor.jsx";
 import SheetScaffold from "./partial/sheet-scaffold.jsx";
 

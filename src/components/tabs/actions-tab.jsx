@@ -1,10 +1,10 @@
-import { createDeferred, createEffect, createMemo, For, Show } from "solid-js";
+import { createDeferred, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
+import DuelApplication from "../../applications/duel.mjs";
 import TextButton from "../partial/text-button.tsx";
+import TextSuits from "../partial/text-suits.jsx";
 import { trackDocument } from "../rendering-utils.mjs";
 import { softFade } from "../transitions.mjs";
-import TextSuits from "../partial/text-suits.jsx";
-import DuelApplication from "../../applications/duel.mjs";
 
 export default function ActionsTab(props) {
   const canEdit = createMemo(() => props.actor.isOwner);
@@ -49,23 +49,30 @@ export default function ActionsTab(props) {
 
   function Action(props) {
     const system = createMemo(() => props.action.system, { equals: false });
-    const av = createMemo(() => system().skill != null ? props.actor.getActingValue(system().skill, system().aspect) : null);
+    const av = createMemo(() =>
+      system().skill != null
+        ? props.actor.getActingValue(system().skill, system().aspect)
+        : null,
+    );
     return (
       <div class="flex flex-col gap-1">
         <div class="self-stretch flex flex-row justify-between">
           <div class="flex flex-row gap-2">
-            <TextButton class="text-base font-bold" onClick={() => {
-              if (!av || !canEdit()) return;
-              const app = new DuelApplication({
-                title: props.action.name,
-                actor: props.actor,
-                skill: system().skill,
-                aspect: system().aspect,
-                targetNumber: system().targetNumber,
-                actingValue: av(),
-              });
-              app.render(true);
-            }}>
+            <TextButton
+              class="text-base font-bold"
+              onClick={() => {
+                if (!av || !canEdit()) return;
+                const app = new DuelApplication({
+                  title: props.action.name,
+                  actor: props.actor,
+                  skill: system().skill,
+                  aspect: system().aspect,
+                  targetNumber: system().targetNumber,
+                  actingValue: av(),
+                });
+                app.render(true);
+              }}
+            >
               {props.action.name}
             </TextButton>
             <TextButton

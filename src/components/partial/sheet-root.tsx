@@ -1,5 +1,5 @@
-import { themeColorCss } from "../color.mjs";
 import { JSX } from "solid-js";
+import { themeColorCss } from "../color.mjs";
 
 export default function SheetRoot(props: {
   themeColor?: string;

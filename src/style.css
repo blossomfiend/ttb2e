@@ -140,6 +140,7 @@
           background-color: theme("colors.theme-dark");
         }
       }
+
       &:disabled {
         opacity: 0.5;
       }

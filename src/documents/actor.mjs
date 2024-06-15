@@ -242,7 +242,7 @@ export default class TtbActor extends Actor {
       };
     }
     if (category === "derivedAspects") {
-      const source =  this.system.derivedAspects[skillName].value;
+      const source = this.system.derivedAspects[skillName].value;
       return {
         value: source.value,
         suits: source.suits,

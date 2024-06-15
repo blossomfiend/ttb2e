@@ -51,13 +51,7 @@ const ttbGameData = {
     "cunning",
     "tenacity",
   ],
-  derivedAspects: [
-    "defense",
-    "willpower",
-    "initiative",
-    "walk",
-    "charge",
-  ],
+  derivedAspects: ["defense", "willpower", "initiative", "walk", "charge"],
   skillCategories: [
     "academic",
     "closeCombat",
@@ -408,8 +402,8 @@ const ttbGameData = {
     },
     {
       name: "explorersTeal",
-      color: "#02a896"
-    }
+      color: "#02a896",
+    },
   ],
   fateDeck: [
     ...suits.flatMap((suit) =>

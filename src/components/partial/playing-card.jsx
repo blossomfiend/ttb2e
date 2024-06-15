@@ -73,7 +73,8 @@ export default function PlayingCard(props) {
                 "text-red-900": props.targetNumber != null && !higherThanTN(),
               }}
             >
-              {duelTotal().value}<TextSuits suits={duelTotal().suits} />
+              {duelTotal().value}
+              <TextSuits suits={duelTotal().suits} />
               <Show when={props.card.suit === "redJoker"}>
                 <span>J</span>
               </Show>

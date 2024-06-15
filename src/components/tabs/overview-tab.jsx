@@ -7,7 +7,6 @@ export default function OverviewTab(props) {
 
   return (
     <div class="flex flex-row gap-4">
-
       <div class="p-2 flex flex-col gap-2">
         <p>Fate steps here</p>
         <button

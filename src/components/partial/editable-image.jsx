@@ -12,7 +12,9 @@ export default function EditableImage(props) {
   function openImagePicker() {
     const current = props.document[props.path];
     const { img } =
-      props.document.constructor.getDefaultArtwork?.(props.document.toObject()) ?? {};
+      props.document.constructor.getDefaultArtwork?.(
+        props.document.toObject(),
+      ) ?? {};
     const fp = new FilePicker({
       current,
       type: "image",

@@ -1,4 +1,10 @@
-import { createComputed, createMemo, createSignal, onCleanup, untrack } from "solid-js";
+import {
+  createComputed,
+  createMemo,
+  createSignal,
+  onCleanup,
+  untrack,
+} from "solid-js";
 
 /**
  * Create a hook that will automatically be disposed in a SolidJS context.
@@ -28,9 +34,12 @@ export function trackDocument(document) {
     if (hasDocument()) {
       const name = documentName();
       untrack(() => {
-        createHook(`update${name}`, (document, _updateData, _options, _editorId) => {
-          if (document.id === doc().id) setDoc(document);
-        });
+        createHook(
+          `update${name}`,
+          (document, _updateData, _options, _editorId) => {
+            if (document.id === doc().id) setDoc(document);
+          },
+        );
         createHook(`delete${name}`, (document, _options, _id) => {
           if (document.id === doc().id) setDoc(null);
         });

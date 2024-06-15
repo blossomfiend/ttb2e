@@ -43,7 +43,10 @@ export function canCardBeChosen(
   return true;
 }
 
-export function* inclusiveRange(first: number, last: number): Generator<number> {
+export function* inclusiveRange(
+  first: number,
+  last: number,
+): Generator<number> {
   for (let i = first; i <= last; i++) yield i;
 }
 

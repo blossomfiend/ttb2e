@@ -1,4 +1,4 @@
-import { createDeferred, createEffect, createMemo, For, Show } from "solid-js";
+import { createDeferred, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import TextButton from "../partial/text-button.tsx";
 import { trackDocument } from "../rendering-utils.mjs";

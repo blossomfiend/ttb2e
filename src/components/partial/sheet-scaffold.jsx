@@ -46,7 +46,10 @@ export default function SheetScaffold(props) {
         </div>
       </header>
 
-      <Show when={props.tabs} fallback={<main class="grow">{props.children}</main>}>
+      <Show
+        when={props.tabs}
+        fallback={<main class="grow">{props.children}</main>}
+      >
         <nav
           class="z-10 sticky top-0 bg-stone-200/90 dark:bg-zinc-900/90 shadow-md
           flex flex-row justify-evenly items-stretch
@@ -59,7 +62,10 @@ export default function SheetScaffold(props) {
           />
         </nav>
 
-        <main class="grow" classList={{ "pending-fade-out": appContext.isPending() }}>
+        <main
+          class="grow"
+          classList={{ "pending-fade-out": appContext.isPending() }}
+        >
           <Suspense fallback={<BarLoader />}>
             <Tabs currentTab={currentTab()} tabs={props.tabs} {...props}></Tabs>
           </Suspense>

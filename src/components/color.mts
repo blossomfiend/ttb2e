@@ -7,7 +7,7 @@ import {
   serialize,
   set,
   sRGB,
-  to
+  to,
 } from "colorjs.io/fn";
 
 ColorSpace.register(sRGB);
@@ -52,7 +52,7 @@ export function themeColorCss(color: string = defaultColor) {
   };
 }
 
-const root = document.querySelector(':root');
+const root = document.querySelector(":root");
 const color = themeColorCss();
 for (const name in color) {
   // @ts-ignore
