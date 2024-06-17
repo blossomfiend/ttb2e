@@ -43,7 +43,7 @@ export default defineConfig({
       preserveEntrySignatures: false,
     },
     cssMinify: "lightningcss",
-    cssCodeSplit: false,
+    cssCodeSplit: true,
   },
   esbuild: {
     // essential for Foundries hooks to work correctly, they rely on class names
