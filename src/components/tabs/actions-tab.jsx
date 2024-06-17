@@ -1,8 +1,7 @@
 import { createDeferred, createMemo, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
-import Flip from "../../flip.mjs";
+import SuitedValue from "../partial/SuitedValue.jsx";
 import TextButton from "../partial/text-button.tsx";
-import TextSuits from "../partial/text-suits.jsx";
 import { trackDocument } from "../rendering-utils.mjs";
 import { softFade } from "../transitions.mjs";
 
@@ -14,7 +13,18 @@ export default function ActionsTab(props) {
   const { onEnter, onExit } = softFade({ duration: 150 });
 
   return (
-    <div class="py-4 px-2 flex flex-col gap-2">
+    <div class="py-4 px-2 flex flex-col gap-1">
+      <div class="flex flex-row gap-1 rounded border bg-theme-lighter dark:bg-theme-darker">
+        <div class="basis-6 flex-none" />
+        <div class="basis-6 flex-none">AP</div>
+        <div class="grow overflow-hidden overflow-ellipsis">Name</div>
+        <div class="basis-1/6 flex-none">AV</div>
+        <div class="basis-1/6 flex-none">TN</div>
+        <div class="basis-10 flex-none">Resist</div>
+        <div class="basis-10 flex-none">Range</div>
+        {/*Edit/Delete*/}
+        <div class="basis-10 flex-none" />
+      </div>
       <TransitionGroup onEnter={onEnter} onExit={onExit} appear={false}>
         <For each={actions()}>
           {(untrackedAction) => {
@@ -55,34 +65,55 @@ export default function ActionsTab(props) {
         : null,
     );
     return (
-      <div class="flex flex-col gap-1">
-        <div class="self-stretch flex flex-row justify-between">
-          <div class="flex flex-row gap-2">
-            <TextButton
-              class="text-base font-bold"
-              onClick={async () => {
-                if (!av || !canEdit()) return;
-                await new Flip({
-                  action: props.action,
-                  actor: props.actor,
-                  skill: system().skill,
-                  aspect: system().aspect,
-                  targetNumber: system().targetNumber,
-                  actingValue: av(),
-                }).openConfigurationUi();
-              }}
-            >
-              {props.action.name}
-            </TextButton>
-            <TextButton
-              class="w-auto text-base font-bold"
-              onClick={() => {
-                props.action.sheet.render({ force: true });
-              }}
-            >
-              <i class="fa-solid fa-edit" />
-            </TextButton>
-          </div>
+      <div class="flex flex-row gap-1 rounded border bg-black/5 dark:bg-white/5">
+        <div class="basis-6 flex-none">
+          <img
+            class="size-6 rounded-l block border-0"
+            src={props.action.img}
+            alt={props.action.name}
+          />
+        </div>
+        <div class="basis-6 flex-none flex flex-row items-center">
+          {system().ap}
+        </div>
+        <div class="grow overflow-hidden overflow-ellipsis whitespace-nowrap flex flex-row items-center">
+          {props.action.name}
+        </div>
+        <div class="basis-1/6 flex-none flex flex-row items-center">
+          <span>
+            <SuitedValue value={av()} />
+          </span>
+        </div>
+        <div class="basis-1/6 flex-none flex flex-row items-center">
+          <span>
+            <SuitedValue value={system().targetNumber} />
+          </span>
+        </div>
+        <div class="basis-10 flex-none overflow-hidden flex flex-row items-center">
+          {() => {
+            if (system().resist === "defense") return "Df";
+            else if (system().resist === "willpower") return "Wp";
+            else if (system().resist === "either") return "Df/Wp";
+            else return "";
+          }}
+        </div>
+        <div class="basis-10 flex-none flex flex-row items-center">
+          <span>
+            <Show when={system().rangeType}>
+              <i class={`ttb-icon-${system().rangeType}`} />
+            </Show>
+            {system().range}
+          </span>
+        </div>
+        <div class="basis-10 flex-none flex flex-row items-center">
+          <TextButton
+            disabled={!canEdit()}
+            onClick={() => {
+              props.action.sheet.render(true);
+            }}
+          >
+            <i class="fa-solid fa-edit" />
+          </TextButton>
           <TextButton
             disabled={!canEdit()}
             onClick={async () => {
@@ -100,56 +131,6 @@ export default function ActionsTab(props) {
             <i class="fa-solid fa-trash" />
           </TextButton>
         </div>
-
-        <div class="flex flex-row gap-3">
-          <Show when={av() != null}>
-            <div class="flex flex-row gap-1">
-              <div class="text-stone-700 dark:text-zinc-300">AV</div>
-              <div>
-                {av().value}
-                <TextSuits suits={av().suits} />
-              </div>
-            </div>
-          </Show>
-          <Show when={system().targetNumber.value}>
-            <div class="flex flex-row gap-1">
-              <div class="text-stone-700 dark:text-zinc-300">TN</div>
-              <div>
-                {system().targetNumber.value}
-                <TextSuits suits={system().targetNumber.suits} />
-              </div>
-            </div>
-          </Show>
-          <Show when={system().range}>
-            <div class="flex flex-row gap-1">
-              <div class="text-stone-700 dark:text-zinc-300">Range</div>
-              <div>
-                <Show when={system().rangeType}>
-                  <i class={`ttb-icon-${system().rangeType}`} />
-                </Show>
-                {system().range}
-              </div>
-            </div>
-          </Show>
-          <Show when={system().resist}>
-            <div class="flex flex-row gap-1">
-              <div class="text-stone-700 dark:text-zinc-300">Resist</div>
-              <div>
-                {() => {
-                  if (system().resist === "defense") return "Df";
-                  else if (system().resist === "willpower") return "Wp";
-                  else if (system().resist === "either") return "Df/Wp";
-                }}
-              </div>
-            </div>
-          </Show>
-        </div>
-
-        <div
-          class="ml-2 rounded-lg p-2
-                  prose prose-sm prose-stone dark:prose-zinc dark:prose-invert"
-          innerHTML={system().description}
-        />
       </div>
     );
   }
