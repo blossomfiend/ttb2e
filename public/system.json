@@ -13,7 +13,7 @@
   "esmodules": [
     "ttb2e.mjs"
   ],
-  "styles": [],
+  "styles": ["style.css"],
   "packs": [],
   "packFolders": [],
   "languages": [

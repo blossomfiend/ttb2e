@@ -1,9 +1,9 @@
 import {
   createComputed,
-  createMemo,
+  createMemo, createResource,
   createSignal,
   onCleanup,
-  untrack,
+  untrack
 } from "solid-js";
 
 /**
@@ -47,4 +47,11 @@ export function trackDocument(document) {
     }
   });
   return doc;
+}
+
+export function enrichHtml(htmlAccessor) {
+  return createResource(htmlAccessor(), async (v) => {
+    if (v == null || v === "") return "";
+    return await TextEditor.enrichHTML(v);
+  });
 }

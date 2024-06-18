@@ -1,6 +1,7 @@
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import path from "path";
 import { defineConfig } from "vite";
+import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import solidPlugin from "vite-plugin-solid";
 
 // https://vitejs.dev/config/
@@ -43,11 +44,11 @@ export default defineConfig({
       preserveEntrySignatures: false,
     },
     cssMinify: "lightningcss",
-    cssCodeSplit: true,
+    cssCodeSplit: false,
   },
   esbuild: {
     // essential for Foundries hooks to work correctly, they rely on class names
     keepNames: true,
   },
-  plugins: [solidPlugin()],
+  plugins: [solidPlugin(), ViteImageOptimizer({})],
 });

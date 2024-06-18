@@ -1,5 +1,5 @@
 import ttbGameData from "./game-data.mts";
-import "./style.css";
+import "./ttb2e.css";
 
 import FatedActorData from "./data/actor/fated.mjs";
 import FatemasterCharacterActorData from "./data/actor/fatemaster-character.mjs";

@@ -49,3 +49,31 @@ export function slide(options) {
     },
   };
 }
+
+export function grow(options){
+  return {
+    onEnter: (el, done) => {
+      const height = getComputedStyle(el).height;
+      const a = el.animate(
+        [
+          { opacity: 0, height: 0, easing: "ease-out" },
+          { opacity: 1, height: height },
+        ],
+        options,
+      );
+      a.finished.then(done);
+    },
+
+    onExit: (el, done) => {
+      const height = getComputedStyle(el).height;
+      const a = el.animate(
+        [
+          { opacity: 1, height: height, easing: "ease-out" },
+          { opacity: 0, height: 0 },
+        ],
+        options,
+      );
+      a.finished.then(done);
+    },
+  };
+}

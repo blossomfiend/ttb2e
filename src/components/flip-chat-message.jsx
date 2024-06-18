@@ -1,6 +1,6 @@
 import { createMemo, For, onMount, Show, Suspense } from "solid-js";
 import { ErrorBoundary, render } from "solid-js/web";
-import { canCardBeChosen, localize } from "../util.mts";
+import { canCardBeChosen } from "../util.mts";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
 import PlayingCard from "./partial/playing-card.jsx";
 import TextSuits from "./partial/text-suits.jsx";
@@ -16,24 +16,7 @@ export default function FlipChatMessage(props) {
   const actingValue = () => system().actingValue;
   const fateModifier = () => system().fateModifier;
 
-  const title = createMemo(
-    () => {
-      if (system().title != null && system().title !== "")
-        return system().title;
-      const titleElements = [];
-      if (skill() != null) {
-        titleElements.push(localize(`ttb.${skill()}.name`));
-      }
-      if (aspect() != null) {
-        titleElements.push(localize(`ttb.aspects.${aspect()}.name`));
-      }
-      if (titleElements.length === 0) {
-        titleElements.push(localize("ttb.ui.flip"));
-      }
-      return titleElements.join(" + ");
-    },
-    { equals: true },
-  );
+  const title = () => system().title;
 
   const canCheat = createMemo(
     () =>

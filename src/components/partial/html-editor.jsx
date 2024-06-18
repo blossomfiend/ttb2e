@@ -74,7 +74,7 @@ export function HtmlField(props) {
 
   const value = createMemo(() => props.value);
   const [contentHtml] = createResource(value, async (v) => {
-    if (props.value == null || props.value === "") return "";
+    if (v == null || v === "") return "";
     return await TextEditor.enrichHTML(v);
   });
 

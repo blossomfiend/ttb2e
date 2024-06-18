@@ -43,6 +43,16 @@ export function canCardBeChosen(
   return true;
 }
 
+export function localizeSkillCheck(skill?: string, aspect?: string) {
+  let titleElements = [];
+  if (skill != null)
+    titleElements.push(localize(`ttb.${skill}.name`));
+  if (aspect != null)
+    titleElements.push(localize(`ttb.aspects.${aspect}.name`));
+  if (titleElements.length === 0) return null;
+  return titleElements.join(" + ");
+}
+
 export function* inclusiveRange(
   first: number,
   last: number,

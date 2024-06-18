@@ -10,7 +10,7 @@
 
 import DuelApplication from "./applications/duel.mjs";
 import TtbChatMessage from "./documents/chat-message.mjs";
-import { canCardBeChosen, localize } from "./util.mts";
+import { canCardBeChosen, localize, localizeSkillCheck } from "./util.mts";
 
 /**
  * Flip exposes the primary way of initiating any sort of flips or duels.
@@ -45,14 +45,11 @@ export default class Flip {
   }
 
   get title() {
-    if (this.options.action != null) return this.options.action.name;
-    let titleElements = [];
-    if (this.options.skill != null)
-      titleElements.push(localize(`ttb.${this.options.skill}.name`));
-    if (this.options.aspect != null)
-      titleElements.push(localize(`ttb.aspects.${this.options.aspect}.name`));
-    if (titleElements.length === 0) titleElements.push(localize("ttb.ui.flip"));
-    return titleElements.join(" + ");
+    return (
+      this.options.action?.name ??
+      localizeSkillCheck(this.options.skill, this.options.aspect) ??
+      localize("ttb.ui.flip")
+    );
   }
 
   /**
