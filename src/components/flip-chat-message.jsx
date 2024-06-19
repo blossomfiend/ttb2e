@@ -1,4 +1,4 @@
-import { createMemo, For, onMount, Show, Suspense } from "solid-js";
+import { createEffect, createMemo, For, onMount, Show, Suspense } from "solid-js";
 import { ErrorBoundary, render } from "solid-js/web";
 import { canCardBeChosen } from "../util.mts";
 import InlineFateModifiers from "./partial/inline-fate-modifiers.jsx";
@@ -9,8 +9,6 @@ import { trackDocument } from "./rendering-utils.mjs";
 export default function FlipChatMessage(props) {
   const message = trackDocument(props.message);
   const system = () => message().system;
-  const skill = () => system().skill;
-  const aspect = () => system().aspect;
   const flippedCards = () => system().flippedCards;
   const targetNumber = () => system().targetNumber;
   const actingValue = () => system().actingValue;

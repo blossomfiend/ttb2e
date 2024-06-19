@@ -1,5 +1,5 @@
-import plugin from "tailwindcss/plugin";
 import typography from "@tailwindcss/typography";
+import plugin from "tailwindcss/plugin";
 
 const config = {
   content: ["./src/**/*.{html,js,svelte,ts,jsx,tsx}"],

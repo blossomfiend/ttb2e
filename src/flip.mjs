@@ -6,6 +6,7 @@
  * @property {string} [skill] A string like "skills.sorcery" or "derivedAspects.defense"
  * @property {string} [aspect]
  * @property [action]
+ * @property {number} [fateModifier]
  */
 
 import DuelApplication from "./applications/duel.mjs";
@@ -59,7 +60,8 @@ export default class Flip {
    * @param chatNotification
    * @return {Promise<void>}
    */
-  async evaluate({ fateModifier, chatNotification = true } = {}) {
+  async evaluate({ fateModifier = this.options.fateModifier, chatNotification = true } = {}) {
+    this.options.fateModifier = fateModifier;
     let fateDeck = game.cards.get(game.settings.get("ttb2e", "fateDeck"));
     let fateDiscard = game.cards.get(game.settings.get("ttb2e", "fateDiscard"));
     if (fateDeck == null || fateDiscard == null) {
@@ -81,13 +83,11 @@ export default class Flip {
 
   /**
    * Post a chat notification displaying the flipped cards.
-   * @param fateModifier
    * @param author
    * @param actor
    * @return {Promise<void>}
    */
   async postFlip({
-    fateModifier,
     author = game.user.id,
     actor = this.options.actor ?? undefined,
   } = {}) {
@@ -101,7 +101,7 @@ export default class Flip {
       system: {
         ...this.options,
         title: this.title,
-        fateModifier: fateModifier,
+        fateModifier: this.options.fateModifier,
         flippedCards: this.flippedCards,
       },
     };

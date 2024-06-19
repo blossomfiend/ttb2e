@@ -93,7 +93,7 @@ export default function ActionsTab(props) {
             <img
               class="size-6 rounded-l block border-0"
               src={props.action.img}
-              alt={props.action.name}
+              alt={`icon for the action ${props.action.name}`}
             />
           </div>
           <div class="basis-6 flex-none flex flex-row items-center">
@@ -161,10 +161,17 @@ export default function ActionsTab(props) {
           <Show when={!collapsed()}>
             <div class="flex flex-col overflow-hidden">
               <div class="p-1 flex flex-row border-0 border-b border-solid border-black/10 dark:border-white/10">
-                <div>
-                  Skill:{" "}
-                  {localizeSkillCheck(system().skill, system().aspect) ?? ""}
-                </div>
+                {() => {
+                  const skillCheck = localizeSkillCheck(
+                    system().skill,
+                    system().aspect,
+                  );
+                  return (
+                    <Show when={skillCheck != null}>
+                      <div>Skill: {skillCheck}</div>
+                    </Show>
+                  );
+                }}
               </div>
               <Suspense fallback={<i class="fa-solid fa-gear fa-spin" />}>
                 <div

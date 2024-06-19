@@ -41,22 +41,22 @@ export default function PlayingCard(props) {
           classList={{ "text-red-700": props.card?.suit === "redJoker" }}
         >
           <div class="self-start flex flex-col items-center w-6 p-1">
-            <div>{props.card.value}</div>
+            <div class="font-modesto text-lg leading-none">{props.card.value}</div>
             <div>
               <Show
                 when={
                   props.card.suit !== "redJoker" &&
                   props.card.suit !== "blackJoker"
                 }
-                fallback={<span>J</span>}
+                fallback={<span class="font-modesto text-base leading-none">J</span>}
               >
                 <i class={`ttb-icon-${props.card.suit}`} />
               </Show>
             </div>
           </div>
-          <div class="text-[6px] opacity-60 py-1.5 px-1 flex flex-row gap-px">
+          <div class="text-[8px] opacity-60 py-1.5 px-1 flex flex-row gap-px">
             <For each={Array(severity())}>
-              {() => <i class="fa-solid fa-diamond" />}
+              {() => <i class="fa-solid fa-sparkle" />}
             </For>
           </div>
         </div>
