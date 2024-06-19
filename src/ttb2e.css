@@ -1,4 +1,4 @@
-@import "styles/ttb-icons.css";
+@import "assets/fonts/ttb-icons/ttb-icons.css";
 
 .use-tailwind:not(#I-am-so-sorry-for-this-hack) {
   @tailwind components;
