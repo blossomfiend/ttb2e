@@ -1,5 +1,7 @@
 # ttb2e – Foundry System for Through the Breach
 
+***This system is still in active development! Use it at your own risk!***
+
 This system implements the rules laid out in the second edition Through the Breach: Core
 Rules ([check out Wyrd Miniatures' store!](https://www.wyrd-games.net/ttb-products)) in
 the [Foundry Virtual Tabletop](https://foundryvtt.com/). Through the Breach itself is a weird west tabletop RPG, based
