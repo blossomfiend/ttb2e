@@ -11,6 +11,7 @@ export default class FatemasterCharacterActorData extends CharacterDataModel {
       fatePoints: new fields.SchemaField({
         value: intField(0),
       }),
+      doesFlipCards: new fields.BooleanField({ initial: false }),
     };
   }
 }

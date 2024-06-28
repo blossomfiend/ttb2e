@@ -1,4 +1,4 @@
-import { intField, suitedValue } from "../data-util.mjs";
+import { damageField, intField, suitedValue } from "../data-util.mjs";
 
 export default class ActionData extends foundry.abstract.DataModel {
   /** @inheritDoc */
@@ -20,8 +20,12 @@ export default class ActionData extends foundry.abstract.DataModel {
       // skills.doctor
       // derivedAspects.defense
       skill: new fields.StringField({ blank: false, nullable: true }),
-      aspect: new fields.StringField({ choices: game.ttb2e.aspects, nullable: true }),
-      description: new fields.HTMLField({  initial: "" }),
+      aspect: new fields.StringField({
+        choices: game.ttb2e.aspects,
+        nullable: true,
+      }),
+      description: new fields.HTMLField({ initial: "" }),
+      damage: damageField(),
     };
   }
 }

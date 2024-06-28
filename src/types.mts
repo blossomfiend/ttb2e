@@ -36,3 +36,16 @@ export type RankValue =
   | 12
   | 13
   | 14;
+
+export interface TriggerData {
+  suits: Suits;
+  name: string;
+  // Raw HTML description
+  description: string;
+}
+
+export interface Damage {
+  weak: number;
+  moderate: number;
+  severe: number;
+}

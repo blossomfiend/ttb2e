@@ -26,3 +26,14 @@ export function suitedValue(initial = 0, options = {}) {
     options,
   );
 }
+
+export function damageField(options = {}) {
+  return new foundry.data.fields.SchemaField(
+    {
+      weak: intField(0),
+      moderate: intField(0),
+      severe: intField(0),
+    },
+    { initial: null, nullable: true, ...options },
+  );
+}
