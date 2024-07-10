@@ -195,7 +195,7 @@ export default function CharacterSheet(props) {
                   {localize(`ttb.derivedAspects.${name()}.name`)}
                 </TextButton>
                 <button
-                  class="sheet-button border-none w-full h-5 p-0 text-center"
+                  class="sheet-button border-none w-full h-5 p-0 text-center disabled:opacity-100"
                   disabled={!canEdit() || ["walk", "charge"].includes(name())}
                   onClick={() => openDerivedAspectDuel(derivedAspect())}
                 >
