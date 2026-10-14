@@ -26,5 +26,5 @@ This project is formatted using prettier. A few npm scripts are included for dev
 
 ## Fine print
 
-This project is directly affiliated with Wyrd Miniatures or Foundry Gaming, but rather a fan developed system to
+This project is not directly affiliated with Wyrd Miniatures or Foundry Gaming, but rather a fan developed system to
 allow playing Through the Breach on FoundryVTT.
